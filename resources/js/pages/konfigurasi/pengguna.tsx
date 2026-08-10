@@ -1,5 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
-import { Edit2, Loader2, Trash2, UserPlus, Users, X } from 'lucide-react';
+import { Edit, Loader2, Trash2, UserPlus, Users, X } from 'lucide-react';
 import { useState } from 'react';
 
 import { konfigurasi } from '@/routes';
@@ -18,13 +18,26 @@ interface User {
 }
 
 interface Props {
-    users?: User[];
+    users: {
+        data: User[];
+        current_page: number;
+        last_page: number;
+        per_page: number;
+        total: number;
+        links: Array<{
+            url: string | null;
+            label: string;
+            active: boolean;
+        }>;
+    };
+    search?: string;
 }
 
-export default function Pengguna({ users = [] }: Props) {
+export default function Pengguna({ users, search = '' }: Props) {
     // State Modal
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [editingUser, setEditingUser] = useState<User | null>(null);
+    const [searchQuery, setSearchQuery] = useState(search);
 
     // Form Tambah
     const createForm = useForm({
@@ -88,6 +101,19 @@ export default function Pengguna({ users = [] }: Props) {
         }
     };
 
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+        const url = new URL(window.location.href);
+
+        if (searchQuery) {
+            url.searchParams.set('search', searchQuery);
+        } else {
+            url.searchParams.delete('search');
+        }
+
+        window.location.href = url.toString();
+    };
+
     return (
         <>
             <Head title="Manajemen Pengguna" />
@@ -120,36 +146,53 @@ export default function Pengguna({ users = [] }: Props) {
 
                 {/* Table Container */}
                 <div className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                    {/* Search Bar */}
+                    <div className="p-4 border-b border-slate-200">
+                        <form onSubmit={handleSearch} className="flex gap-2">
+                            <input
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder="Cari nama atau email..."
+                                className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-indigo-600"
+                            />
+                            <button
+                                type="submit"
+                                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors"
+                            >
+                                Cari
+                            </button>
+                        </form>
+                    </div>
+
                     <table className="w-full text-left text-sm text-slate-600">
                         <thead className="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
                             <tr>
                                 <th className="p-4">Nama</th>
                                 <th className="p-4">Email</th>
-                                <th className="p-4 text-right">Aksi</th>
+                                <th className="p-4 text-center">Aksi</th>
                             </tr>
                         </thead>
 
                         <tbody className="divide-y divide-slate-100">
-                            {users.length > 0 ? (
-                                users.map((user) => (
+                            {users.data.length > 0 ? (
+                                users.data.map((user) => (
                                     <tr key={user.id} className="hover:bg-slate-50/80 transition-colors">
                                         <td className="p-4 font-medium text-slate-900">{user.name}</td>
                                         <td className="p-4 text-slate-600">{user.email}</td>
-                                        <td className="p-4 text-right space-x-2">
+                                        <td className="p-4 text-center space-x-2">
                                             <button
                                                 onClick={() => openEditModal(user)}
-                                                className="inline-flex items-center gap-1 text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors cursor-pointer"
+                                                className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors cursor-pointer"
                                             >
-                                                <Edit2 className="w-3.5 h-3.5" />
-                                                Edit
+                                                <Edit className="w-4 h-4" />
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(user)}
                                                 disabled={deleteForm.processing}
-                                                className="inline-flex items-center gap-1 text-sm font-medium text-red-600 hover:text-red-700 transition-colors cursor-pointer disabled:opacity-50"
+                                                className="inline-flex items-center gap-2 text-sm font-medium text-red-600 hover:text-red-700 transition-colors cursor-pointer disabled:opacity-50"
                                             >
-                                                <Trash2 className="w-3.5 h-3.5" />
-                                                Hapus
+                                                <Trash2 className="w-4 h-4" />
                                             </button>
                                         </td>
                                     </tr>
@@ -157,12 +200,36 @@ export default function Pengguna({ users = [] }: Props) {
                             ) : (
                                 <tr>
                                     <td colSpan={3} className="p-8 text-center text-slate-400">
-                                        Belum ada data pengguna yang tersedia.
+                                        {search ? 'Tidak ada pengguna yang sesuai dengan pencarian.' : 'Belum ada data pengguna yang tersedia.'}
                                     </td>
                                 </tr>
                             )}
                         </tbody>
                     </table>
+
+                    {/* Pagination */}
+                    {users.last_page > 1 && (
+                        <div className="flex items-center justify-between px-4 py-3 border-t border-slate-200">
+                            <div className="text-sm text-slate-600">
+                                Menampilkan {users.data.length} dari {users.total} pengguna
+                            </div>
+                            <div className="flex gap-2">
+                                {users.links.map((link, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => link.url && (window.location.href = link.url)}
+                                        disabled={!link.url}
+                                        dangerouslySetInnerHTML={{ __html: link.label }}
+                                        className={`px-3 py-1 rounded text-sm ${
+                                            link.active
+                                                ? 'bg-indigo-600 text-white'
+                                                : 'bg-white border border-slate-300 text-slate-700 hover:bg-slate-50'
+                                        } ${!link.url ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
 

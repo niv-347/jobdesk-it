@@ -19,5 +19,13 @@ class Sop extends Model
         'kebijakan',
         'prosedur',
         'unit_terkait',
+        'file_path',
+        'status',
+        'approved_by',
+        'approved_at',
+    ];
+
+    protected $casts = [
+        'approved_at' => 'datetime',
     ];
 }

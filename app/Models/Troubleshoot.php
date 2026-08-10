@@ -23,6 +23,11 @@ class Troubleshoot extends Model
         'status',
         'tingkat_urgensi',
         'petugas_it',
+        'timeline',
+    ];
+
+    protected $casts = [
+        'timeline' => 'array',
     ];
 
     /**

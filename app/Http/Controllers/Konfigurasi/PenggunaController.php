@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Konfigurasi;
 
 use App\Http\Controllers\Controller;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
+use App\Models\UserMenuPermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -12,12 +15,24 @@ use Inertia\Response;
 
 class PenggunaController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $users = User::select('id', 'name', 'email')->latest()->get();
+        $search = $request->query('search');
+        $perPage = 10;
+
+        $query = User::query()->select('id', 'name', 'email');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        $users = $query->latest()->paginate($perPage)->withQueryString();
 
         return Inertia::render('konfigurasi/pengguna', [
-            'users' => $users
+            'users' => $users,
         ]);
     }
 
@@ -71,5 +86,51 @@ class PenggunaController extends Controller
         $pengguna->delete();
 
         return redirect()->back()->with('success', 'Pengguna berhasil dihapus!');
+    }
+
+    public function roleIndex(): Response
+    {
+        $users = User::select('id', 'name', 'email')->latest()->get();
+        $roles = Role::all();
+        $userRoles = User::with('roles.permissions')->get()->map(fn ($user) => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'roles' => $user->roles->map(fn ($role) => [
+                'id' => $role->id,
+                'name' => $role->name,
+                'slug' => $role->slug,
+            ]),
+            'permissions' => $user->roles->flatMap(fn ($role) => $role->permissions->pluck('key'))->unique()->values(),
+        ]);
+
+        return Inertia::render('konfigurasi/role', [
+            'users' => $users,
+            'roles' => $roles,
+            'userRoles' => $userRoles,
+        ]);
+    }
+
+    public function getUserPermissions(int $userId)
+    {
+        $user = User::findOrFail($userId);
+        $permissions = $user->roles()->with('permissions')->get()->flatMap(fn ($role) => $role->permissions->pluck('key', 'id'));
+
+        return response()->json($permissions);
+    }
+
+    public function saveUserPermissions(Request $request)
+    {
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'role_id' => 'required|exists:roles,id',
+        ]);
+
+        $user = User::findOrFail($validated['user_id']);
+        $role = Role::findOrFail($validated['role_id']);
+
+        $user->roles()->sync([$role->id]);
+
+        return back()->with('success', 'Role akses berhasil disimpan.');
     }
 }

@@ -141,3 +141,41 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* Professional Login Styles */
+.login-static-bg {
+    background: #0f172a;
+}
+
+.login-card {
+    animation: login-slide-up 0.6s ease-out;
+}
+
+.login-form-input {
+    transition: all 0.2s ease;
+}
+
+.login-form-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.login-submit-button {
+    background: #6366f1;
+    transition: all 0.2s ease;
+}
+
+.login-submit-button:hover:not(:disabled) {
+    background: #4f46e5;
+}
+
+.login-submit-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.login-stagger-1 { animation-delay: 0.1s; }
+.login-stagger-2 { animation-delay: 0.2s; }
+.login-stagger-3 { animation-delay: 0.3s; }
+.login-stagger-4 { animation-delay: 0.4s; }
+.login-stagger-5 { animation-delay: 0.5s; }

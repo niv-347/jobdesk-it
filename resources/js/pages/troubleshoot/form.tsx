@@ -1,5 +1,5 @@
-import { Head, useForm, Link } from '@inertiajs/react';
-import { ArrowLeft, Save } from 'lucide-react';
+import { Head, useForm, Link, router } from '@inertiajs/react';
+import { ArrowLeft, Save, Clock, Plus } from 'lucide-react';
 import type { FormEvent } from 'react';
 
 import { create, index, store, update } from '@/routes/troubleshoot';
@@ -193,6 +193,82 @@ export default function Form({ troubleshoot }: Props) {
                         </button>
                     </div>
                 </form>
+
+                {/* Timeline Section */}
+                {isEdit && troubleshoot.timeline && troubleshoot.timeline.length > 0 && (
+                    <div className="mt-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h3 className="mb-4 flex items-center gap-2 text-base font-semibold text-slate-900">
+                            <Clock className="h-5 w-5 text-indigo-600" />
+                            Timeline Aktivitas
+                        </h3>
+                        <div className="space-y-4">
+                            {troubleshoot.timeline.map((item, index) => (
+                                <div key={index} className="flex gap-4 border-l-2 border-indigo-200 pl-4 pb-4">
+                                    <div className="flex-1">
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-sm font-medium text-slate-900">{item.aksi}</span>
+                                            <span className="text-xs text-slate-500">
+                                                {new Date(item.timestamp).toLocaleString('id-ID')}
+                                            </span>
+                                        </div>
+                                        {item.catatan && (
+                                            <p className="mt-1 text-sm text-slate-600">{item.catatan}</p>
+                                        )}
+                                        <p className="mt-1 text-xs text-slate-400">oleh {item.user}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* Add Timeline Form */}
+                {isEdit && (
+                    <div className="mt-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h3 className="mb-4 flex items-center gap-2 text-base font-semibold text-slate-900">
+                            <Plus className="h-5 w-5 text-indigo-600" />
+                            Tambah Timeline
+                        </h3>
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                const formData = new FormData(e.target as HTMLFormElement);
+                                router.post(`/troubleshoot/${troubleshoot.id}/timeline`, {
+                                    aksi: formData.get('aksi'),
+                                    catatan: formData.get('catatan'),
+                                });
+                            }}
+                            className="space-y-4"
+                        >
+                            <div>
+                                <label className="mb-1 block text-sm font-medium text-slate-700">Aksi</label>
+                                <input
+                                    type="text"
+                                    name="aksi"
+                                    required
+                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none"
+                                    placeholder="Contoh: Update status, Hubungi user, dll"
+                                />
+                            </div>
+                            <div>
+                                <label className="mb-1 block text-sm font-medium text-slate-700">Catatan</label>
+                                <textarea
+                                    name="catatan"
+                                    rows={2}
+                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none"
+                                    placeholder="Catatan tambahan..."
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-emerald-700"
+                            >
+                                <Plus className="h-4 w-4" />
+                                Tambah Timeline
+                            </button>
+                        </form>
+                    </div>
+                )}
             </div>
         </div>
     );

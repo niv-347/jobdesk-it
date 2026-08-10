@@ -11,6 +11,12 @@ export interface TroubleshootData {
     status: string;
     tingkat_urgensi: string;
     petugas_it?: string | null;
+    timeline?: Array<{
+        aksi: string;
+        catatan?: string;
+        user: string;
+        timestamp: string;
+    }>;
     created_at?: string | null;
     updated_at?: string | null;
 }

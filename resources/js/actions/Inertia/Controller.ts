@@ -1,0 +1,327 @@
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/'
+ */
+const Controller980bb49ee7ae63891f1d891d2fbcf1c9 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: Controller980bb49ee7ae63891f1d891d2fbcf1c9.url(options),
+    method: 'get',
+})
+
+Controller980bb49ee7ae63891f1d891d2fbcf1c9.definition = {
+    methods: ["get","head"],
+    url: '/',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/'
+ */
+Controller980bb49ee7ae63891f1d891d2fbcf1c9.url = (options?: RouteQueryOptions) => {
+    return Controller980bb49ee7ae63891f1d891d2fbcf1c9.definition.url + queryParams(options)
+}
+
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/'
+ */
+Controller980bb49ee7ae63891f1d891d2fbcf1c9.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: Controller980bb49ee7ae63891f1d891d2fbcf1c9.url(options),
+    method: 'get',
+})
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/'
+ */
+Controller980bb49ee7ae63891f1d891d2fbcf1c9.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: Controller980bb49ee7ae63891f1d891d2fbcf1c9.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/'
+ */
+    const Controller980bb49ee7ae63891f1d891d2fbcf1c9Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: Controller980bb49ee7ae63891f1d891d2fbcf1c9.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/'
+ */
+        Controller980bb49ee7ae63891f1d891d2fbcf1c9Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: Controller980bb49ee7ae63891f1d891d2fbcf1c9.url(options),
+            method: 'get',
+        })
+            /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/'
+ */
+        Controller980bb49ee7ae63891f1d891d2fbcf1c9Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: Controller980bb49ee7ae63891f1d891d2fbcf1c9.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    Controller980bb49ee7ae63891f1d891d2fbcf1c9.form = Controller980bb49ee7ae63891f1d891d2fbcf1c9Form
+    /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/visum'
+ */
+const Controller9748657f3b03bb677f7ab62f54205df0 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: Controller9748657f3b03bb677f7ab62f54205df0.url(options),
+    method: 'get',
+})
+
+Controller9748657f3b03bb677f7ab62f54205df0.definition = {
+    methods: ["get","head"],
+    url: '/visum',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/visum'
+ */
+Controller9748657f3b03bb677f7ab62f54205df0.url = (options?: RouteQueryOptions) => {
+    return Controller9748657f3b03bb677f7ab62f54205df0.definition.url + queryParams(options)
+}
+
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/visum'
+ */
+Controller9748657f3b03bb677f7ab62f54205df0.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: Controller9748657f3b03bb677f7ab62f54205df0.url(options),
+    method: 'get',
+})
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/visum'
+ */
+Controller9748657f3b03bb677f7ab62f54205df0.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: Controller9748657f3b03bb677f7ab62f54205df0.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/visum'
+ */
+    const Controller9748657f3b03bb677f7ab62f54205df0Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: Controller9748657f3b03bb677f7ab62f54205df0.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/visum'
+ */
+        Controller9748657f3b03bb677f7ab62f54205df0Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: Controller9748657f3b03bb677f7ab62f54205df0.url(options),
+            method: 'get',
+        })
+            /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/visum'
+ */
+        Controller9748657f3b03bb677f7ab62f54205df0Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: Controller9748657f3b03bb677f7ab62f54205df0.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    Controller9748657f3b03bb677f7ab62f54205df0.form = Controller9748657f3b03bb677f7ab62f54205df0Form
+    /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/konfigurasi'
+ */
+const Controller9a5c12a554a682af5f7bbe61f50f5ac3 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: Controller9a5c12a554a682af5f7bbe61f50f5ac3.url(options),
+    method: 'get',
+})
+
+Controller9a5c12a554a682af5f7bbe61f50f5ac3.definition = {
+    methods: ["get","head"],
+    url: '/konfigurasi',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/konfigurasi'
+ */
+Controller9a5c12a554a682af5f7bbe61f50f5ac3.url = (options?: RouteQueryOptions) => {
+    return Controller9a5c12a554a682af5f7bbe61f50f5ac3.definition.url + queryParams(options)
+}
+
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/konfigurasi'
+ */
+Controller9a5c12a554a682af5f7bbe61f50f5ac3.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: Controller9a5c12a554a682af5f7bbe61f50f5ac3.url(options),
+    method: 'get',
+})
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/konfigurasi'
+ */
+Controller9a5c12a554a682af5f7bbe61f50f5ac3.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: Controller9a5c12a554a682af5f7bbe61f50f5ac3.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/konfigurasi'
+ */
+    const Controller9a5c12a554a682af5f7bbe61f50f5ac3Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: Controller9a5c12a554a682af5f7bbe61f50f5ac3.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/konfigurasi'
+ */
+        Controller9a5c12a554a682af5f7bbe61f50f5ac3Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: Controller9a5c12a554a682af5f7bbe61f50f5ac3.url(options),
+            method: 'get',
+        })
+            /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/konfigurasi'
+ */
+        Controller9a5c12a554a682af5f7bbe61f50f5ac3Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: Controller9a5c12a554a682af5f7bbe61f50f5ac3.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    Controller9a5c12a554a682af5f7bbe61f50f5ac3.form = Controller9a5c12a554a682af5f7bbe61f50f5ac3Form
+    /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/settings/appearance'
+ */
+const Controllere19ee86e9cf603ce1a59a1ec5d21dec5 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: Controllere19ee86e9cf603ce1a59a1ec5d21dec5.url(options),
+    method: 'get',
+})
+
+Controllere19ee86e9cf603ce1a59a1ec5d21dec5.definition = {
+    methods: ["get","head"],
+    url: '/settings/appearance',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/settings/appearance'
+ */
+Controllere19ee86e9cf603ce1a59a1ec5d21dec5.url = (options?: RouteQueryOptions) => {
+    return Controllere19ee86e9cf603ce1a59a1ec5d21dec5.definition.url + queryParams(options)
+}
+
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/settings/appearance'
+ */
+Controllere19ee86e9cf603ce1a59a1ec5d21dec5.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: Controllere19ee86e9cf603ce1a59a1ec5d21dec5.url(options),
+    method: 'get',
+})
+/**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/settings/appearance'
+ */
+Controllere19ee86e9cf603ce1a59a1ec5d21dec5.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: Controllere19ee86e9cf603ce1a59a1ec5d21dec5.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/settings/appearance'
+ */
+    const Controllere19ee86e9cf603ce1a59a1ec5d21dec5Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: Controllere19ee86e9cf603ce1a59a1ec5d21dec5.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/settings/appearance'
+ */
+        Controllere19ee86e9cf603ce1a59a1ec5d21dec5Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: Controllere19ee86e9cf603ce1a59a1ec5d21dec5.url(options),
+            method: 'get',
+        })
+            /**
+* @see \Inertia\Controller::__invoke
+ * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
+ * @route '/settings/appearance'
+ */
+        Controllere19ee86e9cf603ce1a59a1ec5d21dec5Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: Controllere19ee86e9cf603ce1a59a1ec5d21dec5.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    Controllere19ee86e9cf603ce1a59a1ec5d21dec5.form = Controllere19ee86e9cf603ce1a59a1ec5d21dec5Form
+
+/**
+* Multiple routes resolve to \Inertia\Controller::Controller, so this export is a
+* dictionary keyed by URI rather than a callable. Call a specific route with `Controller['<uri>'](...)`,
+* or import the route by name from your generated `routes/` directory.
+*/
+const Controller = {
+    '/': Controller980bb49ee7ae63891f1d891d2fbcf1c9,
+    '/visum': Controller9748657f3b03bb677f7ab62f54205df0,
+    '/konfigurasi': Controller9a5c12a554a682af5f7bbe61f50f5ac3,
+    '/settings/appearance': Controllere19ee86e9cf603ce1a59a1ec5d21dec5,
+}
+
+export default Controller

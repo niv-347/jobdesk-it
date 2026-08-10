@@ -43,12 +43,16 @@ class SopController extends Controller
             'judul'     => ['required', 'string', 'max:255'],
             'kategori'  => ['required', 'string', 'max:100'],
             'deskripsi' => ['nullable', 'string'],
-            //'tujuan'    => ['nullable', 'string'],
-            //'kebijakan' => ['nullable', 'string'],
-            //'prosedur'  => ['nullable', 'string'],
+            'file'      => ['nullable', 'file', 'mimes:pdf,doc,docx,xls,xlsx,ppt,pptx', 'max:10240'],
         ]);
 
-        Sop::create($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('file')) {
+            $data['file_path'] = $request->file('file')->store('sop-files', 'public');
+        }
+
+        Sop::create($data);
 
         return redirect()->back()->with('success', 'SOP berhasil ditambahkan!');
     }
@@ -97,9 +101,35 @@ class SopController extends Controller
 
     public function destroy(Sop $sop)
     {
+        if ($sop->file_path && \Storage::disk('public')->exists($sop->file_path)) {
+            \Storage::disk('public')->delete($sop->file_path);
+        }
+
         $sop->delete();
 
         return redirect()->back()->with('success', 'SOP berhasil dihapus!');
+    }
+
+    public function approve(Sop $sop)
+    {
+        $sop->update([
+            'status' => 'approved',
+            'approved_by' => auth()->id(),
+            'approved_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'SOP berhasil disetujui!');
+    }
+
+    public function reject(Sop $sop)
+    {
+        $sop->update([
+            'status' => 'rejected',
+            'approved_by' => auth()->id(),
+            'approved_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'SOP berhasil ditolak!');
     }
 
     public function isiSop(Sop $sop): Response

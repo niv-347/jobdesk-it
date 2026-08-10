@@ -116,4 +116,24 @@ class TroubleshootController extends Controller
             'troubleshoot' => $troubleshoot,
         ]);
     }
+
+    public function addTimeline(Request $request, Troubleshoot $troubleshoot)
+    {
+        $request->validate([
+            'aksi' => 'required|string|max:255',
+            'catatan' => 'nullable|string',
+        ]);
+
+        $timeline = $troubleshoot->timeline ?? [];
+        $timeline[] = [
+            'aksi' => $request->aksi,
+            'catatan' => $request->catatan,
+            'user' => auth()->user()?->name ?? 'System',
+            'timestamp' => now()->toDateTimeString(),
+        ];
+
+        $troubleshoot->update(['timeline' => $timeline]);
+
+        return back()->with('success', 'Timeline berhasil ditambahkan.');
+    }
 }
