@@ -232,10 +232,30 @@ Dashboard.layout = { breadcrumbs };
 
 function StatCard({ title, value, icon, color }: { title: string; value: number; icon: string; color: string }) {
     const colorClasses = {
-        blue: 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400',
-        green: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400',
-        orange: 'bg-orange-50 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400',
-        red: 'bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400',
+        blue: {
+            card: 'border-l-4 border-l-blue-500 bg-blue-50/50 dark:bg-blue-900/10',
+            icon: 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400',
+            title: 'text-blue-600 dark:text-blue-400',
+            value: 'text-blue-900 dark:text-blue-300',
+        },
+        green: {
+            card: 'border-l-4 border-l-emerald-500 bg-emerald-50/50 dark:bg-emerald-900/10',
+            icon: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400',
+            title: 'text-emerald-600 dark:text-emerald-400',
+            value: 'text-emerald-900 dark:text-emerald-300',
+        },
+        orange: {
+            card: 'border-l-4 border-l-orange-500 bg-orange-50/50 dark:bg-orange-900/10',
+            icon: 'bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400',
+            title: 'text-orange-600 dark:text-orange-400',
+            value: 'text-orange-900 dark:text-orange-300',
+        },
+        red: {
+            card: 'border-l-4 border-l-red-500 bg-red-50/50 dark:bg-red-900/10',
+            icon: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400',
+            title: 'text-red-600 dark:text-red-400',
+            value: 'text-red-900 dark:text-red-300',
+        },
     };
 
     const iconSvgs = {
@@ -262,14 +282,16 @@ function StatCard({ title, value, icon, color }: { title: string; value: number;
         ),
     };
 
+    const theme = colorClasses[color as keyof typeof colorClasses] || colorClasses.blue;
+
     return (
-        <div className="rounded-xl border border-sidebar-border/70 bg-white p-6 dark:border-sidebar-border dark:bg-slate-800">
+        <div className={`rounded-xl border border-sidebar-border/70 p-6 dark:border-sidebar-border ${theme.card}`}>
             <div className="flex items-center justify-between">
                 <div>
-                    <p className="text-sm font-medium text-slate-600 dark:text-slate-300">{title}</p>
-                    <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">{value}</p>
+                    <p className={`text-sm font-medium ${theme.title}`}>{title}</p>
+                    <p className={`mt-2 text-3xl font-bold ${theme.value}`}>{value}</p>
                 </div>
-                <div className={`rounded-lg p-3 ${colorClasses[color as keyof typeof colorClasses]}`}>
+                <div className={`rounded-lg p-3 ${theme.icon}`}>
                     {iconSvgs[icon as keyof typeof iconSvgs]}
                 </div>
             </div>

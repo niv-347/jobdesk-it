@@ -67,7 +67,7 @@ export default function ProsesSop({ sop }: Props) {
                     <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
                         <h2 className="flex items-center gap-2 text-base font-semibold text-slate-900 border-b pb-2">
                             <FileText className="h-5 w-5 text-indigo-600" />
-                            INFORMASI UMUM
+                            Informasi SOP
                         </h2>
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                             <div>

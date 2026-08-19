@@ -1,5 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
-import { Briefcase, LayoutGrid, Save, Settings, Trash2, UserCog } from 'lucide-react';
+import { Briefcase, CalendarIcon, FileText, LayoutGrid, Save, Settings, Share2, Trash2, UserCog } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useState } from 'react';
 
@@ -57,8 +57,36 @@ const defaultMenuItems: MenuItemConfig[] = [
     {
         id: 'visum',
         label: 'Visum',
+        icon: CalendarIcon,
+        enabled: true,
+        children: [{ id: 'formvisum', label: 'Form Visum', icon: FileText, enabled: true }],
+    },
+    {
+        id: 'asset',
+        label: 'Asset',
         icon: LayoutGrid,
         enabled: true,
+        children: [
+            { id: 'dataasset', label: 'Data Asset', icon: Briefcase, enabled: true },
+            { id: 'laporan', label: 'Laporan', icon: FileText, enabled: true },
+        ],
+    },
+    {
+        id: 'radiologi',
+        label: 'Radiologi',
+        icon: LayoutGrid,
+        enabled: true,
+        children: [
+            { id: 'ekpertise', label: 'Ekspertise', icon: FileText, enabled: true },
+            { id: 'share', label: 'Share', icon: Share2, enabled: true },
+        ],
+    },
+    {
+        id: 'verifikator',
+        label: 'Verifikator',
+        icon: UserCog,
+        enabled: true,
+        children: [{ id: 'verifsop', label: 'Verifikasi SOP', icon: Briefcase, enabled: true }],
     },
 ];
 
@@ -77,6 +105,15 @@ const permissionLabels: Record<string, string> = {
     troubleshooting: 'Troubleshooting',
     'troubleshooting.kejadian': 'Kejadian',
     visum: 'Visum',
+    'visum.formvisum': 'Form Visum',
+    asset: 'Asset',
+    'asset.dataasset': 'Data Asset',
+    'asset.laporan': 'Laporan Asset',
+    radiologi: 'Radiologi',
+    'radiologi.ekpertise': 'Ekspertise',
+    'radiologi.share': 'Share',
+    verifikator: 'Verifikator',
+    'verifikator.verifsop': 'Verifikasi SOP',
 };
 
 interface Props {
@@ -108,9 +145,8 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
     const [loading, setLoading] = useState(false);
     const [editUser, setEditUser] = useState<{ id: number; name: string; email: string } | null>(null);
     const [editRoleId, setEditRoleId] = useState<string>('');
-    const [saving, setSaving] = useState(false);
 
-    const { post, processing, wasSuccessful, setData } = useForm({
+    const { post, processing, wasSuccessful, setData, reset, errors } = useForm({
         user_id: '',
         role_id: '',
     });
@@ -199,6 +235,8 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
     const openEditDialog = (userRole: { id: number; name: string; email: string; roles: { id: number }[] }) => {
         setEditUser({ id: userRole.id, name: userRole.name, email: userRole.email });
         setEditRoleId(userRole.roles[0]?.id?.toString() ?? '');
+        setData('user_id', userRole.id.toString());
+        setData('role_id', userRole.roles[0]?.id?.toString() ?? '');
     };
 
     return (
@@ -376,28 +414,32 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                 </div>
 
                 {editUser && (
-                    <form
-                        action="/konfigurasi/role/permissions"
-                        method="post"
-                        onSubmit={() => setSaving(true)}
-                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-                    >
-                        <input type="hidden" name="_token" value={document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''} />
-                        <input type="hidden" name="user_id" value={editUser.id.toString()} />
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
                         <div className="w-full max-w-lg rounded-lg border border-slate-200 bg-white p-6 shadow-lg">
                             <h3 className="text-lg font-semibold text-slate-900">Edit Hak Akses</h3>
                             <p className="mt-1 text-sm text-slate-500">
                                 Ubah role untuk pengguna <strong>{editUser.name}</strong> ({editUser.email}).
                             </p>
 
-                            <div className="mt-4 grid gap-4">
+                            <form
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    post('/konfigurasi/role/permissions', {
+                                        onSuccess: () => {
+                                            setEditUser(null);
+                                            setEditRoleId('');
+                                            reset();
+                                        },
+                                    });
+                                }}
+                                className="mt-4 grid gap-4"
+                            >
                                 <div className="grid gap-2">
                                     <label htmlFor="edit-role" className="text-sm font-medium text-slate-700">
                                         Pilih Role
                                     </label>
                                     <select
                                         id="edit-role"
-                                        name="role_id"
                                         value={editRoleId}
                                         onChange={(e) => setEditRoleId(e.target.value)}
                                         className="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
@@ -409,6 +451,7 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                                             </option>
                                         ))}
                                     </select>
+                                    {errors.role_id && <p className="text-xs text-red-500">{errors.role_id}</p>}
                                 </div>
 
                                 <div className="grid gap-2">
@@ -434,30 +477,32 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                                         })()}
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="mt-6 flex justify-end gap-2">
-                                <button
-                                    type="button"
-                                    onClick={() => {
- setEditUser(null); setEditRoleId(''); 
-}}
-                                    disabled={saving}
-                                    className="inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 disabled:opacity-60"
-                                >
-                                    Batal
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={!editRoleId || saving}
-                                    className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm text-white hover:bg-indigo-700 disabled:opacity-60"
-                                >
-                                    {saving && <UserCog className="mr-2 h-4 w-4 animate-spin" />}
-                                    Simpan
-                                </button>
-                            </div>
+                                <div className="mt-2 flex justify-end gap-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setEditUser(null);
+                                            setEditRoleId('');
+                                            reset();
+                                        }}
+                                        disabled={processing}
+                                        className="inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 disabled:opacity-60"
+                                    >
+                                        Batal
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        disabled={!editRoleId || processing}
+                                        className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm text-white hover:bg-indigo-700 disabled:opacity-60"
+                                    >
+                                        {processing && <UserCog className="mr-2 h-4 w-4 animate-spin" />}
+                                        Simpan
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 )}
 
             </div>

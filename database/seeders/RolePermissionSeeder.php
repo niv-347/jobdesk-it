@@ -21,6 +21,13 @@ class RolePermissionSeeder extends Seeder
             ['key' => 'troubleshooting', 'group' => 'Troubleshooting', 'label' => 'Troubleshooting'],
             ['key' => 'troubleshooting.kejadian', 'group' => 'Troubleshooting', 'label' => 'Kejadian'],
             ['key' => 'visum', 'group' => 'Visum', 'label' => 'Visum'],
+            ['key' => 'visum.formvisum', 'group' => 'Visum', 'label' => 'Form Visum'],
+            ['key' => 'asset', 'group' => 'Asset', 'label' => 'Asset'],
+            ['key' => 'asset.dataasset', 'group' => 'Asset', 'label' => 'Data Asset'],
+            ['key' => 'asset.laporan', 'group' => 'Asset', 'label' => 'Laporan Asset'],
+            ['key' => 'radiologi', 'group' => 'Radiologi', 'label' => 'Radiologi'],
+            ['key' => 'radiologi.ekpertise', 'group' => 'Radiologi', 'label' => 'Ekspertise'],
+            ['key' => 'radiologi.share', 'group' => 'Radiologi', 'label' => 'Share'],
             ['key' => 'verifikator', 'group' => 'Verifikator', 'label' => 'Verifikator'],
             ['key' => 'verifikator.verifsop', 'group' => 'Verifikator', 'label' => 'Verifikasi SOP'],
         ];

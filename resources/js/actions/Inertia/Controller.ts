@@ -80,84 +80,6 @@ Controller980bb49ee7ae63891f1d891d2fbcf1c9.head = (options?: RouteQueryOptions):
     /**
 * @see \Inertia\Controller::__invoke
  * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/visum'
- */
-const Controller9748657f3b03bb677f7ab62f54205df0 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: Controller9748657f3b03bb677f7ab62f54205df0.url(options),
-    method: 'get',
-})
-
-Controller9748657f3b03bb677f7ab62f54205df0.definition = {
-    methods: ["get","head"],
-    url: '/visum',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/visum'
- */
-Controller9748657f3b03bb677f7ab62f54205df0.url = (options?: RouteQueryOptions) => {
-    return Controller9748657f3b03bb677f7ab62f54205df0.definition.url + queryParams(options)
-}
-
-/**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/visum'
- */
-Controller9748657f3b03bb677f7ab62f54205df0.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: Controller9748657f3b03bb677f7ab62f54205df0.url(options),
-    method: 'get',
-})
-/**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/visum'
- */
-Controller9748657f3b03bb677f7ab62f54205df0.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: Controller9748657f3b03bb677f7ab62f54205df0.url(options),
-    method: 'head',
-})
-
-    /**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/visum'
- */
-    const Controller9748657f3b03bb677f7ab62f54205df0Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: Controller9748657f3b03bb677f7ab62f54205df0.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/visum'
- */
-        Controller9748657f3b03bb677f7ab62f54205df0Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: Controller9748657f3b03bb677f7ab62f54205df0.url(options),
-            method: 'get',
-        })
-            /**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route '/visum'
- */
-        Controller9748657f3b03bb677f7ab62f54205df0Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: Controller9748657f3b03bb677f7ab62f54205df0.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    Controller9748657f3b03bb677f7ab62f54205df0.form = Controller9748657f3b03bb677f7ab62f54205df0Form
-    /**
-* @see \Inertia\Controller::__invoke
- * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
  * @route '/konfigurasi'
  */
 const Controller9a5c12a554a682af5f7bbe61f50f5ac3 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -319,7 +241,6 @@ Controllere19ee86e9cf603ce1a59a1ec5d21dec5.head = (options?: RouteQueryOptions):
 */
 const Controller = {
     '/': Controller980bb49ee7ae63891f1d891d2fbcf1c9,
-    '/visum': Controller9748657f3b03bb677f7ab62f54205df0,
     '/konfigurasi': Controller9a5c12a554a682af5f7bbe61f50f5ac3,
     '/settings/appearance': Controllere19ee86e9cf603ce1a59a1ec5d21dec5,
 }

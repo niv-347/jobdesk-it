@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\Konfigurasi\PenggunaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RadiologiController;
 use App\Http\Controllers\Sop\SopController;
 use App\Http\Controllers\Troubleshoot\TroubleshootController;
+use App\Http\Controllers\VerifikatorController;
+use App\Http\Controllers\VisumController;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'login')->name('home');
@@ -40,7 +44,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('troubleshoot/{troubleshoot}/timeline', [TroubleshootController::class, 'addTimeline'])->name('troubleshoot.timeline');
 
     // === ROUTE VISUM ===
-    Route::inertia('visum', 'visum')->name('visum');
+    Route::get('visum', [VisumController::class, 'index'])->name('visum.index');
+    Route::post('visum', [VisumController::class, 'store'])->name('visum.store');
+    Route::put('visum/{visum}', [VisumController::class, 'update'])->name('visum.update');
+    Route::delete('visum/{visum}', [VisumController::class, 'destroy'])->name('visum.destroy');
+    Route::get('visum/cetak', [VisumController::class, 'cetak'])->name('visum.cetak');
 
     // === ROUTE KONFIGURASI ===
     Route::inertia('konfigurasi', 'konfigurasi')->name('konfigurasi');
@@ -56,6 +64,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('konfigurasi/role/permissions/{user}', [PenggunaController::class, 'getUserPermissions'])->name('konfigurasi.role.permissions');
     Route::post('konfigurasi/role/permissions', [PenggunaController::class, 'saveUserPermissions'])->name('konfigurasi.role.permissions.save');
     Route::get('profile/activity', [ProfileController::class, 'activityLog'])->name('profile.activity');
+
+    Route::get('asset/dataasset', [AssetController::class, 'index'])->name('asset.dataasset');
+    Route::post('asset/dataasset', [AssetController::class, 'store'])->name('asset.dataasset.store');
+    Route::put('asset/dataasset/{asset}', [AssetController::class, 'update'])->name('asset.dataasset.update');
+    Route::delete('asset/dataasset/{asset}', [AssetController::class, 'destroy'])->name('asset.dataasset.destroy');
+    Route::get('asset/laporan', [AssetController::class, 'laporan'])->name('asset.laporan');
+
+    Route::get('radiologi/ekpertise', [RadiologiController::class, 'index'])->name('radiologi.ekpertise');
+    Route::post('radiologi/ekpertise', [RadiologiController::class, 'store'])->name('radiologi.ekpertise.store');
+    Route::put('radiologi/ekpertise/{radiologi}', [RadiologiController::class, 'update'])->name('radiologi.ekpertise.update');
+    Route::delete('radiologi/ekpertise/{radiologi}', [RadiologiController::class, 'destroy'])->name('radiologi.ekpertise.destroy');
+
+    Route::get('radiologi/share', [\App\Http\Controllers\RadiologiShareController::class, 'index'])->name('radiologi.share');
+    Route::get('radiologi/verify', [\App\Http\Controllers\RadiologiShareController::class, 'showVerify'])->name('radiologi.verify');
+    Route::post('radiologi/verify', [\App\Http\Controllers\RadiologiShareController::class, 'verify'])->name('radiologi.verify.submit');
+    Route::get('radiologi/hasil/{radiologi}/pdf', [\App\Http\Controllers\RadiologiShareController::class, 'downloadPdf'])->name('radiologi.hasil.pdf');
+    Route::get('radiologi/hasil/{radiologi}/foto', [\App\Http\Controllers\RadiologiShareController::class, 'downloadFoto'])->name('radiologi.hasil.foto');
 
     Route::get('verifikator/verifsop', [\App\Http\Controllers\VerifikatorController::class, 'verifSop'])->name('verifikator.verifsop');
     Route::post('verifikator/verifsop/{sop}/approve', [\App\Http\Controllers\VerifikatorController::class, 'approve'])->name('verifikator.approve');
