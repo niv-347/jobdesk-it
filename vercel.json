@@ -13,8 +13,10 @@
     }
   },
   "routes": [
+
     { "src": "/build/(.*)", "dest": "/build/$1" },
-    { "src": "/(css|js|images|favicon.ico)", "dest": "/public/$1" },
+
+    { "src": "/(css|js|images|favicon.ico|favicon.svg|apple-touch-icon.png)", "dest": "/$1" },
     { "src": "/(.*)", "dest": "/api/index.php" }
   ]
 }
