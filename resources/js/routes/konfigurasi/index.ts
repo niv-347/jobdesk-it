@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
 import pengguna1a0678 from './pengguna'
 import role51742c from './role'
 /**
@@ -44,41 +44,6 @@ pengguna.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::pengguna
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:18
- * @route '/konfigurasi/pengguna'
- */
-    const penggunaForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: pengguna.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::pengguna
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:18
- * @route '/konfigurasi/pengguna'
- */
-        penggunaForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: pengguna.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::pengguna
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:18
- * @route '/konfigurasi/pengguna'
- */
-        penggunaForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: pengguna.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    pengguna.form = penggunaForm
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::role
  * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:91
@@ -121,42 +86,6 @@ role.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: role.url(options),
     method: 'head',
 })
-
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::role
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:91
- * @route '/konfigurasi/role'
- */
-    const roleForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: role.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::role
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:91
- * @route '/konfigurasi/role'
- */
-        roleForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: role.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::role
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:91
- * @route '/konfigurasi/role'
- */
-        roleForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: role.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    role.form = roleForm
 const konfigurasi = {
     pengguna: Object.assign(pengguna, pengguna1a0678),
 role: Object.assign(role, role51742c),

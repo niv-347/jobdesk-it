@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::index
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
@@ -42,41 +42,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::index
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
- * @route '/troubleshoot'
- */
-    const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: index.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::index
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
- * @route '/troubleshoot'
- */
-        indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: index.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::index
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
- * @route '/troubleshoot'
- */
-        indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: index.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    index.form = indexForm
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::create
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:39
@@ -120,41 +85,6 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::create
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:39
- * @route '/troubleshoot/create'
- */
-    const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: create.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::create
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:39
- * @route '/troubleshoot/create'
- */
-        createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: create.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::create
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:39
- * @route '/troubleshoot/create'
- */
-        createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: create.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    create.form = createForm
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::kejadian
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
@@ -198,41 +128,6 @@ kejadian.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::kejadian
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
- * @route '/troubleshoot/kejadian'
- */
-    const kejadianForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: kejadian.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::kejadian
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
- * @route '/troubleshoot/kejadian'
- */
-        kejadianForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: kejadian.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::kejadian
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
- * @route '/troubleshoot/kejadian'
- */
-        kejadianForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: kejadian.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    kejadian.form = kejadianForm
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::store
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:47
@@ -267,33 +162,12 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     method: 'post',
 })
 
-    /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::store
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:47
- * @route '/troubleshoot'
- */
-    const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: store.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::store
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:47
- * @route '/troubleshoot'
- */
-        storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: store.url(options),
-            method: 'post',
-        })
-    
-    store.form = storeForm
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::edit
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
  * @route '/troubleshoot/{troubleshoot}/edit'
  */
-export const edit = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const edit = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -308,7 +182,7 @@ edit.definition = {
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
  * @route '/troubleshoot/{troubleshoot}/edit'
  */
-edit.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+edit.url = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { troubleshoot: args }
     }
@@ -341,7 +215,7 @@ edit.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: num
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
  * @route '/troubleshoot/{troubleshoot}/edit'
  */
-edit.get = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+edit.get = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -350,52 +224,17 @@ edit.get = (args: { troubleshoot: number | { id: number } } | [troubleshoot: num
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
  * @route '/troubleshoot/{troubleshoot}/edit'
  */
-edit.head = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+edit.head = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::edit
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
- * @route '/troubleshoot/{troubleshoot}/edit'
- */
-    const editForm = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: edit.url(args, options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::edit
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
- * @route '/troubleshoot/{troubleshoot}/edit'
- */
-        editForm.get = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: edit.url(args, options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::edit
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
- * @route '/troubleshoot/{troubleshoot}/edit'
- */
-        editForm.head = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: edit.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    edit.form = editForm
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::cetak
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
  * @route '/troubleshoot/{troubleshoot}/cetak'
  */
-export const cetak = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const cetak = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: cetak.url(args, options),
     method: 'get',
 })
@@ -410,7 +249,7 @@ cetak.definition = {
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
  * @route '/troubleshoot/{troubleshoot}/cetak'
  */
-cetak.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+cetak.url = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { troubleshoot: args }
     }
@@ -443,7 +282,7 @@ cetak.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: nu
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
  * @route '/troubleshoot/{troubleshoot}/cetak'
  */
-cetak.get = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+cetak.get = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: cetak.url(args, options),
     method: 'get',
 })
@@ -452,52 +291,17 @@ cetak.get = (args: { troubleshoot: number | { id: number } } | [troubleshoot: nu
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
  * @route '/troubleshoot/{troubleshoot}/cetak'
  */
-cetak.head = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+cetak.head = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: cetak.url(args, options),
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::cetak
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
- * @route '/troubleshoot/{troubleshoot}/cetak'
- */
-    const cetakForm = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: cetak.url(args, options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::cetak
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
- * @route '/troubleshoot/{troubleshoot}/cetak'
- */
-        cetakForm.get = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: cetak.url(args, options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::cetak
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
- * @route '/troubleshoot/{troubleshoot}/cetak'
- */
-        cetakForm.head = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: cetak.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    cetak.form = cetakForm
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::update
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:80
  * @route '/troubleshoot/{troubleshoot}'
  */
-export const update = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -512,7 +316,7 @@ update.definition = {
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:80
  * @route '/troubleshoot/{troubleshoot}'
  */
-update.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { troubleshoot: args }
     }
@@ -545,48 +349,17 @@ update.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: n
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:80
  * @route '/troubleshoot/{troubleshoot}'
  */
-update.put = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
 
-    /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::update
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:80
- * @route '/troubleshoot/{troubleshoot}'
- */
-    const updateForm = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: update.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'PUT',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::update
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:80
- * @route '/troubleshoot/{troubleshoot}'
- */
-        updateForm.put = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: update.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PUT',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    update.form = updateForm
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::destroy
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:103
  * @route '/troubleshoot/{troubleshoot}'
  */
-export const destroy = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -601,7 +374,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:103
  * @route '/troubleshoot/{troubleshoot}'
  */
-destroy.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { troubleshoot: args }
     }
@@ -634,48 +407,17 @@ destroy.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: 
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:103
  * @route '/troubleshoot/{troubleshoot}'
  */
-destroy.delete = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
 
-    /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::destroy
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:103
- * @route '/troubleshoot/{troubleshoot}'
- */
-    const destroyForm = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: destroy.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'DELETE',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::destroy
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:103
- * @route '/troubleshoot/{troubleshoot}'
- */
-        destroyForm.delete = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: destroy.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'DELETE',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    destroy.form = destroyForm
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::timeline
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:120
  * @route '/troubleshoot/{troubleshoot}/timeline'
  */
-export const timeline = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const timeline = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: timeline.url(args, options),
     method: 'post',
 })
@@ -690,7 +432,7 @@ timeline.definition = {
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:120
  * @route '/troubleshoot/{troubleshoot}/timeline'
  */
-timeline.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+timeline.url = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { troubleshoot: args }
     }
@@ -723,32 +465,10 @@ timeline.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot:
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:120
  * @route '/troubleshoot/{troubleshoot}/timeline'
  */
-timeline.post = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+timeline.post = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: timeline.url(args, options),
     method: 'post',
 })
-
-    /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::timeline
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:120
- * @route '/troubleshoot/{troubleshoot}/timeline'
- */
-    const timelineForm = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: timeline.url(args, options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Troubleshoot\TroubleshootController::timeline
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:120
- * @route '/troubleshoot/{troubleshoot}/timeline'
- */
-        timelineForm.post = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: timeline.url(args, options),
-            method: 'post',
-        })
-    
-    timeline.form = timelineForm
 const troubleshoot = {
     index: Object.assign(index, index),
 create: Object.assign(create, create),

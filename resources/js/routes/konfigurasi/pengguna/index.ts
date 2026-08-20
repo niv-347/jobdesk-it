@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::store
  * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:39
@@ -33,27 +33,6 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     method: 'post',
 })
 
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::store
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:39
- * @route '/konfigurasi/pengguna'
- */
-    const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: store.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::store
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:39
- * @route '/konfigurasi/pengguna'
- */
-        storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: store.url(options),
-            method: 'post',
-        })
-    
-    store.form = storeForm
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::update
  * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:60
@@ -112,37 +91,6 @@ update.put = (args: { pengguna: number | { id: number } } | [pengguna: number | 
     method: 'put',
 })
 
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::update
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:60
- * @route '/konfigurasi/pengguna/{pengguna}'
- */
-    const updateForm = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: update.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'PUT',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::update
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:60
- * @route '/konfigurasi/pengguna/{pengguna}'
- */
-        updateForm.put = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: update.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PUT',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    update.form = updateForm
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::destroy
  * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:84
@@ -200,38 +148,6 @@ destroy.delete = (args: { pengguna: number | { id: number } } | [pengguna: numbe
     url: destroy.url(args, options),
     method: 'delete',
 })
-
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::destroy
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:84
- * @route '/konfigurasi/pengguna/{pengguna}'
- */
-    const destroyForm = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: destroy.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'DELETE',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::destroy
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:84
- * @route '/konfigurasi/pengguna/{pengguna}'
- */
-        destroyForm.delete = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: destroy.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'DELETE',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    destroy.form = destroyForm
 const pengguna = {
     store: Object.assign(store, store),
 update: Object.assign(update, update),

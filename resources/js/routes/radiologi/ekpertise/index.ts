@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\RadiologiController::store
  * @see app/Http/Controllers/RadiologiController.php:41
@@ -33,33 +33,12 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     method: 'post',
 })
 
-    /**
-* @see \App\Http\Controllers\RadiologiController::store
- * @see app/Http/Controllers/RadiologiController.php:41
- * @route '/radiologi/ekpertise'
- */
-    const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: store.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\RadiologiController::store
- * @see app/Http/Controllers/RadiologiController.php:41
- * @route '/radiologi/ekpertise'
- */
-        storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: store.url(options),
-            method: 'post',
-        })
-    
-    store.form = storeForm
 /**
 * @see \App\Http\Controllers\RadiologiController::update
  * @see app/Http/Controllers/RadiologiController.php:79
  * @route '/radiologi/ekpertise/{radiologi}'
  */
-export const update = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { radiologi: string | number | { id: string | number } } | [radiologi: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -74,7 +53,7 @@ update.definition = {
  * @see app/Http/Controllers/RadiologiController.php:79
  * @route '/radiologi/ekpertise/{radiologi}'
  */
-update.url = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { radiologi: string | number | { id: string | number } } | [radiologi: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { radiologi: args }
     }
@@ -107,48 +86,17 @@ update.url = (args: { radiologi: number | { id: number } } | [radiologi: number 
  * @see app/Http/Controllers/RadiologiController.php:79
  * @route '/radiologi/ekpertise/{radiologi}'
  */
-update.put = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { radiologi: string | number | { id: string | number } } | [radiologi: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
 
-    /**
-* @see \App\Http\Controllers\RadiologiController::update
- * @see app/Http/Controllers/RadiologiController.php:79
- * @route '/radiologi/ekpertise/{radiologi}'
- */
-    const updateForm = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: update.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'PUT',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\RadiologiController::update
- * @see app/Http/Controllers/RadiologiController.php:79
- * @route '/radiologi/ekpertise/{radiologi}'
- */
-        updateForm.put = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: update.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PUT',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    update.form = updateForm
 /**
 * @see \App\Http\Controllers\RadiologiController::destroy
  * @see app/Http/Controllers/RadiologiController.php:126
  * @route '/radiologi/ekpertise/{radiologi}'
  */
-export const destroy = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { radiologi: string | number | { id: string | number } } | [radiologi: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -163,7 +111,7 @@ destroy.definition = {
  * @see app/Http/Controllers/RadiologiController.php:126
  * @route '/radiologi/ekpertise/{radiologi}'
  */
-destroy.url = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { radiologi: string | number | { id: string | number } } | [radiologi: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { radiologi: args }
     }
@@ -196,42 +144,10 @@ destroy.url = (args: { radiologi: number | { id: number } } | [radiologi: number
  * @see app/Http/Controllers/RadiologiController.php:126
  * @route '/radiologi/ekpertise/{radiologi}'
  */
-destroy.delete = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { radiologi: string | number | { id: string | number } } | [radiologi: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
-
-    /**
-* @see \App\Http\Controllers\RadiologiController::destroy
- * @see app/Http/Controllers/RadiologiController.php:126
- * @route '/radiologi/ekpertise/{radiologi}'
- */
-    const destroyForm = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: destroy.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'DELETE',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\RadiologiController::destroy
- * @see app/Http/Controllers/RadiologiController.php:126
- * @route '/radiologi/ekpertise/{radiologi}'
- */
-        destroyForm.delete = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: destroy.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'DELETE',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    destroy.form = destroyForm
 const ekpertise = {
     store: Object.assign(store, store),
 update: Object.assign(update, update),

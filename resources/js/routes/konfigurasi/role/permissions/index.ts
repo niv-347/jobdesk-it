@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::save
  * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:122
@@ -32,28 +32,6 @@ save.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: save.url(options),
     method: 'post',
 })
-
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::save
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:122
- * @route '/konfigurasi/role/permissions'
- */
-    const saveForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: save.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::save
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:122
- * @route '/konfigurasi/role/permissions'
- */
-        saveForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: save.url(options),
-            method: 'post',
-        })
-    
-    save.form = saveForm
 const permissions = {
     save: Object.assign(save, save),
 }

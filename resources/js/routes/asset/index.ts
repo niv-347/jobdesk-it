@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
 import dataasset0e9557 from './dataasset'
 /**
 * @see \App\Http\Controllers\AssetController::dataasset
@@ -43,41 +43,6 @@ dataasset.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\AssetController::dataasset
- * @see app/Http/Controllers/AssetController.php:14
- * @route '/asset/dataasset'
- */
-    const dataassetForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: dataasset.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\AssetController::dataasset
- * @see app/Http/Controllers/AssetController.php:14
- * @route '/asset/dataasset'
- */
-        dataassetForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: dataasset.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\AssetController::dataasset
- * @see app/Http/Controllers/AssetController.php:14
- * @route '/asset/dataasset'
- */
-        dataassetForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: dataasset.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    dataasset.form = dataassetForm
 /**
 * @see \App\Http\Controllers\AssetController::laporan
  * @see app/Http/Controllers/AssetController.php:127
@@ -120,42 +85,6 @@ laporan.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: laporan.url(options),
     method: 'head',
 })
-
-    /**
-* @see \App\Http\Controllers\AssetController::laporan
- * @see app/Http/Controllers/AssetController.php:127
- * @route '/asset/laporan'
- */
-    const laporanForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: laporan.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\AssetController::laporan
- * @see app/Http/Controllers/AssetController.php:127
- * @route '/asset/laporan'
- */
-        laporanForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: laporan.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\AssetController::laporan
- * @see app/Http/Controllers/AssetController.php:127
- * @route '/asset/laporan'
- */
-        laporanForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: laporan.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    laporan.form = laporanForm
 const asset = {
     dataasset: Object.assign(dataasset, dataasset0e9557),
 laporan: Object.assign(laporan, laporan),

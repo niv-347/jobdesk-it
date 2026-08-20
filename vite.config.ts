@@ -17,6 +17,7 @@ export default defineConfig({
                 }),
             ],
         }),
+
         inertia(),
         react({
             babel: {
@@ -24,8 +25,10 @@ export default defineConfig({
             },
         }),
         tailwindcss(),
-        wayfinder({
+
+        // Matikan wayfinder HANYA saat diproses oleh Vercel
+        !process.env.VERCEL && wayfinder({
             formVariants: true,
         }),
-    ],
+    ].filter(Boolean),
 });

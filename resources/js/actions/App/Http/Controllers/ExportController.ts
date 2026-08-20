@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\ExportController::users
  * @see app/Http/Controllers/ExportController.php:14
@@ -42,41 +42,6 @@ users.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\ExportController::users
- * @see app/Http/Controllers/ExportController.php:14
- * @route '/export/users'
- */
-    const usersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: users.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\ExportController::users
- * @see app/Http/Controllers/ExportController.php:14
- * @route '/export/users'
- */
-        usersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: users.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\ExportController::users
- * @see app/Http/Controllers/ExportController.php:14
- * @route '/export/users'
- */
-        usersForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: users.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    users.form = usersForm
 /**
 * @see \App\Http\Controllers\ExportController::sops
  * @see app/Http/Controllers/ExportController.php:29
@@ -120,41 +85,6 @@ sops.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\ExportController::sops
- * @see app/Http/Controllers/ExportController.php:29
- * @route '/export/sops'
- */
-    const sopsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: sops.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\ExportController::sops
- * @see app/Http/Controllers/ExportController.php:29
- * @route '/export/sops'
- */
-        sopsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: sops.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\ExportController::sops
- * @see app/Http/Controllers/ExportController.php:29
- * @route '/export/sops'
- */
-        sopsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: sops.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    sops.form = sopsForm
 /**
 * @see \App\Http\Controllers\ExportController::troubleshoots
  * @see app/Http/Controllers/ExportController.php:44
@@ -197,42 +127,6 @@ troubleshoots.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
     url: troubleshoots.url(options),
     method: 'head',
 })
-
-    /**
-* @see \App\Http\Controllers\ExportController::troubleshoots
- * @see app/Http/Controllers/ExportController.php:44
- * @route '/export/troubleshoots'
- */
-    const troubleshootsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: troubleshoots.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\ExportController::troubleshoots
- * @see app/Http/Controllers/ExportController.php:44
- * @route '/export/troubleshoots'
- */
-        troubleshootsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: troubleshoots.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\ExportController::troubleshoots
- * @see app/Http/Controllers/ExportController.php:44
- * @route '/export/troubleshoots'
- */
-        troubleshootsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: troubleshoots.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    troubleshoots.form = troubleshootsForm
 const ExportController = { users, sops, troubleshoots }
 
 export default ExportController

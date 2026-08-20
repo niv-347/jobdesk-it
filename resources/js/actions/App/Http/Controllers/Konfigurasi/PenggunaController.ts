@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::index
  * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:18
@@ -42,41 +42,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::index
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:18
- * @route '/konfigurasi/pengguna'
- */
-    const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: index.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::index
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:18
- * @route '/konfigurasi/pengguna'
- */
-        indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: index.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::index
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:18
- * @route '/konfigurasi/pengguna'
- */
-        indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: index.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    index.form = indexForm
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::store
  * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:39
@@ -111,27 +76,6 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     method: 'post',
 })
 
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::store
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:39
- * @route '/konfigurasi/pengguna'
- */
-    const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: store.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::store
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:39
- * @route '/konfigurasi/pengguna'
- */
-        storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: store.url(options),
-            method: 'post',
-        })
-    
-    store.form = storeForm
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::update
  * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:60
@@ -190,37 +134,6 @@ update.put = (args: { pengguna: number | { id: number } } | [pengguna: number | 
     method: 'put',
 })
 
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::update
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:60
- * @route '/konfigurasi/pengguna/{pengguna}'
- */
-    const updateForm = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: update.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'PUT',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::update
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:60
- * @route '/konfigurasi/pengguna/{pengguna}'
- */
-        updateForm.put = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: update.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PUT',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    update.form = updateForm
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::destroy
  * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:84
@@ -279,37 +192,6 @@ destroy.delete = (args: { pengguna: number | { id: number } } | [pengguna: numbe
     method: 'delete',
 })
 
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::destroy
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:84
- * @route '/konfigurasi/pengguna/{pengguna}'
- */
-    const destroyForm = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: destroy.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'DELETE',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::destroy
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:84
- * @route '/konfigurasi/pengguna/{pengguna}'
- */
-        destroyForm.delete = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: destroy.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'DELETE',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    destroy.form = destroyForm
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::roleIndex
  * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:91
@@ -353,41 +235,6 @@ roleIndex.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::roleIndex
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:91
- * @route '/konfigurasi/role'
- */
-    const roleIndexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: roleIndex.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::roleIndex
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:91
- * @route '/konfigurasi/role'
- */
-        roleIndexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: roleIndex.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::roleIndex
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:91
- * @route '/konfigurasi/role'
- */
-        roleIndexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: roleIndex.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    roleIndex.form = roleIndexForm
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::getUserPermissions
  * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:114
@@ -450,41 +297,6 @@ getUserPermissions.head = (args: { user: string | number } | [user: string | num
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::getUserPermissions
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:114
- * @route '/konfigurasi/role/permissions/{user}'
- */
-    const getUserPermissionsForm = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: getUserPermissions.url(args, options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::getUserPermissions
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:114
- * @route '/konfigurasi/role/permissions/{user}'
- */
-        getUserPermissionsForm.get = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: getUserPermissions.url(args, options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::getUserPermissions
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:114
- * @route '/konfigurasi/role/permissions/{user}'
- */
-        getUserPermissionsForm.head = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: getUserPermissions.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    getUserPermissions.form = getUserPermissionsForm
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::saveUserPermissions
  * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:122
@@ -518,28 +330,6 @@ saveUserPermissions.post = (options?: RouteQueryOptions): RouteDefinition<'post'
     url: saveUserPermissions.url(options),
     method: 'post',
 })
-
-    /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::saveUserPermissions
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:122
- * @route '/konfigurasi/role/permissions'
- */
-    const saveUserPermissionsForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: saveUserPermissions.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Konfigurasi\PenggunaController::saveUserPermissions
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:122
- * @route '/konfigurasi/role/permissions'
- */
-        saveUserPermissionsForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: saveUserPermissions.url(options),
-            method: 'post',
-        })
-    
-    saveUserPermissions.form = saveUserPermissionsForm
 const PenggunaController = { index, store, update, destroy, roleIndex, getUserPermissions, saveUserPermissions }
 
 export default PenggunaController

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\ProfileController::activityLog
  * @see app/Http/Controllers/ProfileController.php:58
@@ -41,42 +41,6 @@ activityLog.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: activityLog.url(options),
     method: 'head',
 })
-
-    /**
-* @see \App\Http\Controllers\ProfileController::activityLog
- * @see app/Http/Controllers/ProfileController.php:58
- * @route '/profile/activity'
- */
-    const activityLogForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: activityLog.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\ProfileController::activityLog
- * @see app/Http/Controllers/ProfileController.php:58
- * @route '/profile/activity'
- */
-        activityLogForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: activityLog.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\ProfileController::activityLog
- * @see app/Http/Controllers/ProfileController.php:58
- * @route '/profile/activity'
- */
-        activityLogForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: activityLog.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    activityLog.form = activityLogForm
 const ProfileController = { activityLog }
 
 export default ProfileController

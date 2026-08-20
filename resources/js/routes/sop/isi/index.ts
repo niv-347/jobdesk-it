@@ -1,10 +1,10 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Sop\SopController::store
  * @see app/Http/Controllers/Sop/SopController.php:60
  * @route '/sop/{sop}/isisop'
  */
-export const store = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const store = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: store.url(args, options),
     method: 'put',
 })
@@ -19,7 +19,7 @@ store.definition = {
  * @see app/Http/Controllers/Sop/SopController.php:60
  * @route '/sop/{sop}/isisop'
  */
-store.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+store.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -52,42 +52,10 @@ store.url = (args: { sop: number | { id: number } } | [sop: number | { id: numbe
  * @see app/Http/Controllers/Sop/SopController.php:60
  * @route '/sop/{sop}/isisop'
  */
-store.put = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+store.put = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: store.url(args, options),
     method: 'put',
 })
-
-    /**
-* @see \App\Http\Controllers\Sop\SopController::store
- * @see app/Http/Controllers/Sop/SopController.php:60
- * @route '/sop/{sop}/isisop'
- */
-    const storeForm = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: store.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'PUT',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Sop\SopController::store
- * @see app/Http/Controllers/Sop/SopController.php:60
- * @route '/sop/{sop}/isisop'
- */
-        storeForm.put = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: store.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PUT',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    store.form = storeForm
 const isi = {
     store: Object.assign(store, store),
 }

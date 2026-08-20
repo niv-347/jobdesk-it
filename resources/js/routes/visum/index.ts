@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\VisumController::index
  * @see app/Http/Controllers/VisumController.php:15
@@ -42,41 +42,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\VisumController::index
- * @see app/Http/Controllers/VisumController.php:15
- * @route '/visum'
- */
-    const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: index.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\VisumController::index
- * @see app/Http/Controllers/VisumController.php:15
- * @route '/visum'
- */
-        indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: index.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\VisumController::index
- * @see app/Http/Controllers/VisumController.php:15
- * @route '/visum'
- */
-        indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: index.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    index.form = indexForm
 /**
 * @see \App\Http\Controllers\VisumController::store
  * @see app/Http/Controllers/VisumController.php:64
@@ -111,33 +76,12 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     method: 'post',
 })
 
-    /**
-* @see \App\Http\Controllers\VisumController::store
- * @see app/Http/Controllers/VisumController.php:64
- * @route '/visum'
- */
-    const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: store.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\VisumController::store
- * @see app/Http/Controllers/VisumController.php:64
- * @route '/visum'
- */
-        storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: store.url(options),
-            method: 'post',
-        })
-    
-    store.form = storeForm
 /**
 * @see \App\Http\Controllers\VisumController::update
  * @see app/Http/Controllers/VisumController.php:89
  * @route '/visum/{visum}'
  */
-export const update = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { visum: string | number | { id: string | number } } | [visum: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -152,7 +96,7 @@ update.definition = {
  * @see app/Http/Controllers/VisumController.php:89
  * @route '/visum/{visum}'
  */
-update.url = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { visum: string | number | { id: string | number } } | [visum: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { visum: args }
     }
@@ -185,48 +129,17 @@ update.url = (args: { visum: number | { id: number } } | [visum: number | { id: 
  * @see app/Http/Controllers/VisumController.php:89
  * @route '/visum/{visum}'
  */
-update.put = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { visum: string | number | { id: string | number } } | [visum: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
 
-    /**
-* @see \App\Http\Controllers\VisumController::update
- * @see app/Http/Controllers/VisumController.php:89
- * @route '/visum/{visum}'
- */
-    const updateForm = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: update.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'PUT',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\VisumController::update
- * @see app/Http/Controllers/VisumController.php:89
- * @route '/visum/{visum}'
- */
-        updateForm.put = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: update.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PUT',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    update.form = updateForm
 /**
 * @see \App\Http\Controllers\VisumController::destroy
  * @see app/Http/Controllers/VisumController.php:120
  * @route '/visum/{visum}'
  */
-export const destroy = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { visum: string | number | { id: string | number } } | [visum: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -241,7 +154,7 @@ destroy.definition = {
  * @see app/Http/Controllers/VisumController.php:120
  * @route '/visum/{visum}'
  */
-destroy.url = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { visum: string | number | { id: string | number } } | [visum: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { visum: args }
     }
@@ -274,42 +187,11 @@ destroy.url = (args: { visum: number | { id: number } } | [visum: number | { id:
  * @see app/Http/Controllers/VisumController.php:120
  * @route '/visum/{visum}'
  */
-destroy.delete = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { visum: string | number | { id: string | number } } | [visum: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
 
-    /**
-* @see \App\Http\Controllers\VisumController::destroy
- * @see app/Http/Controllers/VisumController.php:120
- * @route '/visum/{visum}'
- */
-    const destroyForm = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: destroy.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'DELETE',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\VisumController::destroy
- * @see app/Http/Controllers/VisumController.php:120
- * @route '/visum/{visum}'
- */
-        destroyForm.delete = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: destroy.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'DELETE',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    destroy.form = destroyForm
 /**
 * @see \App\Http\Controllers\VisumController::cetak
  * @see app/Http/Controllers/VisumController.php:135
@@ -352,42 +234,6 @@ cetak.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: cetak.url(options),
     method: 'head',
 })
-
-    /**
-* @see \App\Http\Controllers\VisumController::cetak
- * @see app/Http/Controllers/VisumController.php:135
- * @route '/visum/cetak'
- */
-    const cetakForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: cetak.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\VisumController::cetak
- * @see app/Http/Controllers/VisumController.php:135
- * @route '/visum/cetak'
- */
-        cetakForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: cetak.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\VisumController::cetak
- * @see app/Http/Controllers/VisumController.php:135
- * @route '/visum/cetak'
- */
-        cetakForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: cetak.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    cetak.form = cetakForm
 const visum = {
     index: Object.assign(index, index),
 store: Object.assign(store, store),

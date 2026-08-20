@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\RadiologiShareController::pdf
  * @see app/Http/Controllers/RadiologiShareController.php:79
@@ -61,41 +61,6 @@ pdf.head = (args: { radiologi: string | number } | [radiologi: string | number ]
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\RadiologiShareController::pdf
- * @see app/Http/Controllers/RadiologiShareController.php:79
- * @route '/radiologi/hasil/{radiologi}/pdf'
- */
-    const pdfForm = (args: { radiologi: string | number } | [radiologi: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: pdf.url(args, options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::pdf
- * @see app/Http/Controllers/RadiologiShareController.php:79
- * @route '/radiologi/hasil/{radiologi}/pdf'
- */
-        pdfForm.get = (args: { radiologi: string | number } | [radiologi: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: pdf.url(args, options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::pdf
- * @see app/Http/Controllers/RadiologiShareController.php:79
- * @route '/radiologi/hasil/{radiologi}/pdf'
- */
-        pdfForm.head = (args: { radiologi: string | number } | [radiologi: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: pdf.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    pdf.form = pdfForm
 /**
 * @see \App\Http\Controllers\RadiologiShareController::foto
  * @see app/Http/Controllers/RadiologiShareController.php:93
@@ -157,42 +122,6 @@ foto.head = (args: { radiologi: string | number } | [radiologi: string | number 
     url: foto.url(args, options),
     method: 'head',
 })
-
-    /**
-* @see \App\Http\Controllers\RadiologiShareController::foto
- * @see app/Http/Controllers/RadiologiShareController.php:93
- * @route '/radiologi/hasil/{radiologi}/foto'
- */
-    const fotoForm = (args: { radiologi: string | number } | [radiologi: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: foto.url(args, options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::foto
- * @see app/Http/Controllers/RadiologiShareController.php:93
- * @route '/radiologi/hasil/{radiologi}/foto'
- */
-        fotoForm.get = (args: { radiologi: string | number } | [radiologi: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: foto.url(args, options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::foto
- * @see app/Http/Controllers/RadiologiShareController.php:93
- * @route '/radiologi/hasil/{radiologi}/foto'
- */
-        fotoForm.head = (args: { radiologi: string | number } | [radiologi: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: foto.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    foto.form = fotoForm
 const hasil = {
     pdf: Object.assign(pdf, pdf),
 foto: Object.assign(foto, foto),

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\RadiologiShareController::index
  * @see app/Http/Controllers/RadiologiShareController.php:19
@@ -42,41 +42,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\RadiologiShareController::index
- * @see app/Http/Controllers/RadiologiShareController.php:19
- * @route '/radiologi/share'
- */
-    const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: index.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::index
- * @see app/Http/Controllers/RadiologiShareController.php:19
- * @route '/radiologi/share'
- */
-        indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: index.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::index
- * @see app/Http/Controllers/RadiologiShareController.php:19
- * @route '/radiologi/share'
- */
-        indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: index.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    index.form = indexForm
 /**
 * @see \App\Http\Controllers\RadiologiShareController::showVerify
  * @see app/Http/Controllers/RadiologiShareController.php:44
@@ -120,41 +85,6 @@ showVerify.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\RadiologiShareController::showVerify
- * @see app/Http/Controllers/RadiologiShareController.php:44
- * @route '/radiologi/verify'
- */
-    const showVerifyForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: showVerify.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::showVerify
- * @see app/Http/Controllers/RadiologiShareController.php:44
- * @route '/radiologi/verify'
- */
-        showVerifyForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: showVerify.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::showVerify
- * @see app/Http/Controllers/RadiologiShareController.php:44
- * @route '/radiologi/verify'
- */
-        showVerifyForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: showVerify.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    showVerify.form = showVerifyForm
 /**
 * @see \App\Http\Controllers\RadiologiShareController::verify
  * @see app/Http/Controllers/RadiologiShareController.php:49
@@ -189,27 +119,6 @@ verify.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     method: 'post',
 })
 
-    /**
-* @see \App\Http\Controllers\RadiologiShareController::verify
- * @see app/Http/Controllers/RadiologiShareController.php:49
- * @route '/radiologi/verify'
- */
-    const verifyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: verify.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::verify
- * @see app/Http/Controllers/RadiologiShareController.php:49
- * @route '/radiologi/verify'
- */
-        verifyForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: verify.url(options),
-            method: 'post',
-        })
-    
-    verify.form = verifyForm
 /**
 * @see \App\Http\Controllers\RadiologiShareController::downloadPdf
  * @see app/Http/Controllers/RadiologiShareController.php:79
@@ -272,41 +181,6 @@ downloadPdf.head = (args: { radiologi: string | number } | [radiologi: string | 
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\RadiologiShareController::downloadPdf
- * @see app/Http/Controllers/RadiologiShareController.php:79
- * @route '/radiologi/hasil/{radiologi}/pdf'
- */
-    const downloadPdfForm = (args: { radiologi: string | number } | [radiologi: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: downloadPdf.url(args, options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::downloadPdf
- * @see app/Http/Controllers/RadiologiShareController.php:79
- * @route '/radiologi/hasil/{radiologi}/pdf'
- */
-        downloadPdfForm.get = (args: { radiologi: string | number } | [radiologi: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: downloadPdf.url(args, options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::downloadPdf
- * @see app/Http/Controllers/RadiologiShareController.php:79
- * @route '/radiologi/hasil/{radiologi}/pdf'
- */
-        downloadPdfForm.head = (args: { radiologi: string | number } | [radiologi: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: downloadPdf.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    downloadPdf.form = downloadPdfForm
 /**
 * @see \App\Http\Controllers\RadiologiShareController::downloadFoto
  * @see app/Http/Controllers/RadiologiShareController.php:93
@@ -368,42 +242,6 @@ downloadFoto.head = (args: { radiologi: string | number } | [radiologi: string |
     url: downloadFoto.url(args, options),
     method: 'head',
 })
-
-    /**
-* @see \App\Http\Controllers\RadiologiShareController::downloadFoto
- * @see app/Http/Controllers/RadiologiShareController.php:93
- * @route '/radiologi/hasil/{radiologi}/foto'
- */
-    const downloadFotoForm = (args: { radiologi: string | number } | [radiologi: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: downloadFoto.url(args, options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::downloadFoto
- * @see app/Http/Controllers/RadiologiShareController.php:93
- * @route '/radiologi/hasil/{radiologi}/foto'
- */
-        downloadFotoForm.get = (args: { radiologi: string | number } | [radiologi: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: downloadFoto.url(args, options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\RadiologiShareController::downloadFoto
- * @see app/Http/Controllers/RadiologiShareController.php:93
- * @route '/radiologi/hasil/{radiologi}/foto'
- */
-        downloadFotoForm.head = (args: { radiologi: string | number } | [radiologi: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: downloadFoto.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    downloadFoto.form = downloadFotoForm
 const RadiologiShareController = { index, showVerify, verify, downloadPdf, downloadFoto }
 
 export default RadiologiShareController

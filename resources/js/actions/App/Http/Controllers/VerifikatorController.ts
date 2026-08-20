@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\VerifikatorController::verifSop
  * @see app/Http/Controllers/VerifikatorController.php:12
@@ -42,47 +42,12 @@ verifSop.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\VerifikatorController::verifSop
- * @see app/Http/Controllers/VerifikatorController.php:12
- * @route '/verifikator/verifsop'
- */
-    const verifSopForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: verifSop.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\VerifikatorController::verifSop
- * @see app/Http/Controllers/VerifikatorController.php:12
- * @route '/verifikator/verifsop'
- */
-        verifSopForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: verifSop.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\VerifikatorController::verifSop
- * @see app/Http/Controllers/VerifikatorController.php:12
- * @route '/verifikator/verifsop'
- */
-        verifSopForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: verifSop.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    verifSop.form = verifSopForm
 /**
 * @see \App\Http\Controllers\VerifikatorController::approve
  * @see app/Http/Controllers/VerifikatorController.php:38
  * @route '/verifikator/verifsop/{sop}/approve'
  */
-export const approve = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const approve = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve.url(args, options),
     method: 'post',
 })
@@ -97,7 +62,7 @@ approve.definition = {
  * @see app/Http/Controllers/VerifikatorController.php:38
  * @route '/verifikator/verifsop/{sop}/approve'
  */
-approve.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+approve.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -130,38 +95,17 @@ approve.url = (args: { sop: number | { id: number } } | [sop: number | { id: num
  * @see app/Http/Controllers/VerifikatorController.php:38
  * @route '/verifikator/verifsop/{sop}/approve'
  */
-approve.post = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+approve.post = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve.url(args, options),
     method: 'post',
 })
 
-    /**
-* @see \App\Http\Controllers\VerifikatorController::approve
- * @see app/Http/Controllers/VerifikatorController.php:38
- * @route '/verifikator/verifsop/{sop}/approve'
- */
-    const approveForm = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: approve.url(args, options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\VerifikatorController::approve
- * @see app/Http/Controllers/VerifikatorController.php:38
- * @route '/verifikator/verifsop/{sop}/approve'
- */
-        approveForm.post = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: approve.url(args, options),
-            method: 'post',
-        })
-    
-    approve.form = approveForm
 /**
 * @see \App\Http\Controllers\VerifikatorController::reject
  * @see app/Http/Controllers/VerifikatorController.php:49
  * @route '/verifikator/verifsop/{sop}/reject'
  */
-export const reject = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const reject = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: reject.url(args, options),
     method: 'post',
 })
@@ -176,7 +120,7 @@ reject.definition = {
  * @see app/Http/Controllers/VerifikatorController.php:49
  * @route '/verifikator/verifsop/{sop}/reject'
  */
-reject.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+reject.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -209,38 +153,17 @@ reject.url = (args: { sop: number | { id: number } } | [sop: number | { id: numb
  * @see app/Http/Controllers/VerifikatorController.php:49
  * @route '/verifikator/verifsop/{sop}/reject'
  */
-reject.post = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+reject.post = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: reject.url(args, options),
     method: 'post',
 })
 
-    /**
-* @see \App\Http\Controllers\VerifikatorController::reject
- * @see app/Http/Controllers/VerifikatorController.php:49
- * @route '/verifikator/verifsop/{sop}/reject'
- */
-    const rejectForm = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: reject.url(args, options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\VerifikatorController::reject
- * @see app/Http/Controllers/VerifikatorController.php:49
- * @route '/verifikator/verifsop/{sop}/reject'
- */
-        rejectForm.post = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: reject.url(args, options),
-            method: 'post',
-        })
-    
-    reject.form = rejectForm
 /**
 * @see \App\Http\Controllers\VerifikatorController::prosesSop
  * @see app/Http/Controllers/VerifikatorController.php:60
  * @route '/verifikator/prosessop/{sop}'
  */
-export const prosesSop = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const prosesSop = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: prosesSop.url(args, options),
     method: 'get',
 })
@@ -255,7 +178,7 @@ prosesSop.definition = {
  * @see app/Http/Controllers/VerifikatorController.php:60
  * @route '/verifikator/prosessop/{sop}'
  */
-prosesSop.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+prosesSop.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -288,7 +211,7 @@ prosesSop.url = (args: { sop: number | { id: number } } | [sop: number | { id: n
  * @see app/Http/Controllers/VerifikatorController.php:60
  * @route '/verifikator/prosessop/{sop}'
  */
-prosesSop.get = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+prosesSop.get = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: prosesSop.url(args, options),
     method: 'get',
 })
@@ -297,46 +220,10 @@ prosesSop.get = (args: { sop: number | { id: number } } | [sop: number | { id: n
  * @see app/Http/Controllers/VerifikatorController.php:60
  * @route '/verifikator/prosessop/{sop}'
  */
-prosesSop.head = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+prosesSop.head = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: prosesSop.url(args, options),
     method: 'head',
 })
-
-    /**
-* @see \App\Http\Controllers\VerifikatorController::prosesSop
- * @see app/Http/Controllers/VerifikatorController.php:60
- * @route '/verifikator/prosessop/{sop}'
- */
-    const prosesSopForm = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: prosesSop.url(args, options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\VerifikatorController::prosesSop
- * @see app/Http/Controllers/VerifikatorController.php:60
- * @route '/verifikator/prosessop/{sop}'
- */
-        prosesSopForm.get = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: prosesSop.url(args, options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\VerifikatorController::prosesSop
- * @see app/Http/Controllers/VerifikatorController.php:60
- * @route '/verifikator/prosessop/{sop}'
- */
-        prosesSopForm.head = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: prosesSop.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    prosesSop.form = prosesSopForm
 const VerifikatorController = { verifSop, approve, reject, prosesSop }
 
 export default VerifikatorController
