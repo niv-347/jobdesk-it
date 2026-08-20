@@ -5,7 +5,7 @@
   "buildCommand": "npm run build",
   "installCommand": "npm install",
   "env": {
-    "PHP_VERSION": "8.4.0"
+    "PHP_VERSION": "8.5.0"
   },
   "functions": {
     "api/index.php": {
