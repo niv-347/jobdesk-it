@@ -1,10 +1,9 @@
 import inertia from '@inertiajs/vite';
-//import { wayfinder } from '@laravel/vite-plugin-wayfinder';
-import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
 import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
     plugins: [
@@ -17,7 +16,6 @@ export default defineConfig({
                 }),
             ],
         }),
-
         inertia(),
         react({
             babel: {
@@ -25,12 +23,9 @@ export default defineConfig({
             },
         }),
         tailwindcss(),
-
-        // Hanya masukkan plugin Wayfinder jika BUKAN di environment Vercel
-        // ...(process.env.VERCEL ? [] : [
-        //     wayfinder({
-        //         formVariants: true,
-        //     })
-        //]),
     ],
+    // Mengoptimalkan pemrosesan modul agar build serverless di Vercel lebih stabil
+    build: {
+        chunkSizeWarningLimit: 1000,
+    },
 });
