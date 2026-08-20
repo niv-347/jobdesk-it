@@ -26,9 +26,11 @@ export default defineConfig({
         }),
         tailwindcss(),
 
-        // Matikan wayfinder HANYA saat diproses oleh Vercel
-        !process.env.VERCEL && wayfinder({
-            formVariants: true,
-        }),
-    ].filter(Boolean),
+        // Hanya masukkan plugin Wayfinder jika BUKAN di environment Vercel
+        ...(process.env.VERCEL ? [] : [
+            wayfinder({
+                formVariants: true,
+            })
+        ]),
+    ],
 });
