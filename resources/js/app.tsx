@@ -10,6 +10,7 @@ import SettingsLayout from '@/layouts/settings/layout';
 
 function FlashToastListener() {
     useFlashToast();
+
     return null;
 }
 
