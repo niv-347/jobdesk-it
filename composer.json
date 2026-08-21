@@ -16,8 +16,8 @@
         "laravel/fortify": "^1.37.2",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
-        "laravel/wayfinder": "^0.1.14",
-        "symfony/http-foundation": "^6.4"
+        "laravel/wayfinder": "^0.1.14"
+
 
     },
     "require-dev": {
@@ -116,7 +116,7 @@
             "php-http/discovery": true
         },
         "platform": {
-            "php": "8.1.0"
+            "php": "8.4.1"
         }
     },
     "minimum-stability": "stable",
