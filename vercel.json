@@ -5,11 +5,11 @@
   "buildCommand": "npm run build",
   "installCommand": "npm install",
   "env": {
-    "PHP_VERSION": "8.4"
+    "PHP_VERSION": "8.3"
   },
   "functions": {
     "api/index.php": {
-      "runtime": "vercel-php@0.8.4"
+      "runtime": "vercel-php@0.7.2"
     }
   },
   "routes": [
