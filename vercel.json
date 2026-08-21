@@ -2,10 +2,10 @@
   "version": 2,
   "framework": null,
   "outputDirectory": "public",
-  "buildCommand": "npm run build",
+  "buildCommand": "composer install --no-dev --optimize-autoloader && npm run build",
   "installCommand": "npm install",
   "env": {
-    "PHP_VERSION": "8.2.0"
+    "PHP_VERSION": "8.5"
   },
   "functions": {
     "api/index.php": {
@@ -14,16 +14,7 @@
   },
   "routes": [
     {
-      "src": "/build/(.*)",
-      "dest": "/build/$1"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "/favicon.ico"
-    },
-    {
-      "src": "/robots.txt",
-      "dest": "/robots.txt"
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
