@@ -47,7 +47,7 @@ verifSop.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
  * @see app/Http/Controllers/VerifikatorController.php:38
  * @route '/verifikator/verifsop/{sop}/approve'
  */
-export const approve = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const approve = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve.url(args, options),
     method: 'post',
 })
@@ -62,7 +62,7 @@ approve.definition = {
  * @see app/Http/Controllers/VerifikatorController.php:38
  * @route '/verifikator/verifsop/{sop}/approve'
  */
-approve.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+approve.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -95,7 +95,7 @@ approve.url = (args: { sop: string | number | { id: string | number } } | [sop: 
  * @see app/Http/Controllers/VerifikatorController.php:38
  * @route '/verifikator/verifsop/{sop}/approve'
  */
-approve.post = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+approve.post = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve.url(args, options),
     method: 'post',
 })
@@ -105,7 +105,7 @@ approve.post = (args: { sop: string | number | { id: string | number } } | [sop:
  * @see app/Http/Controllers/VerifikatorController.php:49
  * @route '/verifikator/verifsop/{sop}/reject'
  */
-export const reject = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const reject = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: reject.url(args, options),
     method: 'post',
 })
@@ -120,7 +120,7 @@ reject.definition = {
  * @see app/Http/Controllers/VerifikatorController.php:49
  * @route '/verifikator/verifsop/{sop}/reject'
  */
-reject.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+reject.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -153,7 +153,7 @@ reject.url = (args: { sop: string | number | { id: string | number } } | [sop: s
  * @see app/Http/Controllers/VerifikatorController.php:49
  * @route '/verifikator/verifsop/{sop}/reject'
  */
-reject.post = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+reject.post = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: reject.url(args, options),
     method: 'post',
 })
@@ -163,7 +163,7 @@ reject.post = (args: { sop: string | number | { id: string | number } } | [sop: 
  * @see app/Http/Controllers/VerifikatorController.php:60
  * @route '/verifikator/prosessop/{sop}'
  */
-export const prosesSop = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const prosesSop = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: prosesSop.url(args, options),
     method: 'get',
 })
@@ -178,7 +178,7 @@ prosesSop.definition = {
  * @see app/Http/Controllers/VerifikatorController.php:60
  * @route '/verifikator/prosessop/{sop}'
  */
-prosesSop.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+prosesSop.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -211,7 +211,7 @@ prosesSop.url = (args: { sop: string | number | { id: string | number } } | [sop
  * @see app/Http/Controllers/VerifikatorController.php:60
  * @route '/verifikator/prosessop/{sop}'
  */
-prosesSop.get = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+prosesSop.get = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: prosesSop.url(args, options),
     method: 'get',
 })
@@ -220,7 +220,7 @@ prosesSop.get = (args: { sop: string | number | { id: string | number } } | [sop
  * @see app/Http/Controllers/VerifikatorController.php:60
  * @route '/verifikator/prosessop/{sop}'
  */
-prosesSop.head = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+prosesSop.head = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: prosesSop.url(args, options),
     method: 'head',
 })

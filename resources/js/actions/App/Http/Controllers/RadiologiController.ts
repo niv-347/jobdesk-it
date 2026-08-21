@@ -81,7 +81,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/RadiologiController.php:79
  * @route '/radiologi/ekpertise/{radiologi}'
  */
-export const update = (args: { radiologi: string | number | { id: string | number } } | [radiologi: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -96,7 +96,7 @@ update.definition = {
  * @see app/Http/Controllers/RadiologiController.php:79
  * @route '/radiologi/ekpertise/{radiologi}'
  */
-update.url = (args: { radiologi: string | number | { id: string | number } } | [radiologi: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { radiologi: args }
     }
@@ -129,7 +129,7 @@ update.url = (args: { radiologi: string | number | { id: string | number } } | [
  * @see app/Http/Controllers/RadiologiController.php:79
  * @route '/radiologi/ekpertise/{radiologi}'
  */
-update.put = (args: { radiologi: string | number | { id: string | number } } | [radiologi: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -139,7 +139,7 @@ update.put = (args: { radiologi: string | number | { id: string | number } } | [
  * @see app/Http/Controllers/RadiologiController.php:126
  * @route '/radiologi/ekpertise/{radiologi}'
  */
-export const destroy = (args: { radiologi: string | number | { id: string | number } } | [radiologi: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -154,7 +154,7 @@ destroy.definition = {
  * @see app/Http/Controllers/RadiologiController.php:126
  * @route '/radiologi/ekpertise/{radiologi}'
  */
-destroy.url = (args: { radiologi: string | number | { id: string | number } } | [radiologi: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { radiologi: args }
     }
@@ -187,7 +187,7 @@ destroy.url = (args: { radiologi: string | number | { id: string | number } } | 
  * @see app/Http/Controllers/RadiologiController.php:126
  * @route '/radiologi/ekpertise/{radiologi}'
  */
-destroy.delete = (args: { radiologi: string | number | { id: string | number } } | [radiologi: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { radiologi: number | { id: number } } | [radiologi: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })

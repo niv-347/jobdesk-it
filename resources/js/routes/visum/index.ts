@@ -81,7 +81,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/VisumController.php:89
  * @route '/visum/{visum}'
  */
-export const update = (args: { visum: string | number | { id: string | number } } | [visum: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -96,7 +96,7 @@ update.definition = {
  * @see app/Http/Controllers/VisumController.php:89
  * @route '/visum/{visum}'
  */
-update.url = (args: { visum: string | number | { id: string | number } } | [visum: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { visum: args }
     }
@@ -129,7 +129,7 @@ update.url = (args: { visum: string | number | { id: string | number } } | [visu
  * @see app/Http/Controllers/VisumController.php:89
  * @route '/visum/{visum}'
  */
-update.put = (args: { visum: string | number | { id: string | number } } | [visum: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -139,7 +139,7 @@ update.put = (args: { visum: string | number | { id: string | number } } | [visu
  * @see app/Http/Controllers/VisumController.php:120
  * @route '/visum/{visum}'
  */
-export const destroy = (args: { visum: string | number | { id: string | number } } | [visum: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -154,7 +154,7 @@ destroy.definition = {
  * @see app/Http/Controllers/VisumController.php:120
  * @route '/visum/{visum}'
  */
-destroy.url = (args: { visum: string | number | { id: string | number } } | [visum: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { visum: args }
     }
@@ -187,7 +187,7 @@ destroy.url = (args: { visum: string | number | { id: string | number } } | [vis
  * @see app/Http/Controllers/VisumController.php:120
  * @route '/visum/{visum}'
  */
-destroy.delete = (args: { visum: string | number | { id: string | number } } | [visum: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { visum: number | { id: number } } | [visum: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })

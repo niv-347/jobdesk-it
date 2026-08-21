@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Troubleshoot;
 use App\Http\Controllers\Controller;
 use App\Models\Troubleshoot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class TroubleshootController extends Controller
@@ -112,7 +113,7 @@ class TroubleshootController extends Controller
      */
     public function cetak(Troubleshoot $troubleshoot)
     {
-        return Inertia::render('Troubleshoot/Cetak', [
+        return Inertia::render('troubleshoot/Cetak', [
             'troubleshoot' => $troubleshoot,
         ]);
     }
@@ -128,7 +129,7 @@ class TroubleshootController extends Controller
         $timeline[] = [
             'aksi' => $request->aksi,
             'catatan' => $request->catatan,
-            'user' => auth()->user()?->name ?? 'System',
+            'user' => Auth::user()?->name ?? 'System',
             'timestamp' => now()->toDateTimeString(),
         ];
 

@@ -167,7 +167,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
  * @route '/troubleshoot/{troubleshoot}/edit'
  */
-export const edit = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const edit = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -182,7 +182,7 @@ edit.definition = {
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
  * @route '/troubleshoot/{troubleshoot}/edit'
  */
-edit.url = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+edit.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { troubleshoot: args }
     }
@@ -215,7 +215,7 @@ edit.url = (args: { troubleshoot: string | number | { id: string | number } } | 
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
  * @route '/troubleshoot/{troubleshoot}/edit'
  */
-edit.get = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+edit.get = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(args, options),
     method: 'get',
 })
@@ -224,7 +224,7 @@ edit.get = (args: { troubleshoot: string | number | { id: string | number } } | 
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
  * @route '/troubleshoot/{troubleshoot}/edit'
  */
-edit.head = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+edit.head = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(args, options),
     method: 'head',
 })
@@ -234,7 +234,7 @@ edit.head = (args: { troubleshoot: string | number | { id: string | number } } |
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
  * @route '/troubleshoot/{troubleshoot}/cetak'
  */
-export const cetak = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const cetak = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: cetak.url(args, options),
     method: 'get',
 })
@@ -249,7 +249,7 @@ cetak.definition = {
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
  * @route '/troubleshoot/{troubleshoot}/cetak'
  */
-cetak.url = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+cetak.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { troubleshoot: args }
     }
@@ -282,7 +282,7 @@ cetak.url = (args: { troubleshoot: string | number | { id: string | number } } |
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
  * @route '/troubleshoot/{troubleshoot}/cetak'
  */
-cetak.get = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+cetak.get = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: cetak.url(args, options),
     method: 'get',
 })
@@ -291,7 +291,7 @@ cetak.get = (args: { troubleshoot: string | number | { id: string | number } } |
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
  * @route '/troubleshoot/{troubleshoot}/cetak'
  */
-cetak.head = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+cetak.head = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: cetak.url(args, options),
     method: 'head',
 })
@@ -301,7 +301,7 @@ cetak.head = (args: { troubleshoot: string | number | { id: string | number } } 
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:80
  * @route '/troubleshoot/{troubleshoot}'
  */
-export const update = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -316,7 +316,7 @@ update.definition = {
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:80
  * @route '/troubleshoot/{troubleshoot}'
  */
-update.url = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { troubleshoot: args }
     }
@@ -349,7 +349,7 @@ update.url = (args: { troubleshoot: string | number | { id: string | number } } 
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:80
  * @route '/troubleshoot/{troubleshoot}'
  */
-update.put = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -359,7 +359,7 @@ update.put = (args: { troubleshoot: string | number | { id: string | number } } 
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:103
  * @route '/troubleshoot/{troubleshoot}'
  */
-export const destroy = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -374,7 +374,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:103
  * @route '/troubleshoot/{troubleshoot}'
  */
-destroy.url = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { troubleshoot: args }
     }
@@ -407,7 +407,7 @@ destroy.url = (args: { troubleshoot: string | number | { id: string | number } }
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:103
  * @route '/troubleshoot/{troubleshoot}'
  */
-destroy.delete = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -417,7 +417,7 @@ destroy.delete = (args: { troubleshoot: string | number | { id: string | number 
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:120
  * @route '/troubleshoot/{troubleshoot}/timeline'
  */
-export const timeline = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const timeline = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: timeline.url(args, options),
     method: 'post',
 })
@@ -432,7 +432,7 @@ timeline.definition = {
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:120
  * @route '/troubleshoot/{troubleshoot}/timeline'
  */
-timeline.url = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+timeline.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { troubleshoot: args }
     }
@@ -465,7 +465,7 @@ timeline.url = (args: { troubleshoot: string | number | { id: string | number } 
  * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:120
  * @route '/troubleshoot/{troubleshoot}/timeline'
  */
-timeline.post = (args: { troubleshoot: string | number | { id: string | number } } | [troubleshoot: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+timeline.post = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: timeline.url(args, options),
     method: 'post',
 })

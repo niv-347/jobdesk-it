@@ -2,7 +2,7 @@
   "version": 2,
   "framework": null,
   "outputDirectory": "public",
-  "buildCommand": "npm run build",
+  "buildCommand": "php artisan route:clear && php artisan wayfinder:generate && npm run build",
   "installCommand": "npm install",
   "functions": {
     "api/index.php": {

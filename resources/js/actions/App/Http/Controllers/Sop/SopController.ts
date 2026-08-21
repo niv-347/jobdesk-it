@@ -134,7 +134,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/Sop/SopController.php:135
  * @route '/sop/{sop}/isisop'
  */
-export const isiSop = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const isiSop = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: isiSop.url(args, options),
     method: 'get',
 })
@@ -149,7 +149,7 @@ isiSop.definition = {
  * @see app/Http/Controllers/Sop/SopController.php:135
  * @route '/sop/{sop}/isisop'
  */
-isiSop.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+isiSop.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -182,7 +182,7 @@ isiSop.url = (args: { sop: string | number | { id: string | number } } | [sop: s
  * @see app/Http/Controllers/Sop/SopController.php:135
  * @route '/sop/{sop}/isisop'
  */
-isiSop.get = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+isiSop.get = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: isiSop.url(args, options),
     method: 'get',
 })
@@ -191,7 +191,7 @@ isiSop.get = (args: { sop: string | number | { id: string | number } } | [sop: s
  * @see app/Http/Controllers/Sop/SopController.php:135
  * @route '/sop/{sop}/isisop'
  */
-isiSop.head = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+isiSop.head = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: isiSop.url(args, options),
     method: 'head',
 })
@@ -201,7 +201,7 @@ isiSop.head = (args: { sop: string | number | { id: string | number } } | [sop: 
  * @see app/Http/Controllers/Sop/SopController.php:60
  * @route '/sop/{sop}/isisop'
  */
-export const storeIsi = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const storeIsi = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: storeIsi.url(args, options),
     method: 'put',
 })
@@ -216,7 +216,7 @@ storeIsi.definition = {
  * @see app/Http/Controllers/Sop/SopController.php:60
  * @route '/sop/{sop}/isisop'
  */
-storeIsi.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+storeIsi.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -249,7 +249,7 @@ storeIsi.url = (args: { sop: string | number | { id: string | number } } | [sop:
  * @see app/Http/Controllers/Sop/SopController.php:60
  * @route '/sop/{sop}/isisop'
  */
-storeIsi.put = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+storeIsi.put = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: storeIsi.url(args, options),
     method: 'put',
 })
@@ -259,7 +259,7 @@ storeIsi.put = (args: { sop: string | number | { id: string | number } } | [sop:
  * @see app/Http/Controllers/Sop/SopController.php:141
  * @route '/sop/{sop}/cetak'
  */
-export const cetakSop = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const cetakSop = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: cetakSop.url(args, options),
     method: 'get',
 })
@@ -274,7 +274,7 @@ cetakSop.definition = {
  * @see app/Http/Controllers/Sop/SopController.php:141
  * @route '/sop/{sop}/cetak'
  */
-cetakSop.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+cetakSop.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -307,7 +307,7 @@ cetakSop.url = (args: { sop: string | number | { id: string | number } } | [sop:
  * @see app/Http/Controllers/Sop/SopController.php:141
  * @route '/sop/{sop}/cetak'
  */
-cetakSop.get = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+cetakSop.get = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: cetakSop.url(args, options),
     method: 'get',
 })
@@ -316,7 +316,7 @@ cetakSop.get = (args: { sop: string | number | { id: string | number } } | [sop:
  * @see app/Http/Controllers/Sop/SopController.php:141
  * @route '/sop/{sop}/cetak'
  */
-cetakSop.head = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+cetakSop.head = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: cetakSop.url(args, options),
     method: 'head',
 })
@@ -326,7 +326,7 @@ cetakSop.head = (args: { sop: string | number | { id: string | number } } | [sop
  * @see app/Http/Controllers/Sop/SopController.php:83
  * @route '/sop/{sop}'
  */
-export const update = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -341,7 +341,7 @@ update.definition = {
  * @see app/Http/Controllers/Sop/SopController.php:83
  * @route '/sop/{sop}'
  */
-update.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+update.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -374,7 +374,7 @@ update.url = (args: { sop: string | number | { id: string | number } } | [sop: s
  * @see app/Http/Controllers/Sop/SopController.php:83
  * @route '/sop/{sop}'
  */
-update.put = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -384,7 +384,7 @@ update.put = (args: { sop: string | number | { id: string | number } } | [sop: s
  * @see app/Http/Controllers/Sop/SopController.php:102
  * @route '/sop/{sop}'
  */
-export const destroy = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+export const destroy = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -399,7 +399,7 @@ destroy.definition = {
  * @see app/Http/Controllers/Sop/SopController.php:102
  * @route '/sop/{sop}'
  */
-destroy.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+destroy.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -432,7 +432,7 @@ destroy.url = (args: { sop: string | number | { id: string | number } } | [sop: 
  * @see app/Http/Controllers/Sop/SopController.php:102
  * @route '/sop/{sop}'
  */
-destroy.delete = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+destroy.delete = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
@@ -442,7 +442,7 @@ destroy.delete = (args: { sop: string | number | { id: string | number } } | [so
  * @see app/Http/Controllers/Sop/SopController.php:113
  * @route '/sop/{sop}/approve'
  */
-export const approve = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const approve = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve.url(args, options),
     method: 'post',
 })
@@ -457,7 +457,7 @@ approve.definition = {
  * @see app/Http/Controllers/Sop/SopController.php:113
  * @route '/sop/{sop}/approve'
  */
-approve.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+approve.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -490,7 +490,7 @@ approve.url = (args: { sop: string | number | { id: string | number } } | [sop: 
  * @see app/Http/Controllers/Sop/SopController.php:113
  * @route '/sop/{sop}/approve'
  */
-approve.post = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+approve.post = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve.url(args, options),
     method: 'post',
 })
@@ -500,7 +500,7 @@ approve.post = (args: { sop: string | number | { id: string | number } } | [sop:
  * @see app/Http/Controllers/Sop/SopController.php:124
  * @route '/sop/{sop}/reject'
  */
-export const reject = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const reject = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: reject.url(args, options),
     method: 'post',
 })
@@ -515,7 +515,7 @@ reject.definition = {
  * @see app/Http/Controllers/Sop/SopController.php:124
  * @route '/sop/{sop}/reject'
  */
-reject.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+reject.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -548,7 +548,7 @@ reject.url = (args: { sop: string | number | { id: string | number } } | [sop: s
  * @see app/Http/Controllers/Sop/SopController.php:124
  * @route '/sop/{sop}/reject'
  */
-reject.post = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+reject.post = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: reject.url(args, options),
     method: 'post',
 })

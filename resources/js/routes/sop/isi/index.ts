@@ -4,7 +4,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefa
  * @see app/Http/Controllers/Sop/SopController.php:60
  * @route '/sop/{sop}/isisop'
  */
-export const store = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const store = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: store.url(args, options),
     method: 'put',
 })
@@ -19,7 +19,7 @@ store.definition = {
  * @see app/Http/Controllers/Sop/SopController.php:60
  * @route '/sop/{sop}/isisop'
  */
-store.url = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+store.url = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { sop: args }
     }
@@ -52,7 +52,7 @@ store.url = (args: { sop: string | number | { id: string | number } } | [sop: st
  * @see app/Http/Controllers/Sop/SopController.php:60
  * @route '/sop/{sop}/isisop'
  */
-store.put = (args: { sop: string | number | { id: string | number } } | [sop: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+store.put = (args: { sop: number | { id: number } } | [sop: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: store.url(args, options),
     method: 'put',
 })
