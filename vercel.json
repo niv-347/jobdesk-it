@@ -1,21 +1,16 @@
 {
   "version": 2,
   "framework": null,
-  "outputDirectory": "public",
-  "buildCommand": "composer install --no-dev --optimize-autoloader && npm run build",
-  "installCommand": "npm install",
-  "env": {
-    "PHP_VERSION": "8.5"
+  "docker": {
+    "dockerfile": "Dockerfile"
   },
-  "functions": {
-    "api/index.php": {
-      "runtime": "vercel-php@0.7.2"
-    }
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "outputDirectory": "public",
+  "env": {
+    "PHP_VERSION": "8.4"
   },
   "routes": [
-    {
-      "handle": "filesystem"
-    },
     {
       "src": "/(.*)",
       "dest": "/api/index.php"
