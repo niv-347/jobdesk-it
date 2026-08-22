@@ -47,7 +47,7 @@ export default function Login({ status }: { status?: string; canResetPassword: b
 
 
                             {/* Content overlay */}
-                            <div className="relative z-10 flex h-64 lg:h-full min-h-[300px] lg:min-h-[600px] flex-col justify-center p-8 lg:p-12">
+                            <div className="relative z-10 flex h-64 lg:h-full min-h-75 lg:min-h-150 flex-col justify-center p-8 lg:p-12">
                                 <div className="login-slide-up login-stagger-1">
                                     {/* Logo */}
                                     <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-white/10">
@@ -92,7 +92,8 @@ export default function Login({ status }: { status?: string; canResetPassword: b
                                 </div>
 
                                 <Form
-                                    {...store.form()}
+                                    action={store()}
+                                    //method="post"
                                     resetOnSuccess={['password']}
                                     className="flex flex-col gap-6"
                                 >
