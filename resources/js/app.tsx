@@ -1,8 +1,9 @@
 import { createInertiaApp } from '@inertiajs/react';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 import 'goey-toast/styles.css';
 import { GooeyToaster } from 'goey-toast';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import type { ComponentType } from 'react';
 
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
@@ -23,9 +24,9 @@ createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
 
     resolve: (name) =>
-        resolvePageComponent(
+        resolvePageComponent<ComponentType<any>>(
             `./pages/${name}.tsx`,
-            import.meta.glob('./pages/**/*.tsx'),
+            import.meta.glob<ComponentType<any>>('./pages/**/*.tsx'),
         ),
 
     layout: (name) => {

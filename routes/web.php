@@ -8,11 +8,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RadiologiController;
 use App\Http\Controllers\Sop\SopController;
 use App\Http\Controllers\Troubleshoot\TroubleshootController;
-use App\Http\Controllers\VerifikatorController;
 use App\Http\Controllers\VisumController;
 use Illuminate\Support\Facades\Route;
 
-Route::inertia('/', 'login')->name('home');
+Route::redirect('/', 'login')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, '__invoke'])->name('dashboard');

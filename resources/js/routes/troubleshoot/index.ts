@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::index
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:16
  * @route '/troubleshoot'
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::index
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:16
  * @route '/troubleshoot'
  */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::index
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:16
  * @route '/troubleshoot'
  */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::index
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:16
  * @route '/troubleshoot'
  */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,7 +44,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::create
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:39
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:40
  * @route '/troubleshoot/create'
  */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -59,7 +59,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::create
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:39
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:40
  * @route '/troubleshoot/create'
  */
 create.url = (options?: RouteQueryOptions) => {
@@ -68,7 +68,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::create
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:39
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:40
  * @route '/troubleshoot/create'
  */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -77,7 +77,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::create
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:39
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:40
  * @route '/troubleshoot/create'
  */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -87,7 +87,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::kejadian
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:16
  * @route '/troubleshoot/kejadian'
  */
 export const kejadian = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -102,7 +102,7 @@ kejadian.definition = {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::kejadian
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:16
  * @route '/troubleshoot/kejadian'
  */
 kejadian.url = (options?: RouteQueryOptions) => {
@@ -111,7 +111,7 @@ kejadian.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::kejadian
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:16
  * @route '/troubleshoot/kejadian'
  */
 kejadian.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -120,7 +120,7 @@ kejadian.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::kejadian
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:15
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:16
  * @route '/troubleshoot/kejadian'
  */
 kejadian.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -130,7 +130,7 @@ kejadian.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::store
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:47
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:48
  * @route '/troubleshoot'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -145,7 +145,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::store
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:47
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:48
  * @route '/troubleshoot'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -154,7 +154,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::store
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:47
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:48
  * @route '/troubleshoot'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -164,7 +164,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::edit
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:71
  * @route '/troubleshoot/{troubleshoot}/edit'
  */
 export const edit = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -179,7 +179,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::edit
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:71
  * @route '/troubleshoot/{troubleshoot}/edit'
  */
 edit.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -212,7 +212,7 @@ edit.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: num
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::edit
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:71
  * @route '/troubleshoot/{troubleshoot}/edit'
  */
 edit.get = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -221,7 +221,7 @@ edit.get = (args: { troubleshoot: number | { id: number } } | [troubleshoot: num
 })
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::edit
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:70
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:71
  * @route '/troubleshoot/{troubleshoot}/edit'
  */
 edit.head = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -231,7 +231,7 @@ edit.head = (args: { troubleshoot: number | { id: number } } | [troubleshoot: nu
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::cetak
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:114
  * @route '/troubleshoot/{troubleshoot}/cetak'
  */
 export const cetak = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -246,7 +246,7 @@ cetak.definition = {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::cetak
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:114
  * @route '/troubleshoot/{troubleshoot}/cetak'
  */
 cetak.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -279,7 +279,7 @@ cetak.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: nu
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::cetak
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:114
  * @route '/troubleshoot/{troubleshoot}/cetak'
  */
 cetak.get = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -288,7 +288,7 @@ cetak.get = (args: { troubleshoot: number | { id: number } } | [troubleshoot: nu
 })
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::cetak
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:113
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:114
  * @route '/troubleshoot/{troubleshoot}/cetak'
  */
 cetak.head = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -298,7 +298,7 @@ cetak.head = (args: { troubleshoot: number | { id: number } } | [troubleshoot: n
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::update
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:80
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:81
  * @route '/troubleshoot/{troubleshoot}'
  */
 export const update = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -313,7 +313,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::update
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:80
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:81
  * @route '/troubleshoot/{troubleshoot}'
  */
 update.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -346,7 +346,7 @@ update.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: n
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::update
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:80
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:81
  * @route '/troubleshoot/{troubleshoot}'
  */
 update.put = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -356,7 +356,7 @@ update.put = (args: { troubleshoot: number | { id: number } } | [troubleshoot: n
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::destroy
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:103
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:104
  * @route '/troubleshoot/{troubleshoot}'
  */
 export const destroy = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -371,7 +371,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::destroy
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:103
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:104
  * @route '/troubleshoot/{troubleshoot}'
  */
 destroy.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -404,7 +404,7 @@ destroy.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: 
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::destroy
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:103
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:104
  * @route '/troubleshoot/{troubleshoot}'
  */
 destroy.delete = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -414,7 +414,7 @@ destroy.delete = (args: { troubleshoot: number | { id: number } } | [troubleshoo
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::timeline
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:120
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:121
  * @route '/troubleshoot/{troubleshoot}/timeline'
  */
 export const timeline = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -429,7 +429,7 @@ timeline.definition = {
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::timeline
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:120
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:121
  * @route '/troubleshoot/{troubleshoot}/timeline'
  */
 timeline.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -462,7 +462,7 @@ timeline.url = (args: { troubleshoot: number | { id: number } } | [troubleshoot:
 
 /**
 * @see \App\Http\Controllers\Troubleshoot\TroubleshootController::timeline
- * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:120
+ * @see app/Http/Controllers/Troubleshoot/TroubleshootController.php:121
  * @route '/troubleshoot/{troubleshoot}/timeline'
  */
 timeline.post = (args: { troubleshoot: number | { id: number } } | [troubleshoot: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
