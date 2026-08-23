@@ -1,6 +1,4 @@
-import { Link } from '@inertiajs/react';
-import { usePage } from '@inertiajs/react';
-import { LayoutDashboard, Share2, Users, ShieldPlus, Wrench, Files, Speech, Settings, FilePlusIcon, CalendarIcon, FileText, LayoutGrid } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -14,144 +12,12 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard, konfigurasi } from '@/routes';
-import { pengguna } from '@/routes/konfigurasi';
-import troubleshootIndex from '@/routes/troubleshoot';
-import verifikatorRoutes from '@/routes/verifikator';
+import { getMainNavItems } from '@/config/menu';
+import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 
 
-const mainNavItems: NavItem[] = [
-    {
-        id: 'dashboard',
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutDashboard,
-   },
-
-    {
-        id: 'konfigurasi',
-        title: 'Konfigurasi',
-        href: konfigurasi(),
-        icon: Settings,
-        items: [
-            {
-                id: 'pengguna',
-                title: 'Pengguna',
-                href: pengguna(),
-                icon: Users,
-            },
-            {
-                id: 'role',
-                title: 'Role Akses',
-                href: '/konfigurasi/role',
-                icon: ShieldPlus,
-            },
-        ],
-    },
-
-    {
-        id: 'sop',
-        title: 'SOP',
-        href: '/sop',
-        icon: Files,
-        items: [
-            {
-                id: 'buatsop',
-                title: 'Buat SOP',
-                href: '/sop/buatsop',
-                icon: FilePlusIcon,
-            },
-        ],
-    },
-
-    {
-        id: 'troubleshooting',
-        title: 'Troubleshooting',
-        href: troubleshootIndex.index(),
-        icon: Wrench,
-        items: [
-            {
-                id: 'kejadian',
-                title: 'Kejadian',
-                href: troubleshootIndex.kejadian(),
-                icon: Speech,
-            },
-        ],
-    },
-
-    {
-        id: 'visum',
-        title: 'Visum',
-        href: '/visum',
-        icon: CalendarIcon,
-        items: [
-            {
-                id: 'formvisum',
-                title: 'Form Visum',
-                href: '/visum',
-                icon: FileText,
-            },
-        ],
-    },
-
-    {
-        id: 'asset',
-        title: 'Asset',
-        href: '/asset/dataasset',
-        icon: LayoutGrid,
-        items: [
-            {
-                id: 'dataasset',
-                title: 'Data Asset',
-                href: '/asset/dataasset',
-                icon: FilePlusIcon,
-            },
-            {
-                id: 'laporan',
-                title: 'Laporan',
-                href: '/asset/laporan',
-                icon: FileText,
-            },
-        ],
-    },
-
-    {
-        id: 'radiologi',
-        title: 'Radiologi',
-        href: '/radiologi/ekpertise',
-        icon: LayoutGrid,
-        items: [
-            {
-                id: 'ekpertise',
-                title: 'Ekspertise',
-                href: '/radiologi/ekpertise',
-                icon: FileText,
-            },
-            {
-                id: 'share',
-                title: 'Share',
-                href: '/radiologi/share',
-                icon: Share2,
-            },
-        ],
-    },
-
-    {
-        id: 'verifikator',
-        title: 'Verifikator',
-        href: verifikatorRoutes.verifsop(),
-        icon: ShieldPlus,
-        items: [
-            {
-                id: 'verifsop',
-                title: 'Verifikasi SOP',
-                href: verifikatorRoutes.verifsop(),
-                icon: Files,
-            },
-        ],
-    },
-];
+const mainNavItems: NavItem[] = getMainNavItems();
 
 const footerNavItems: NavItem[] = [
     // {

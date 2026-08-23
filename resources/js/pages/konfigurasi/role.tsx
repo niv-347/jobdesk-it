@@ -1,10 +1,10 @@
 import { Head, useForm } from '@inertiajs/react';
 import { Briefcase, CalendarIcon, FileText, LayoutGrid, Save, Settings, Share2, Trash2, UserCog } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import { konfigurasi } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
+import { getDefaultMenuItems, getPermissionLabels, type MenuItemConfig } from '@/config/menu';
 
 interface User {
     id: number;
@@ -20,101 +20,10 @@ interface Role {
     permissions: { id: number; key: string; label: string; group: string }[];
 }
 
-interface MenuItemConfig {
-    id: string;
-    label: string;
-    icon: LucideIcon;
-    enabled: boolean;
-    children?: MenuItemConfig[];
-}
-
-const defaultMenuItems: MenuItemConfig[] = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutGrid, enabled: true },
-    {
-        id: 'konfigurasi',
-        label: 'Konfigurasi',
-        icon: Settings,
-        enabled: true,
-        children: [
-            { id: 'pengguna', label: 'Pengguna', icon: Briefcase, enabled: true },
-            { id: 'role', label: 'Role Akses', icon: Briefcase, enabled: true },
-        ],
-    },
-    {
-        id: 'sop',
-        label: 'SOP',
-        icon: LayoutGrid,
-        enabled: true,
-        children: [{ id: 'buatsop', label: 'Buat SOP', icon: Briefcase, enabled: true }],
-    },
-    {
-        id: 'troubleshooting',
-        label: 'Troubleshooting',
-        icon: LayoutGrid,
-        enabled: true,
-        children: [{ id: 'kejadian', label: 'Kejadian', icon: Briefcase, enabled: true }],
-    },
-    {
-        id: 'visum',
-        label: 'Visum',
-        icon: CalendarIcon,
-        enabled: true,
-        children: [{ id: 'formvisum', label: 'Form Visum', icon: FileText, enabled: true }],
-    },
-    {
-        id: 'asset',
-        label: 'Asset',
-        icon: LayoutGrid,
-        enabled: true,
-        children: [
-            { id: 'dataasset', label: 'Data Asset', icon: Briefcase, enabled: true },
-            { id: 'laporan', label: 'Laporan', icon: FileText, enabled: true },
-        ],
-    },
-    {
-        id: 'radiologi',
-        label: 'Radiologi',
-        icon: LayoutGrid,
-        enabled: true,
-        children: [
-            { id: 'ekpertise', label: 'Ekspertise', icon: FileText, enabled: true },
-            { id: 'share', label: 'Share', icon: Share2, enabled: true },
-        ],
-    },
-    {
-        id: 'verifikator',
-        label: 'Verifikator',
-        icon: UserCog,
-        enabled: true,
-        children: [{ id: 'verifsop', label: 'Verifikasi SOP', icon: Briefcase, enabled: true }],
-    },
-];
-
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Konfigurasi', href: konfigurasi() },
     { title: 'Role Akses', href: '/konfigurasi/role' },
 ];
-
-const permissionLabels: Record<string, string> = {
-    dashboard: 'Dashboard',
-    konfigurasi: 'Konfigurasi',
-    'konfigurasi.pengguna': 'Manajemen Pengguna',
-    'konfigurasi.role': 'Role Akses',
-    sop: 'SOP',
-    'sop.buatsop': 'Buat SOP',
-    troubleshooting: 'Troubleshooting',
-    'troubleshooting.kejadian': 'Kejadian',
-    visum: 'Visum',
-    'visum.formvisum': 'Form Visum',
-    asset: 'Asset',
-    'asset.dataasset': 'Data Asset',
-    'asset.laporan': 'Laporan Asset',
-    radiologi: 'Radiologi',
-    'radiologi.ekpertise': 'Ekspertise',
-    'radiologi.share': 'Share',
-    verifikator: 'Verifikator',
-    'verifikator.verifsop': 'Verifikasi SOP',
-};
 
 interface Props {
     users?: User[];
@@ -123,8 +32,8 @@ interface Props {
         id: number;
         name: string;
         email: string;
-        roles: { id: number; name: string; slug: string }[];
-        permissions: string[];
+        roles?: { id: number; name: string; slug: string }[] | null;
+        permissions?: string[] | null;
     }>;
     menuPermissions?: Record<string, boolean>;
 }
@@ -132,28 +41,30 @@ interface Props {
 export default function Role({ users = [], roles = [], userRoles = [], menuPermissions = {} }: Props) {
     const [selectedUserId, setSelectedUserId] = useState<string>('');
     const [selectedRoleId, setSelectedRoleId] = useState<string>('');
-    const [menuItems, setMenuItems] = useState<MenuItemConfig[]>(() =>
-        defaultMenuItems.map((item) => ({
-            ...item,
-            enabled: menuPermissions[item.id] ?? item.enabled,
-            children: item.children?.map((c) => ({
-                ...c,
-                enabled: menuPermissions[`${item.id}.${c.id}`] ?? c.enabled,
-            })),
-        })),
-    );
+    const [menuItems, setMenuItems] = useState<MenuItemConfig[]>(getDefaultMenuItems());
     const [loading, setLoading] = useState(false);
     const [editUser, setEditUser] = useState<{ id: number; name: string; email: string } | null>(null);
     const [editRoleId, setEditRoleId] = useState<string>('');
 
-    const { post, processing, wasSuccessful, setData, reset, errors } = useForm({
+    const form = useForm<{
+        user_id: string;
+        role_id: string;
+        permissions: Record<string, boolean>;
+    }>({
+        user_id: '',
+        role_id: '',
+        permissions: {},
+    });
+    const { post, processing, wasSuccessful, setData, reset, errors } = form;
+
+    const editForm = useForm({
         user_id: '',
         role_id: '',
     });
 
     const applyPermissions = (permissions: Record<string, boolean>) => {
         setMenuItems(
-            defaultMenuItems.map((item) => ({
+            getDefaultMenuItems().map((item) => ({
                 ...item,
                 enabled: permissions[item.id] ?? item.enabled,
                 children: item.children?.map((c) => ({
@@ -172,6 +83,9 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
         if (!userId) {
             return;
         }
+
+        const userRole = userRoles.find((u) => u.id === Number(userId));
+        setSelectedRoleId(userRole?.roles?.[0]?.id?.toString() ?? '');
 
         setLoading(true);
 
@@ -219,24 +133,19 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
 
         setData('user_id', selectedUserId);
         setData('role_id', selectedRoleId);
+        setData('permissions', collectMenuPermissions(menuItems));
         post('/konfigurasi/role/permissions');
     };
 
     const resetAll = () => {
-        setMenuItems(
-            defaultMenuItems.map((item) => ({
-                ...item,
-                enabled: true,
-                children: item.children?.map((c) => ({ ...c, enabled: true })),
-            })),
-        );
+        setMenuItems(getDefaultMenuItems());
     };
 
-    const openEditDialog = (userRole: { id: number; name: string; email: string; roles: { id: number }[] }) => {
+    const openEditDialog = (userRole: { id: number; name: string; email: string; roles?: { id: number }[] | null }) => {
         setEditUser({ id: userRole.id, name: userRole.name, email: userRole.email });
-        setEditRoleId(userRole.roles[0]?.id?.toString() ?? '');
-        setData('user_id', userRole.id.toString());
-        setData('role_id', userRole.roles[0]?.id?.toString() ?? '');
+        setEditRoleId(userRole.roles?.[0]?.id?.toString() ?? '');
+        editForm.setData('user_id', userRole.id.toString());
+        editForm.setData('role_id', userRole.roles?.[0]?.id?.toString() ?? '');
     };
 
     return (
@@ -360,8 +269,8 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                                             <td className="p-4 text-slate-600">{userRole.email}</td>
                                             <td className="p-4">
                                                 <div className="flex flex-wrap gap-2">
-                                                    {userRole.roles.length > 0 ? (
-                                                        userRole.roles.map((role) => (
+                                                   {(userRole.roles ?? []).length > 0 ? (
+                                                        (userRole.roles ?? []).map((role) => (
                                                             <span
                                                                 key={role.id}
                                                                 className="inline-flex items-center rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-medium text-indigo-700"
@@ -376,13 +285,13 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                                             </td>
                                             <td className="p-4">
                                                 <div className="flex flex-wrap gap-2">
-                                                    {userRole.permissions.length > 0 ? (
-                                                        userRole.permissions.map((perm) => (
+                                                    {(userRole.permissions ?? []).length > 0 ? (
+                                                        (userRole.permissions ?? []).map((perm) => (
                                                             <span
                                                                 key={perm}
                                                                 className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700"
                                                             >
-                                                                {permissionLabels[perm] || perm}
+                                                                 {getPermissionLabels()[perm] || perm}
                                                             </span>
                                                         ))
                                                     ) : (
@@ -424,11 +333,11 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                             <form
                                 onSubmit={(e) => {
                                     e.preventDefault();
-                                    post('/konfigurasi/role/permissions', {
+                                    editForm.post('/konfigurasi/role/permissions', {
                                         onSuccess: () => {
                                             setEditUser(null);
                                             setEditRoleId('');
-                                            reset();
+                                            editForm.reset();
                                         },
                                     });
                                 }}
@@ -451,7 +360,7 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                                             </option>
                                         ))}
                                     </select>
-                                    {errors.role_id && <p className="text-xs text-red-500">{errors.role_id}</p>}
+                                    {editForm.errors.role_id && <p className="text-xs text-red-500">{editForm.errors.role_id}</p>}
                                 </div>
 
                                 <div className="grid gap-2">
@@ -462,16 +371,16 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                                         {(() => {
                                             const selectedRole = roles.find((r) => r.id === Number(editRoleId));
 
-                                            if (!selectedRole || selectedRole.permissions.length === 0) {
-                                                return <span className="text-sm text-slate-400">Pilih role untuk melihat menu.</span>;
-                                            }
+                                        if (!selectedRole || (selectedRole.permissions ?? []).length === 0) {
+                                                   return <span className="text-sm text-slate-400">Pilih role untuk melihat menu.</span>;
+                                                    }
 
-                                            return selectedRole.permissions.map((perm) => (
+                                                return (selectedRole.permissions ?? []).map((perm) => (
                                                 <span
                                                     key={perm.id}
                                                     className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700"
                                                 >
-                                                    {permissionLabels[perm.key] || perm.label}
+                                                     {getPermissionLabels()[perm.key] || perm.label}
                                                 </span>
                                             ));
                                         })()}
@@ -484,19 +393,19 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                                         onClick={() => {
                                             setEditUser(null);
                                             setEditRoleId('');
-                                            reset();
+                                            editForm.reset();
                                         }}
-                                        disabled={processing}
+                                        disabled={editForm.processing}
                                         className="inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 disabled:opacity-60"
                                     >
                                         Batal
                                     </button>
                                     <button
                                         type="submit"
-                                        disabled={!editRoleId || processing}
+                                        disabled={!editRoleId || editForm.processing}
                                         className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm text-white hover:bg-indigo-700 disabled:opacity-60"
                                     >
-                                        {processing && <UserCog className="mr-2 h-4 w-4 animate-spin" />}
+                                        {editForm.processing && <UserCog className="mr-2 h-4 w-4 animate-spin" />}
                                         Simpan
                                     </button>
                                 </div>
@@ -511,6 +420,17 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
 }
 
 Role.layout = { breadcrumbs };
+
+function collectMenuPermissions(items: MenuItemConfig[]): Record<string, boolean> {
+    const permissions: Record<string, boolean> = {};
+    items.forEach((item) => {
+        permissions[item.id] = item.enabled;
+        item.children?.forEach((child) => {
+            permissions[`${item.id}.${child.id}`] = child.enabled;
+        });
+    });
+    return permissions;
+}
 
 function MenuItemCard({
     item,

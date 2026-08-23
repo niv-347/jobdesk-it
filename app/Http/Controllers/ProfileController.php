@@ -15,7 +15,7 @@ class ProfileController extends Controller
 {
     public function edit(): Response
     {
-        $user = Auth::user();
+        $user = User::findOrFail(Auth::id());
 
         return Inertia::render('profile/edit', [
             'user' => $user,
@@ -24,7 +24,7 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $user = Auth::user();
+        $user = User::findOrFail(Auth::id());
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],

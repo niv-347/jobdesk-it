@@ -19,7 +19,7 @@ export default defineConfig({
         inertia(),
         react({
             babel: {
-                plugins: ['babel-plugin-react-compiler'],
+                plugins: [],
             },
         }),
         tailwindcss(),

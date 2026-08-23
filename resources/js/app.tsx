@@ -1,6 +1,8 @@
 import { createInertiaApp } from '@inertiajs/react';
 
 import 'goey-toast/styles.css';
+import '../css/loading.css';
+
 import { GooeyToaster } from 'goey-toast';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { ComponentType } from 'react';
@@ -45,7 +47,7 @@ createInertiaApp({
         }
     },
 
-    strictMode: true,
+    strictMode: false,
 
     withApp(app) {
         return (
@@ -62,5 +64,12 @@ createInertiaApp({
     },
 });
 
-// This will set light / dark mode on load...
-initializeTheme();
+// Initialize theme only in browser to avoid SSR issues
+if (typeof window !== 'undefined') {
+    initializeTheme();
+}
+
+// HMR support for page components
+if (import.meta.hot) {
+    import.meta.hot.accept();
+}

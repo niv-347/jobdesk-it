@@ -1,0 +1,193 @@
+/* Loading & Toast Animations */
+
+/* Page Loading Overlay */
+@keyframes loading-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes loading-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Login Modal Animations */
+@keyframes loading-dot-bounce {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes progress-fill {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+/* Toast Animations */
+@keyframes toast-enter {
+    from {
+        opacity: 0;
+        transform: translateX(100%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes toast-exit {
+    from {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%) scale(0.9);
+    }
+}
+
+/* Success Checkmark Animation */
+@keyframes checkmark {
+    0% {
+        stroke-dashoffset: 100;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes scale-in {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Error Shake Animation */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+/* Loading Dots */
+@keyframes loading-dots {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1); }
+}
+
+/* Button Loading State */
+@keyframes button-loading {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Split Login Layout */
+.login-split-bg {
+    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+}
+
+.login-split-card {
+    animation: card-enter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 
+        0 25px 60px -12px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes card-enter {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Cartoon Side */
+.login-cartoon-side {
+    position: relative;
+    overflow: hidden;
+}
+
+.login-cartoon-side::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Form Side */
+.login-form-side {
+    background: linear-gradient(to bottom, #ffffff, #f8fafc);
+}
+
+/* Cartoon Mascot Animations */
+@keyframes wave {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-15deg); }
+    75% { transform: rotate(15deg); }
+}
+
+/* Input Focus States */
+.login-input-focus {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-input-focus:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+}
+
+/* Button Hover Effect */
+.login-button-hover {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.login-button-hover::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.login-button-hover:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.login-button-hover:active {
+    transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .login-split-card {
+        flex-direction: column;
+    }
+    
+    .login-cartoon-side {
+        min-height: 300px;
+    }
+}

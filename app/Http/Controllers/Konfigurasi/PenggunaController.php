@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\UserMenuPermission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
@@ -91,7 +92,7 @@ class PenggunaController extends Controller
     public function roleIndex(): Response
     {
         $users = User::select('id', 'name', 'email')->latest()->get();
-        $roles = Role::all();
+        $roles = Role::with('permissions')->get();
         $userRoles = User::with('roles.permissions')->get()->map(fn ($user) => [
             'id' => $user->id,
             'name' => $user->name,
@@ -114,7 +115,24 @@ class PenggunaController extends Controller
     public function getUserPermissions(int $userId)
     {
         $user = User::findOrFail($userId);
-        $permissions = $user->roles()->with('permissions')->get()->flatMap(fn ($role) => $role->permissions->pluck('key', 'id'));
+
+        $rolePermissions = $user->roles()
+            ->with('permissions')
+            ->get()
+            ->flatMap(fn ($role) => $role->permissions->pluck('key'))
+            ->unique()
+            ->map(fn ($key) => [$key => true])
+            ->collapse()
+            ->toArray();
+
+        $userPermissions = UserMenuPermission::where('user_id', $user->id)
+            ->pluck('allowed', 'menu_key')
+            ->toArray();
+
+        $permissions = $rolePermissions;
+        foreach ($userPermissions as $menuKey => $allowed) {
+            $permissions[$menuKey] = (bool) $allowed;
+        }
 
         return response()->json($permissions);
     }
@@ -122,14 +140,47 @@ class PenggunaController extends Controller
     public function saveUserPermissions(Request $request)
     {
         $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'role_id' => 'required|exists:roles,id',
+            'user_id' => ['required', 'exists:users,id'],
+            'role_id' => ['required', 'exists:roles,id'],
+            'permissions' => ['nullable', 'array'],
+            'permissions.*' => ['boolean'],
         ]);
 
         $user = User::findOrFail($validated['user_id']);
         $role = Role::findOrFail($validated['role_id']);
 
-        $user->roles()->sync([$role->id]);
+        $permissions = $validated['permissions'] ?? null;
+
+        DB::transaction(function () use ($user, $role, $permissions) {
+            $user->roles()->sync([$role->id]);
+
+            // Ketika `permissions` dikirimkan, ganti seluruh override menu
+            // per-user. Jika tidak dikirimkan (misalnya hanya ganti role),
+            // override yang sudah ada dipertahankan.
+            if (! is_array($permissions)) {
+                return;
+            }
+
+            DB::table('user_menu_permissions')
+                ->where('user_id', $user->id)
+                ->delete();
+
+            $now = now();
+            $records = [];
+            foreach ($permissions as $menuKey => $allowed) {
+                $records[] = [
+                    'user_id' => $user->id,
+                    'menu_key' => $menuKey,
+                    'allowed' => $allowed,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
+            }
+
+            if (! empty($records)) {
+                DB::table('user_menu_permissions')->insert($records);
+            }
+        });
 
         return back()->with('success', 'Role akses berhasil disimpan.');
     }
