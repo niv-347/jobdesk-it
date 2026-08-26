@@ -1,5 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
-import { Edit, Loader2, Trash2, UserPlus, Users, X } from 'lucide-react';
+import { Edit, Loader2, Trash2, UserPlus, X } from 'lucide-react';
 import { useState } from 'react';
 
 import { konfigurasi } from '@/routes';
@@ -15,6 +15,13 @@ interface User {
     id: number;
     name: string;
     email: string;
+    email_verified_at: string | null;
+}
+
+interface Role {
+    id: number;
+    name: string;
+    slug: string;
 }
 
 interface Props {
@@ -30,33 +37,31 @@ interface Props {
             active: boolean;
         }>;
     };
+    roles: Role[];
     search?: string;
 }
 
-export default function Pengguna({ users, search = '' }: Props) {
-    // State Modal
+export default function Pengguna({ users, roles = [], search = '' }: Props) {
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [searchQuery, setSearchQuery] = useState(search);
 
-    // Form Tambah
     const createForm = useForm({
         name: '',
         email: '',
         password: '',
+        role_id: '',
     });
 
-    // Form Edit
     const editForm = useForm({
         name: '',
         email: '',
         password: '',
+        role_id: '',
     });
 
-    // Form Hapus (menggunakan instance form untuk handling status processing)
     const deleteForm = useForm({});
 
-    // Handler Tambah
     const handleCreateSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         createForm.post('/konfigurasi/pengguna', {
@@ -67,34 +72,32 @@ export default function Pengguna({ users, search = '' }: Props) {
         });
     };
 
-    // Handler Buka Edit Modal
     const openEditModal = (user: User) => {
         setEditingUser(user);
         editForm.setData({
             name: user.name,
             email: user.email,
-            password: '', // Biarkan kosong jika tidak ingin mengubah password
+            password: '',
+            role_id: '',
         });
         editForm.clearErrors();
     };
 
-    // Handler Edit Submit
     const handleEditSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!editingUser) {
-            return;
-        }
+return;
+}
 
-    editForm.put(`/konfigurasi/pengguna/${editingUser.id}`, {
-        onSuccess: () => {
-            setEditingUser(null);
-            editForm.reset();
+        editForm.put(`/konfigurasi/pengguna/${editingUser.id}`, {
+            onSuccess: () => {
+                setEditingUser(null);
+                editForm.reset();
             },
         });
     };
 
-    // Handler Hapus
     const handleDelete = (user: User) => {
         if (confirm(`Apakah Anda yakin ingin menghapus pengguna "${user.name}"?`)) {
             deleteForm.delete(`/konfigurasi/pengguna/${user.id}`);
@@ -119,11 +122,11 @@ export default function Pengguna({ users, search = '' }: Props) {
             <Head title="Manajemen Pengguna" />
 
             <div className="flex h-full flex-1 flex-col gap-6 p-6 bg-white">
-                {/* Header Page */}
+                {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
                         <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
-                            <Users className="w-6 h-6 text-indigo-600" />
+                            <UserPlus className="w-6 h-6 text-indigo-600" />
                             Manajemen Pengguna
                         </h1>
                         <p className="text-sm text-slate-500 mt-1">
@@ -137,16 +140,15 @@ export default function Pengguna({ users, search = '' }: Props) {
                             createForm.clearErrors();
                             setIsCreateOpen(true);
                         }}
-                        className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm cursor-pointer"
+                        className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
                     >
                         <UserPlus className="w-4 h-4" />
                         Tambah Pengguna
                     </button>
                 </div>
 
-                {/* Table Container */}
+                {/* Search Bar */}
                 <div className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm">
-                    {/* Search Bar */}
                     <div className="p-4 border-b border-slate-200">
                         <form onSubmit={handleSearch} className="flex gap-2">
                             <input
@@ -170,16 +172,23 @@ export default function Pengguna({ users, search = '' }: Props) {
                             <tr>
                                 <th className="p-4">Nama</th>
                                 <th className="p-4">Email</th>
+                                <th className="p-4">Email Terverifikasi</th>
                                 <th className="p-4 text-center">Aksi</th>
                             </tr>
                         </thead>
-
                         <tbody className="divide-y divide-slate-100">
                             {users.data.length > 0 ? (
                                 users.data.map((user) => (
                                     <tr key={user.id} className="hover:bg-slate-50/80 transition-colors">
                                         <td className="p-4 font-medium text-slate-900">{user.name}</td>
                                         <td className="p-4 text-slate-600">{user.email}</td>
+                                        <td className="p-4 text-slate-600">
+                                            {user.email_verified_at ? (
+                                                <span className="text-emerald-600">Terverifikasi</span>
+                                            ) : (
+                                                <span className="text-slate-400">Belum diverifikasi</span>
+                                            )}
+                                        </td>
                                         <td className="p-4 text-center space-x-2">
                                             <button
                                                 onClick={() => openEditModal(user)}
@@ -199,7 +208,7 @@ export default function Pengguna({ users, search = '' }: Props) {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={3} className="p-8 text-center text-slate-400">
+                                    <td colSpan={4} className="p-8 text-center text-slate-400">
                                         {search ? 'Tidak ada pengguna yang sesuai dengan pencarian.' : 'Belum ada data pengguna yang tersedia.'}
                                     </td>
                                 </tr>
@@ -233,7 +242,7 @@ export default function Pengguna({ users, search = '' }: Props) {
                 </div>
             </div>
 
-            {/* Modal Form Tambah */}
+            {/* Modal: Tambah Pengguna */}
             {isCreateOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
                     <div className="bg-white rounded-xl shadow-xl w-full max-w-md border border-slate-200 overflow-hidden">
@@ -284,6 +293,23 @@ export default function Pengguna({ users, search = '' }: Props) {
                                 {createForm.errors.password && <p className="text-xs text-red-500 mt-1">{createForm.errors.password}</p>}
                             </div>
 
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Role</label>
+                                <select
+                                    value={createForm.data.role_id}
+                                    onChange={(e) => createForm.setData('role_id', e.target.value)}
+                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-indigo-600"
+                                >
+                                    <option value="">-- Pilih role --</option>
+                                    {roles.map((role) => (
+                                        <option key={role.id} value={role.id}>
+                                            {role.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                {createForm.errors.role_id && <p className="text-xs text-red-500 mt-1">{createForm.errors.role_id}</p>}
+                            </div>
+
                             <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
                                 <button
                                     type="button"
@@ -306,7 +332,7 @@ export default function Pengguna({ users, search = '' }: Props) {
                 </div>
             )}
 
-            {/* Modal Form Edit */}
+            {/* Modal: Edit Pengguna */}
             {editingUser && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
                     <div className="bg-white rounded-xl shadow-xl w-full max-w-md border border-slate-200 overflow-hidden">

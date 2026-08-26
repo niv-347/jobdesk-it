@@ -1,9 +1,4 @@
 import type { LucideIcon } from 'lucide-react';
-import type { NavItem } from '@/types';
-import { dashboard, konfigurasi } from '@/routes';
-import { pengguna } from '@/routes/konfigurasi';
-import troubleshootIndex from '@/routes/troubleshoot';
-import verifikatorRoutes from '@/routes/verifikator';
 import {
     Briefcase,
     CalendarIcon,
@@ -11,13 +6,17 @@ import {
     LayoutGrid,
     Settings,
     Share2,
-    UserCog,
     Files,
     FilePlusIcon,
     Wrench,
     Speech,
     ShieldPlus,
 } from 'lucide-react';
+import { dashboard, konfigurasi } from '@/routes';
+import { pengguna } from '@/routes/konfigurasi';
+import troubleshootIndex from '@/routes/troubleshoot';
+import verifikatorRoutes from '@/routes/verifikator';
+import type { NavItem } from '@/types';
 
 interface BaseMenuItem {
     id: string;

@@ -1,10 +1,16 @@
 import { Head, useForm } from '@inertiajs/react';
-import { Briefcase, CalendarIcon, FileText, LayoutGrid, Save, Settings, Share2, Trash2, UserCog } from 'lucide-react';
-import { useState } from 'react';
+import { Plus, UserCog, X } from 'lucide-react';
+import { useMemo, useState } from 'react';
 
+import { getDefaultMenuItems, getPermissionLabels } from '@/config/menu';
+import type { MenuItemConfig } from '@/config/menu';
 import { konfigurasi } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
-import { getDefaultMenuItems, getPermissionLabels, type MenuItemConfig } from '@/config/menu';
+
+const breadcrumbs: BreadcrumbItem[] = [
+    { title: 'Konfigurasi', href: konfigurasi() },
+    { title: 'Role & Akses Menu', href: '/konfigurasi/role' },
+];
 
 interface User {
     id: number;
@@ -12,243 +18,207 @@ interface User {
     email: string;
 }
 
-interface Role {
+interface RoleData {
     id: number;
     name: string;
     slug: string;
     description: string | null;
-    permissions: { id: number; key: string; label: string; group: string }[];
+    permissions: { id: number; name: string; label: string; group: string }[];
 }
 
-const breadcrumbs: BreadcrumbItem[] = [
-    { title: 'Konfigurasi', href: konfigurasi() },
-    { title: 'Role Akses', href: '/konfigurasi/role' },
-];
+interface UserRole {
+    id: number;
+    name: string;
+    email: string;
+    roles: { id: number; name: string; slug: string }[];
+    permissions: string[];
+}
 
 interface Props {
-    users?: User[];
-    roles?: Role[];
-    userRoles?: Array<{
-        id: number;
-        name: string;
-        email: string;
-        roles?: { id: number; name: string; slug: string }[] | null;
-        permissions?: string[] | null;
-    }>;
-    menuPermissions?: Record<string, boolean>;
+    users: User[];
+    roles: RoleData[];
+    userRoles: UserRole[];
 }
 
-export default function Role({ users = [], roles = [], userRoles = [], menuPermissions = {} }: Props) {
-    const [selectedUserId, setSelectedUserId] = useState<string>('');
-    const [selectedRoleId, setSelectedRoleId] = useState<string>('');
+export default function Role({ roles = [], userRoles = [] }: Props) {
+    const [showAddRoleModal, setShowAddRoleModal] = useState(false);
+    const [showAddUserModal, setShowAddUserModal] = useState(false);
     const [menuItems, setMenuItems] = useState<MenuItemConfig[]>(getDefaultMenuItems());
-    const [loading, setLoading] = useState(false);
-    const [editUser, setEditUser] = useState<{ id: number; name: string; email: string } | null>(null);
-    const [editRoleId, setEditRoleId] = useState<string>('');
 
-    const form = useForm<{
-        user_id: string;
-        role_id: string;
-        permissions: Record<string, boolean>;
-    }>({
-        user_id: '',
-        role_id: '',
-        permissions: {},
-    });
-    const { post, processing, wasSuccessful, setData, reset, errors } = form;
-
-    const editForm = useForm({
-        user_id: '',
-        role_id: '',
+    const roleForm = useForm({
+        name: '',
+        slug: '',
+        description: '',
+        permissions: [] as string[],
     });
 
-    const applyPermissions = (permissions: Record<string, boolean>) => {
-        setMenuItems(
-            getDefaultMenuItems().map((item) => ({
-                ...item,
-                enabled: permissions[item.id] ?? item.enabled,
-                children: item.children?.map((c) => ({
-                    ...c,
-                    enabled: permissions[`${item.id}.${c.id}`] ?? c.enabled,
-                })),
-            })),
+    const userForm = useForm({
+        name: '',
+        email: '',
+        password: '',
+        role_id: '',
+        permissions: {} as Record<string, boolean>,
+    });
+
+
+
+    const togglePermissionInRoleForm = (permName: string) => {
+        const current = roleForm.data.permissions;
+
+        if (current.includes(permName)) {
+            roleForm.setData('permissions', current.filter((p) => p !== permName));
+        } else {
+            roleForm.setData('permissions', [...current, permName]);
+        }
+    };
+
+    const collectMenuPermissions = (items: MenuItemConfig[]): Record<string, boolean> => {
+        const permissions: Record<string, boolean> = {};
+        items.forEach((item) => {
+            permissions[item.id] = item.enabled;
+            item.children?.forEach((child) => {
+                permissions[`${item.id}.${child.id}`] = child.enabled;
+            });
+        });
+
+        return permissions;
+    };
+
+
+    const toggleMenuItem = (path: string) => {
+        setMenuItems((prev) =>
+            prev.map((item) => {
+                if (item.id === path) {
+                    return { ...item, enabled: !item.enabled };
+                }
+
+                if (item.children?.some((c) => c.id === path)) {
+                    return {
+                        ...item,
+                        children: item.children.map((c) =>
+                            c.id === path ? { ...c, enabled: !c.enabled } : c,
+                        ),
+                    };
+                }
+
+                return item;
+            }),
         );
     };
 
-    const handleUserChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const userId = e.target.value;
-        setSelectedUserId(userId);
-        setSelectedRoleId('');
 
-        if (!userId) {
-            return;
-        }
 
-        const userRole = userRoles.find((u) => u.id === Number(userId));
-        setSelectedRoleId(userRole?.roles?.[0]?.id?.toString() ?? '');
 
-        setLoading(true);
-
-        try {
-            const res = await fetch(`/konfigurasi/role/permissions/${userId}`, {
-                headers: { 'Accept': 'application/json' },
-            });
-            const data: Record<string, boolean> = await res.json();
-            applyPermissions(data);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const roleId = e.target.value;
-        setSelectedRoleId(roleId);
-
-        if (!roleId) {
-            return;
-        }
-
-        const role = roles.find((r) => r.id === Number(roleId));
-
-        if (!role) {
-            return;
-        }
-
-        const rolePerms: Record<string, boolean> = {};
-        role.permissions.forEach((p) => {
-            rolePerms[p.key] = true;
+    const handleAddUser = () => {
+        userForm.setData('permissions', collectMenuPermissions(menuItems));
+        userForm.post('/konfigurasi/role/store-user', {
+            onSuccess: () => {
+                setShowAddUserModal(false);
+                userForm.reset();
+                setMenuItems(getDefaultMenuItems());
+            },
         });
-
-        applyPermissions(rolePerms);
     };
 
-    const toggleItem = (path: string) => {
-        setMenuItems((prev) => updateItem(prev, path));
+    const handleAddRole = () => {
+        roleForm.post('/konfigurasi/role/store', {
+            onSuccess: () => {
+                setShowAddRoleModal(false);
+                roleForm.reset();
+            },
+        });
     };
 
-    const handleSave = () => {
-        if (!selectedUserId || !selectedRoleId) {
-            return;
-        }
 
-        setData('user_id', selectedUserId);
-        setData('role_id', selectedRoleId);
-        setData('permissions', collectMenuPermissions(menuItems));
-        post('/konfigurasi/role/permissions');
-    };
-
-    const resetAll = () => {
-        setMenuItems(getDefaultMenuItems());
-    };
-
-    const openEditDialog = (userRole: { id: number; name: string; email: string; roles?: { id: number }[] | null }) => {
-        setEditUser({ id: userRole.id, name: userRole.name, email: userRole.email });
-        setEditRoleId(userRole.roles?.[0]?.id?.toString() ?? '');
-        editForm.setData('user_id', userRole.id.toString());
-        editForm.setData('role_id', userRole.roles?.[0]?.id?.toString() ?? '');
-    };
+    // Collect all permission names from roles for role form
+    const allPermissionNames = useMemo(() => {
+        return Array.from(
+            new Set(roles.flatMap((r) => r.permissions.map((p) => p.name))),
+        ).sort();
+    }, [roles]);
 
     return (
         <>
             <Head title="Role & Akses Menu" />
 
             <div className="p-6">
-                <div className="mb-6">
-                    <h1 className="text-2xl font-bold text-slate-900">Role & Akses Menu</h1>
-                    <p className="mt-1 text-sm text-slate-500">
-                        Pilih pengguna, pilih role, dan atur menu mana saja yang ditampilkan di sidebar aplikasi.
-                    </p>
+                {/* Header */}
+                <div className="mb-6 flex items-center justify-between">
+                    <div>
+                        <h1 className="text-2xl font-bold text-slate-900">Role & Akses Menu</h1>
+                        <p className="mt-1 text-sm text-slate-500">
+                            Kelola role, permission, dan hak akses menu pengguna.
+                        </p>
+                    </div>
+                    <div className="flex gap-2">
+                        <button
+                            type="button"
+                            onClick={() => setShowAddUserModal(true)}
+                            className="inline-flex items-center gap-2 rounded-md bg-emerald-600 px-3 py-2 text-sm text-white hover:bg-emerald-700"
+                        >
+                            <Plus className="h-4 w-4" />
+                            Tambah Pengguna
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setShowAddRoleModal(true)}
+                            className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-3 py-2 text-sm text-white hover:bg-indigo-700"
+                        >
+                            <Plus className="h-4 w-4" />
+                            Tambah Role
+                        </button>
+                    </div>
                 </div>
 
-                <div className="mb-6 flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-4">
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-                        <div className="flex flex-1 flex-col gap-2">
-                            <label htmlFor="user-select" className="text-sm font-medium text-slate-700">
-                                Pilih Pengguna
-                            </label>
-                            <select
-                                id="user-select"
-                                value={selectedUserId}
-                                onChange={handleUserChange}
-                                className="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
-                            >
-                                <option value="">-- Pilih pengguna --</option>
-                                {users.map((user) => (
-                                    <option key={user.id} value={user.id}>
-                                        {user.name} ({user.email})
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div className="flex flex-1 flex-col gap-2">
-                            <label htmlFor="role-select" className="text-sm font-medium text-slate-700">
-                                Pilih Role
-                            </label>
-                            <select
-                                id="role-select"
-                                value={selectedRoleId}
-                                onChange={handleRoleChange}
-                                className="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
-                            >
-                                <option value="">-- Pilih role --</option>
+                {/* Role List */}
+                <div className="mb-8 rounded-lg border border-slate-200 bg-white p-4">
+                    <div className="mb-4">
+                        <h2 className="text-lg font-semibold text-slate-900">Daftar Role</h2>
+                        <p className="text-sm text-slate-500">
+                            Total: {roles.length} role terdaftar.
+                        </p>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left text-sm text-slate-600">
+                            <thead className="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
+                                <tr>
+                                    <th className="p-4">Nama Role</th>
+                                    <th className="p-4">Slug</th>
+                                    <th className="p-4">Deskripsi</th>
+                                    <th className="p-4">Jumlah Permission</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
                                 {roles.map((role) => (
-                                    <option key={role.id} value={role.id}>
-                                        {role.name}
-                                    </option>
+                                    <tr key={role.id} className="hover:bg-slate-50/80">
+                                        <td className="p-4 font-medium text-slate-900">{role.name}</td>
+                                        <td className="p-4 text-slate-600">{role.slug}</td>
+                                        <td className="p-4 text-slate-600">
+                                            {role.description || <span className="text-slate-400 italic">Tidak ada</span>}
+                                        </td>
+                                        <td className="p-4 text-slate-600">{role.permissions.length}</td>
+                                    </tr>
                                 ))}
-                            </select>
-                        </div>
-
-                        <div className="flex items-end gap-2">
-                            <button
-                                type="button"
-                                onClick={resetAll}
-                                className="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-600 hover:bg-slate-50"
-                            >
-                                <Trash2 className="h-4 w-4" />
-                                Reset
-                            </button>
-                            <button
-                                type="button"
-                                onClick={handleSave}
-                                disabled={!selectedUserId || !selectedRoleId || processing}
-                                className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-3 py-2 text-sm text-white hover:bg-indigo-700 disabled:opacity-60"
-                            >
-                                {processing && <UserCog className="h-4 w-4 animate-spin" />}
-                                <Save className="h-4 w-4" />
-                                Simpan
-                            </button>
-                        </div>
+                                {roles.length === 0 && (
+                                    <tr>
+                                        <td colSpan={4} className="p-6 text-center text-slate-400">
+                                            Belum ada role. Tambahkan role pertama.
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                {wasSuccessful && (
-                    <div className="mb-4 rounded-md bg-green-50 p-3 text-sm text-green-700">
-                        Hak akses menu berhasil disimpan.
-                    </div>
-                )}
 
-                {!selectedUserId || !selectedRoleId ? (
-                    <div className="rounded-lg border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm text-slate-500">
-                        Pilih pengguna dan role terlebih dahulu untuk mengatur hak akses menu.
-                    </div>
-                ) : loading ? (
-                    <div className="rounded-lg border border-slate-200 bg-white p-8 text-center text-sm text-slate-500">
-                        Memuat data hak akses...
-                    </div>
-                ) : (
-                    <div className="space-y-4">
-                        {menuItems.map((item) => (
-                            <MenuItemCard key={item.id} item={item} onToggle={toggleItem} />
-                        ))}
-                    </div>
-                )}
-
-                <div className="mb-6 rounded-lg border border-slate-200 bg-white">
+                {/* User-Role Table */}
+                <div className="mt-8 rounded-lg border border-slate-200 bg-white">
                     <div className="p-4 border-b border-slate-200">
                         <h2 className="text-lg font-semibold text-slate-900">Daftar Role Pengguna</h2>
-                        <p className="text-sm text-slate-500 mt-1">Menampilkan pengguna yang sudah memiliki role akses.</p>
+                        <p className="mt-1 text-sm text-slate-500">
+                            Menampilkan pengguna yang sudah memiliki role akses.
+                        </p>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-sm text-slate-600">
@@ -257,20 +227,19 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                                     <th className="p-4">Nama</th>
                                     <th className="p-4">Email</th>
                                     <th className="p-4">Role</th>
-                                    <th className="p-4">Menu Yang Dapat Diakses</th>
-                                    <th className="p-4">Aksi</th>
+                                    <th className="p-4">Permission (Menu)</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
                                 {userRoles.length > 0 ? (
-                                    userRoles.map((userRole) => (
-                                        <tr key={userRole.id} className="hover:bg-slate-50/80 transition-colors">
-                                            <td className="p-4 font-medium text-slate-900">{userRole.name}</td>
-                                            <td className="p-4 text-slate-600">{userRole.email}</td>
+                                    userRoles.map((ur) => (
+                                        <tr key={ur.id} className="hover:bg-slate-50/80">
+                                            <td className="p-4 font-medium text-slate-900">{ur.name}</td>
+                                            <td className="p-4 text-slate-600">{ur.email}</td>
                                             <td className="p-4">
                                                 <div className="flex flex-wrap gap-2">
-                                                   {(userRole.roles ?? []).length > 0 ? (
-                                                        (userRole.roles ?? []).map((role) => (
+                                                    {(ur.roles ?? []).length > 0 ? (
+                                                        ur.roles.map((role) => (
                                                             <span
                                                                 key={role.id}
                                                                 className="inline-flex items-center rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-medium text-indigo-700"
@@ -285,13 +254,13 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                                             </td>
                                             <td className="p-4">
                                                 <div className="flex flex-wrap gap-2">
-                                                    {(userRole.permissions ?? []).length > 0 ? (
-                                                        (userRole.permissions ?? []).map((perm) => (
+                                                    {(ur.permissions ?? []).length > 0 ? (
+                                                        ur.permissions.map((perm) => (
                                                             <span
                                                                 key={perm}
                                                                 className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700"
                                                             >
-                                                                 {getPermissionLabels()[perm] || perm}
+                                                                {getPermissionLabels()[perm] || perm}
                                                             </span>
                                                         ))
                                                     ) : (
@@ -299,20 +268,11 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="p-4">
-                                                <button
-                                                    type="button"
-                                                    onClick={() => openEditDialog(userRole)}
-                                                    className="inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-50"
-                                                >
-                                                    Edit
-                                                </button>
-                                            </td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan={5} className="p-8 text-center text-slate-400">
+                                        <td colSpan={4} className="p-8 text-center text-slate-400">
                                             Belum ada pengguna yang memiliki role akses.
                                         </td>
                                     </tr>
@@ -321,182 +281,270 @@ export default function Role({ users = [], roles = [], userRoles = [], menuPermi
                         </table>
                     </div>
                 </div>
+            </div>
 
-                {editUser && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                        <div className="w-full max-w-lg rounded-lg border border-slate-200 bg-white p-6 shadow-lg">
-                            <h3 className="text-lg font-semibold text-slate-900">Edit Hak Akses</h3>
-                            <p className="mt-1 text-sm text-slate-500">
-                                Ubah role untuk pengguna <strong>{editUser.name}</strong> ({editUser.email}).
-                            </p>
-
-                            <form
-                                onSubmit={(e) => {
-                                    e.preventDefault();
-                                    editForm.post('/konfigurasi/role/permissions', {
-                                        onSuccess: () => {
-                                            setEditUser(null);
-                                            setEditRoleId('');
-                                            editForm.reset();
-                                        },
-                                    });
+            {/* Modal: Tambah Role */}
+            {showAddRoleModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+                    <div className="w-full max-w-2xl rounded-lg border border-slate-200 bg-white p-6 shadow-lg">
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-lg font-semibold text-slate-900">Tambah Role Baru</h3>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setShowAddRoleModal(false);
+                                    roleForm.reset();
                                 }}
-                                className="mt-4 grid gap-4"
+                                className="rounded-md p-1 text-slate-500 hover:bg-slate-100"
                             >
-                                <div className="grid gap-2">
-                                    <label htmlFor="edit-role" className="text-sm font-medium text-slate-700">
-                                        Pilih Role
+                                <X className="h-5 w-5" />
+                            </button>
+                        </div>
+
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleAddRole();
+                            }}
+                            className="mt-4 grid gap-6"
+                        >
+                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-sm font-medium text-slate-700">Nama Role</label>
+                                    <input
+                                        type="text"
+                                        value={roleForm.data.name}
+                                        onChange={(e) => roleForm.setData('name', e.target.value)}
+                                        className="rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
+                                        required
+                                    />
+                                    {roleForm.errors.name && <p className="text-xs text-red-500">{roleForm.errors.name}</p>}
+                                </div>
+
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-sm font-medium text-slate-700">Slug</label>
+                                    <input
+                                        type="text"
+                                        value={roleForm.data.slug}
+                                        onChange={(e) => roleForm.setData('slug', e.target.value)}
+                                        className="rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
+                                        required
+                                    />
+                                    {roleForm.errors.slug && <p className="text-xs text-red-500">{roleForm.errors.slug}</p>}
+                                </div>
+
+                                <div className="sm:col-span-2 flex flex-col gap-2">
+                                    <label className="text-sm font-medium text-slate-700">Deskripsi</label>
+                                    <input
+                                        type="text"
+                                        value={roleForm.data.description ?? ''}
+                                        onChange={(e) => roleForm.setData('description', e.target.value)}
+                                        className="rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
+                                        placeholder="Opsional"
+                                    />
+                                    {roleForm.errors.description && <p className="text-xs text-red-500">{roleForm.errors.description}</p>}
+                                </div>
+                            </div>
+
+                            <div className="border-t border-slate-200 pt-4">
+                                <label className="text-sm font-medium text-slate-700">Permission (Menu Akses)</label>
+                                <p className="text-xs text-slate-500 mb-2">
+                                    Pilih permission yang bisa diakses oleh role ini.
+                                </p>
+                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                    {allPermissionNames.map((perm) => {
+                                        const isSelected = roleForm.data.permissions.includes(perm);
+
+                                        return (
+                                            <div key={perm} className="flex items-center gap-3">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={isSelected}
+                                                    onChange={() => togglePermissionInRoleForm(perm)}
+                                                    className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                                                />
+                                                <span className="text-sm text-slate-700">
+                                                    {getPermissionLabels()[perm] || perm}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end gap-3 border-t border-slate-200 pt-4">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setShowAddRoleModal(false);
+                                        roleForm.reset();
+                                    }}
+                                    disabled={roleForm.processing}
+                                    className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 disabled:opacity-60"
+                                >
+                                    Batal
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={roleForm.processing || !roleForm.data.name || !roleForm.data.slug}
+                                    className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700 disabled:opacity-60"
+                                >
+                                    {roleForm.processing && <UserCog className="h-4 w-4 animate-spin" />}
+                                    Simpan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal: Tambah Pengguna */}
+            {showAddUserModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+                    <div className="w-full max-w-2xl rounded-lg border border-slate-200 bg-white p-6 shadow-lg">
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-lg font-semibold text-slate-900">Tambah Pengguna Baru</h3>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setShowAddUserModal(false);
+                                    userForm.reset();
+                                }}
+                                className="rounded-md p-1 text-slate-500 hover:bg-slate-100"
+                            >
+                                <X className="h-5 w-5" />
+                            </button>
+                        </div>
+
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleAddUser();
+                            }}
+                            className="mt-4 grid gap-6"
+                        >
+                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <div className="flex flex-col gap-2">
+                                    <label htmlFor="add-name" className="text-sm font-medium text-slate-700">
+                                        Nama Lengkap
+                                    </label>
+                                    <input
+                                        id="add-name"
+                                        type="text"
+                                        value={userForm.data.name}
+                                        onChange={(e) => userForm.setData('name', e.target.value)}
+                                        className="rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
+                                        required
+                                    />
+                                    {userForm.errors.name && <p className="text-xs text-red-500">{userForm.errors.name}</p>}
+                                </div>
+
+                                <div className="flex flex-col gap-2">
+                                    <label htmlFor="add-email" className="text-sm font-medium text-slate-700">
+                                        Email
+                                    </label>
+                                    <input
+                                        id="add-email"
+                                        type="email"
+                                        value={userForm.data.email}
+                                        onChange={(e) => userForm.setData('email', e.target.value)}
+                                        className="rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
+                                        required
+                                    />
+                                    {userForm.errors.email && <p className="text-xs text-red-500">{userForm.errors.email}</p>}
+                                </div>
+
+                                <div className="sm:col-span-2 flex flex-col gap-2">
+                                    <label htmlFor="add-password" className="text-sm font-medium text-slate-700">
+                                        Password
+                                    </label>
+                                    <input
+                                        id="add-password"
+                                        type="password"
+                                        value={userForm.data.password}
+                                        onChange={(e) => userForm.setData('password', e.target.value)}
+                                        className="rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
+                                        required
+                                    />
+                                    {userForm.errors.password && <p className="text-xs text-red-500">{userForm.errors.password}</p>}
+                                </div>
+
+                                <div className="sm:col-span-2 flex flex-col gap-2">
+                                    <label htmlFor="add-role" className="text-sm font-medium text-slate-700">
+                                        Role
                                     </label>
                                     <select
-                                        id="edit-role"
-                                        value={editRoleId}
-                                        onChange={(e) => setEditRoleId(e.target.value)}
-                                        className="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
+                                        id="add-role"
+                                        value={userForm.data.role_id}
+                                        onChange={(e) => userForm.setData('role_id', e.target.value)}
+                                        className="rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600"
+                                        required
                                     >
                                         <option value="">-- Pilih role --</option>
                                         {roles.map((role) => (
-                                            <option key={role.id} value={role.id.toString()}>
+                                            <option key={role.id} value={role.id}>
                                                 {role.name}
                                             </option>
                                         ))}
                                     </select>
-                                    {editForm.errors.role_id && <p className="text-xs text-red-500">{editForm.errors.role_id}</p>}
+                                    {userForm.errors.role_id && <p className="text-xs text-red-500">{userForm.errors.role_id}</p>}
                                 </div>
+                            </div>
 
-                                <div className="grid gap-2">
-                                    <label className="text-sm font-medium text-slate-700">
-                                        Menu Yang Dapat Diakses
-                                    </label>
-                                    <div className="flex flex-wrap gap-2">
-                                        {(() => {
-                                            const selectedRole = roles.find((r) => r.id === Number(editRoleId));
-
-                                        if (!selectedRole || (selectedRole.permissions ?? []).length === 0) {
-                                                   return <span className="text-sm text-slate-400">Pilih role untuk melihat menu.</span>;
-                                                    }
-
-                                                return (selectedRole.permissions ?? []).map((perm) => (
-                                                <span
-                                                    key={perm.id}
-                                                    className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700"
-                                                >
-                                                     {getPermissionLabels()[perm.key] || perm.label}
-                                                </span>
-                                            ));
-                                        })()}
-                                    </div>
+                            <div className="border-t border-slate-200 pt-4">
+                                <label className="text-sm font-medium text-slate-700">Akses Menu Tambahan (Opsional)</label>
+                                <p className="text-xs text-slate-500 mb-2">
+                                    Override permission role untuk pengguna ini. Biarkan kosong untuk menggunakan permission dari role.
+                                </p>
+                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                    {menuItems.map((item) => (
+                                        <div key={item.id} className="flex items-start gap-3">
+                                            <input
+                                                type="checkbox"
+                                                checked={item.enabled}
+                                                onChange={() => toggleMenuItem(item.id)}
+                                                className="mt-1 h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                                            />
+                                            <span className="text-sm text-slate-700">{item.label}</span>
+                                        </div>
+                                    ))}
                                 </div>
+                            </div>
 
-                                <div className="mt-2 flex justify-end gap-2">
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setEditUser(null);
-                                            setEditRoleId('');
-                                            editForm.reset();
-                                        }}
-                                        disabled={editForm.processing}
-                                        className="inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 disabled:opacity-60"
-                                    >
-                                        Batal
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        disabled={!editRoleId || editForm.processing}
-                                        className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm text-white hover:bg-indigo-700 disabled:opacity-60"
-                                    >
-                                        {editForm.processing && <UserCog className="mr-2 h-4 w-4 animate-spin" />}
-                                        Simpan
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                            <div className="flex justify-end gap-3 border-t border-slate-200 pt-4">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setShowAddUserModal(false);
+                                        userForm.reset();
+                                    }}
+                                    disabled={userForm.processing}
+                                    className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 disabled:opacity-60"
+                                >
+                                    Batal
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={
+                                        userForm.processing ||
+                                        !userForm.data.name ||
+                                        !userForm.data.email ||
+                                        !userForm.data.password ||
+                                        !userForm.data.role_id
+                                    }
+                                    className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm text-white hover:bg-indigo-700 disabled:opacity-60"
+                                >
+                                    {userForm.processing && <UserCog className="h-4 w-4 animate-spin" />}
+                                    Simpan
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                )}
-
-            </div>
+                </div>
+            )}
         </>
     );
 }
 
+
 Role.layout = { breadcrumbs };
-
-function collectMenuPermissions(items: MenuItemConfig[]): Record<string, boolean> {
-    const permissions: Record<string, boolean> = {};
-    items.forEach((item) => {
-        permissions[item.id] = item.enabled;
-        item.children?.forEach((child) => {
-            permissions[`${item.id}.${child.id}`] = child.enabled;
-        });
-    });
-    return permissions;
-}
-
-function MenuItemCard({
-    item,
-    onToggle,
-}: {
-    item: MenuItemConfig;
-    onToggle: (path: string) => void;
-}) {
-    const Icon = item.icon;
-
-    return (
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-            <div className="flex items-center gap-3 font-semibold">
-                <input
-                    type="checkbox"
-                    checked={item.enabled}
-                    onChange={() => onToggle(item.id)}
-                    className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
-                />
-                <Icon className="h-5 w-5 text-slate-600" />
-                <span className="text-slate-800">{item.label}</span>
-            </div>
-
-            {item.children && item.children.length > 0 && (
-                <div className={`ml-6 mt-2 space-y-2 ${!item.enabled ? 'opacity-50' : ''}`}>
-                    {item.children.map((child) => {
-                        const ChildIcon = child.icon;
-
-                        return (
-                            <div
-                                key={child.id}
-                                className="flex items-center gap-3"
-                            >
-                                <input
-                                    type="checkbox"
-                                    checked={item.enabled && child.enabled}
-                                    disabled={!item.enabled}
-                                    onChange={() => onToggle(`${item.id}.${child.id}`)}
-                                    className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
-                                />
-                                <ChildIcon className="h-4 w-4 text-slate-500" />
-                                <span className="text-sm text-slate-700">{child.label}</span>
-                            </div>
-                        );
-                    })}
-                </div>
-            )}
-        </div>
-    );
-}
-
-function updateItem(items: MenuItemConfig[], path: string): MenuItemConfig[] {
-    return items.map((item) => {
-        if (item.id === path) {
-            return { ...item, enabled: !item.enabled };
-        }
-
-        if (item.children?.some((c) => c.id === path)) {
-            return {
-                ...item,
-                children: item.children.map((c) =>
-                    c.id === path ? { ...c, enabled: !c.enabled } : c,
-                ),
-            };
-        }
-
-        return item;
-    });
-}

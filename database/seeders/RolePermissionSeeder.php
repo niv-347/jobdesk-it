@@ -12,33 +12,33 @@ class RolePermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            ['key' => 'dashboard', 'group' => 'General', 'label' => 'Dashboard'],
-            ['key' => 'konfigurasi', 'group' => 'Konfigurasi', 'label' => 'Konfigurasi'],
-            ['key' => 'konfigurasi.pengguna', 'group' => 'Konfigurasi', 'label' => 'Manajemen Pengguna'],
-            ['key' => 'konfigurasi.role', 'group' => 'Konfigurasi', 'label' => 'Role Akses'],
-            ['key' => 'sop', 'group' => 'SOP', 'label' => 'SOP'],
-            ['key' => 'sop.buatsop', 'group' => 'SOP', 'label' => 'Buat SOP'],
-            ['key' => 'troubleshooting', 'group' => 'Troubleshooting', 'label' => 'Troubleshooting'],
-            ['key' => 'troubleshooting.kejadian', 'group' => 'Troubleshooting', 'label' => 'Kejadian'],
-            ['key' => 'visum', 'group' => 'Visum', 'label' => 'Visum'],
-            ['key' => 'visum.formvisum', 'group' => 'Visum', 'label' => 'Form Visum'],
-            ['key' => 'asset', 'group' => 'Asset', 'label' => 'Asset'],
-            ['key' => 'asset.dataasset', 'group' => 'Asset', 'label' => 'Data Asset'],
-            ['key' => 'asset.laporan', 'group' => 'Asset', 'label' => 'Laporan Asset'],
-            ['key' => 'radiologi', 'group' => 'Radiologi', 'label' => 'Radiologi'],
-            ['key' => 'radiologi.ekpertise', 'group' => 'Radiologi', 'label' => 'Ekspertise'],
-            ['key' => 'radiologi.share', 'group' => 'Radiologi', 'label' => 'Share'],
-            ['key' => 'verifikator', 'group' => 'Verifikator', 'label' => 'Verifikator'],
-            ['key' => 'verifikator.verifsop', 'group' => 'Verifikator', 'label' => 'Verifikasi SOP'],
+            ['name' => 'dashboard', 'guard_name' => 'web'],
+            ['name' => 'konfigurasi', 'guard_name' => 'web'],
+            ['name' => 'konfigurasi.pengguna', 'guard_name' => 'web'],
+            ['name' => 'konfigurasi.role', 'guard_name' => 'web'],
+            ['name' => 'sop', 'guard_name' => 'web'],
+            ['name' => 'sop.buatsop', 'guard_name' => 'web'],
+            ['name' => 'troubleshooting', 'guard_name' => 'web'],
+            ['name' => 'troubleshooting.kejadian', 'guard_name' => 'web'],
+            ['name' => 'visum', 'guard_name' => 'web'],
+            ['name' => 'visum.formvisum', 'guard_name' => 'web'],
+            ['name' => 'asset', 'guard_name' => 'web'],
+            ['name' => 'asset.dataasset', 'guard_name' => 'web'],
+            ['name' => 'asset.laporan', 'guard_name' => 'web'],
+            ['name' => 'radiologi', 'guard_name' => 'web'],
+            ['name' => 'radiologi.ekpertise', 'guard_name' => 'web'],
+            ['name' => 'radiologi.share', 'guard_name' => 'web'],
+            ['name' => 'verifikator', 'guard_name' => 'web'],
+            ['name' => 'verifikator.verifsop', 'guard_name' => 'web'],
         ];
 
         foreach ($permissions as $perm) {
-            Permission::updateOrCreate(['key' => $perm['key']], $perm);
+            Permission::updateOrCreate(['name' => $perm['name']], $perm);
         }
 
         $adminRole = Role::updateOrCreate(
             ['slug' => 'admin'],
-            ['name' => 'Administrator', 'description' => 'Akses penuh ke seluruh sistem']
+            ['name' => 'admin', 'description' => 'Akses penuh ke seluruh sistem', 'guard_name' => 'web']
         );
 
         $adminRole->permissions()->sync(Permission::pluck('id')->all());

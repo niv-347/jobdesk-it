@@ -3,7 +3,7 @@ import pengguna1a0678 from './pengguna'
 import role51742c from './role'
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::pengguna
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:18
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:21
  * @route '/konfigurasi/pengguna'
  */
 export const pengguna = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -18,7 +18,7 @@ pengguna.definition = {
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::pengguna
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:18
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:21
  * @route '/konfigurasi/pengguna'
  */
 pengguna.url = (options?: RouteQueryOptions) => {
@@ -27,7 +27,7 @@ pengguna.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::pengguna
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:18
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:21
  * @route '/konfigurasi/pengguna'
  */
 pengguna.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -36,7 +36,7 @@ pengguna.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::pengguna
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:18
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:21
  * @route '/konfigurasi/pengguna'
  */
 pengguna.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -46,7 +46,7 @@ pengguna.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::role
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:91
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:102
  * @route '/konfigurasi/role'
  */
 export const role = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -61,7 +61,7 @@ role.definition = {
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::role
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:91
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:102
  * @route '/konfigurasi/role'
  */
 role.url = (options?: RouteQueryOptions) => {
@@ -70,7 +70,7 @@ role.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::role
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:91
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:102
  * @route '/konfigurasi/role'
  */
 role.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -79,7 +79,7 @@ role.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::role
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:91
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:102
  * @route '/konfigurasi/role'
  */
 role.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({

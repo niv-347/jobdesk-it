@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::save
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:122
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:148
  * @route '/konfigurasi/role/permissions'
  */
 export const save = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ save.definition = {
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::save
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:122
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:148
  * @route '/konfigurasi/role/permissions'
  */
 save.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ save.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::save
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:122
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:148
  * @route '/konfigurasi/role/permissions'
  */
 save.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({

@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefa
 import permissions7d3099 from './permissions'
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::permissions
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:114
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:125
  * @route '/konfigurasi/role/permissions/{user}'
  */
 export const permissions = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -17,7 +17,7 @@ permissions.definition = {
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::permissions
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:114
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:125
  * @route '/konfigurasi/role/permissions/{user}'
  */
 permissions.url = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -45,7 +45,7 @@ permissions.url = (args: { user: string | number } | [user: string | number ] | 
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::permissions
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:114
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:125
  * @route '/konfigurasi/role/permissions/{user}'
  */
 permissions.get = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -54,15 +54,85 @@ permissions.get = (args: { user: string | number } | [user: string | number ] | 
 })
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::permissions
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:114
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:125
  * @route '/konfigurasi/role/permissions/{user}'
  */
 permissions.head = (args: { user: string | number } | [user: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: permissions.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Konfigurasi\PenggunaController::storeUser
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:196
+ * @route '/konfigurasi/role/store-user'
+ */
+export const storeUser = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: storeUser.url(options),
+    method: 'post',
+})
+
+storeUser.definition = {
+    methods: ["post"],
+    url: '/konfigurasi/role/store-user',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Konfigurasi\PenggunaController::storeUser
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:196
+ * @route '/konfigurasi/role/store-user'
+ */
+storeUser.url = (options?: RouteQueryOptions) => {
+    return storeUser.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Konfigurasi\PenggunaController::storeUser
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:196
+ * @route '/konfigurasi/role/store-user'
+ */
+storeUser.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: storeUser.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Konfigurasi\PenggunaController::store
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:245
+ * @route '/konfigurasi/role/store'
+ */
+export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: store.url(options),
+    method: 'post',
+})
+
+store.definition = {
+    methods: ["post"],
+    url: '/konfigurasi/role/store',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Konfigurasi\PenggunaController::store
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:245
+ * @route '/konfigurasi/role/store'
+ */
+store.url = (options?: RouteQueryOptions) => {
+    return store.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Konfigurasi\PenggunaController::store
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:245
+ * @route '/konfigurasi/role/store'
+ */
+store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: store.url(options),
+    method: 'post',
+})
 const role = {
     permissions: Object.assign(permissions, permissions7d3099),
+storeUser: Object.assign(storeUser, storeUser),
+store: Object.assign(store, store),
 }
 
 export default role

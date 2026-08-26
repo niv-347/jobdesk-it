@@ -7,6 +7,8 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\UserMenuPermission;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +23,7 @@ class PenggunaController extends Controller
         $search = $request->query('search');
         $perPage = 10;
 
-        $query = User::query()->select('id', 'name', 'email');
+        $query = User::query()->select('id', 'name', 'email', 'email_verified_at');
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -31,9 +33,11 @@ class PenggunaController extends Controller
         }
 
         $users = $query->latest()->paginate($perPage)->withQueryString();
+        $roles = Role::select('id', 'name', 'slug')->get();
 
         return Inertia::render('konfigurasi/pengguna', [
             'users' => $users,
+            'roles' => $roles,
         ]);
     }
 
@@ -41,17 +45,23 @@ class PenggunaController extends Controller
     {
         // 1. Validasi Input
         $request->validate([
-            'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', Password::defaults()],
+            'name'      => ['required', 'string', 'max:255'],
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'  => ['required', Password::defaults()],
+            'role_id'   => ['nullable', 'exists:roles,id'],
         ]);
 
         // 2. Simpan Data ke Database
-        User::create([
+        $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        // Assign role jika dipilih
+        if ($request->filled('role_id')) {
+            $user->roles()->sync([$request->role_id]);
+        }
 
         // 3. Kembali ke halaman utama dengan pesan sukses
         return redirect()->back()->with('success', 'Pengguna berhasil ditambahkan!');
@@ -102,7 +112,7 @@ class PenggunaController extends Controller
                 'name' => $role->name,
                 'slug' => $role->slug,
             ]),
-            'permissions' => $user->roles->flatMap(fn ($role) => $role->permissions->pluck('key'))->unique()->values(),
+            'permissions' => $user->roles->flatMap(fn ($role) => $role->permissions->pluck('name'))->unique()->values(),
         ]);
 
         return Inertia::render('konfigurasi/role', [
@@ -112,14 +122,12 @@ class PenggunaController extends Controller
         ]);
     }
 
-    public function getUserPermissions(int $userId)
+    public function getUserPermissions(int $userId): JsonResponse
     {
-        $user = User::findOrFail($userId);
+        $user = User::with('roles.permissions')->findOrFail($userId);
 
-        $rolePermissions = $user->roles()
-            ->with('permissions')
-            ->get()
-            ->flatMap(fn ($role) => $role->permissions->pluck('key'))
+        $rolePermissions = $user->roles
+            ->flatMap(fn ($role) => $role->permissions->pluck('name'))
             ->unique()
             ->map(fn ($key) => [$key => true])
             ->collapse()
@@ -129,15 +137,15 @@ class PenggunaController extends Controller
             ->pluck('allowed', 'menu_key')
             ->toArray();
 
-        $permissions = $rolePermissions;
-        foreach ($userPermissions as $menuKey => $allowed) {
-            $permissions[$menuKey] = (bool) $allowed;
-        }
+        $permissions = array_merge(
+            $rolePermissions,
+            array_map('boolval', $userPermissions),
+        );
 
         return response()->json($permissions);
     }
 
-    public function saveUserPermissions(Request $request)
+    public function saveUserPermissions(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'user_id' => ['required', 'exists:users,id'],
@@ -146,8 +154,8 @@ class PenggunaController extends Controller
             'permissions.*' => ['boolean'],
         ]);
 
-        $user = User::findOrFail($validated['user_id']);
-        $role = Role::findOrFail($validated['role_id']);
+        $user = User::findOrFail((int) $validated['user_id']);
+        $role = Role::findOrFail((int) $validated['role_id']);
 
         $permissions = $validated['permissions'] ?? null;
 
@@ -183,5 +191,81 @@ class PenggunaController extends Controller
         });
 
         return back()->with('success', 'Role akses berhasil disimpan.');
+    }
+
+    public function storeUserWithRole(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', Password::defaults()],
+            'role_id'  => ['required', 'exists:roles,id'],
+            'permissions' => ['nullable', 'array'],
+            'permissions.*' => ['boolean'],
+        ]);
+
+        DB::transaction(function () use ($validated) {
+            $user = User::create([
+                'name'     => $validated['name'],
+                'email'    => $validated['email'],
+                'password' => Hash::make($validated['password']),
+            ]);
+
+            $user->roles()->sync([$validated['role_id']]);
+
+            $permissions = $validated['permissions'] ?? null;
+            if (! is_array($permissions)) {
+                return;
+            }
+
+            DB::table('user_menu_permissions')
+                ->where('user_id', $user->id)
+                ->delete();
+
+            $now = now();
+            $records = [];
+            foreach ($permissions as $menuKey => $allowed) {
+                $records[] = [
+                    'user_id' => $user->id,
+                    'menu_key' => $menuKey,
+                    'allowed' => $allowed,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
+            }
+
+            if (! empty($records)) {
+                DB::table('user_menu_permissions')->insert($records);
+            }
+        });
+
+        return back()->with('success', 'Pengguna berhasil ditambahkan!');
+    }
+
+    public function storeRole(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name'        => ['required', 'string', 'max:255', 'unique:roles,name'],
+            'slug'        => ['required', 'string', 'max:255', 'unique:roles,slug', 'alpha_dash'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'permissions' => ['nullable', 'array'],
+            'permissions.*' => ['exists:permissions,name'],
+        ]);
+
+        DB::transaction(function () use ($validated) {
+            $role = Role::create([
+                'name'        => $validated['name'],
+                'slug'        => $validated['slug'],
+                'description' => $validated['description'],
+                'guard_name'  => 'web',
+            ]);
+
+            if (!empty($validated['permissions'])) {
+                $permissionIds = Permission::whereIn('name', $validated['permissions'])->pluck('id')->toArray();
+                $role->permissions()->sync($permissionIds, false);
+            }
+        });
+
+        return back()->with('success', 'Role baru berhasil ditambahkan!');
     }
 }

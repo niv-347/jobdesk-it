@@ -62,6 +62,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('konfigurasi/role', [PenggunaController::class, 'roleIndex'])->name('konfigurasi.role');
     Route::get('konfigurasi/role/permissions/{user}', [PenggunaController::class, 'getUserPermissions'])->name('konfigurasi.role.permissions');
     Route::post('konfigurasi/role/permissions', [PenggunaController::class, 'saveUserPermissions'])->name('konfigurasi.role.permissions.save');
+    Route::post('konfigurasi/role/store-user', [PenggunaController::class, 'storeUserWithRole'])->name('konfigurasi.role.store-user');
+    Route::post('konfigurasi/role/store', [PenggunaController::class, 'storeRole'])->name('konfigurasi.role.store');
     Route::get('profile/activity', [ProfileController::class, 'activityLog'])->name('profile.activity');
 
     Route::get('asset/dataasset', [AssetController::class, 'index'])->name('asset.dataasset');

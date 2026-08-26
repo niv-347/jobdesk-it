@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::store
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:39
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:44
  * @route '/konfigurasi/pengguna'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::store
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:39
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:44
  * @route '/konfigurasi/pengguna'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::store
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:39
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:44
  * @route '/konfigurasi/pengguna'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::update
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:60
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:71
  * @route '/konfigurasi/pengguna/{pengguna}'
  */
 export const update = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -50,7 +50,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::update
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:60
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:71
  * @route '/konfigurasi/pengguna/{pengguna}'
  */
 update.url = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -83,7 +83,7 @@ update.url = (args: { pengguna: number | { id: number } } | [pengguna: number | 
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::update
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:60
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:71
  * @route '/konfigurasi/pengguna/{pengguna}'
  */
 update.put = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -93,7 +93,7 @@ update.put = (args: { pengguna: number | { id: number } } | [pengguna: number | 
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::destroy
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:84
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:95
  * @route '/konfigurasi/pengguna/{pengguna}'
  */
 export const destroy = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -108,7 +108,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::destroy
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:84
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:95
  * @route '/konfigurasi/pengguna/{pengguna}'
  */
 destroy.url = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -141,7 +141,7 @@ destroy.url = (args: { pengguna: number | { id: number } } | [pengguna: number |
 
 /**
 * @see \App\Http\Controllers\Konfigurasi\PenggunaController::destroy
- * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:84
+ * @see app/Http/Controllers/Konfigurasi/PenggunaController.php:95
  * @route '/konfigurasi/pengguna/{pengguna}'
  */
 destroy.delete = (args: { pengguna: number | { id: number } } | [pengguna: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({

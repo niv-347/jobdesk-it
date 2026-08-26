@@ -1,14 +1,7 @@
-import { gooeyToast, type GooeyToastOptions } from 'goey-toast';
+import { gooeyToast  } from 'goey-toast';
+import type {GooeyToastOptions} from 'goey-toast';
 
 type ToastType = 'success' | 'error' | 'info' | 'warning';
-
-interface ToastData {
-    id?: string;
-    type: ToastType;
-    message: string;
-    description?: string;
-    duration?: number;
-}
 
 export function useToast() {
     const showToast = (

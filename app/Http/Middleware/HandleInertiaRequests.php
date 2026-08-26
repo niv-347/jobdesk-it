@@ -50,7 +50,7 @@ class HandleInertiaRequests extends Middleware
 
             $menuPermissions = Permission::whereHas('roles', function ($q) use ($roleIds) {
                 $q->whereIn('roles.id', $roleIds);
-            })->get()->mapWithKeys(fn ($p) => [$p->key => true])->toArray();
+            })->get()->mapWithKeys(fn ($p) => [$p->name => true])->toArray();
         }
 
         $toast = null;
