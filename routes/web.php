@@ -77,12 +77,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('radiologi/ekpertise/{radiologi}', [RadiologiController::class, 'update'])->name('radiologi.ekpertise.update');
     Route::delete('radiologi/ekpertise/{radiologi}', [RadiologiController::class, 'destroy'])->name('radiologi.ekpertise.destroy');
 
-    Route::get('radiologi/share', [\App\Http\Controllers\RadiologiShareController::class, 'index'])->name('radiologi.share');
-    Route::get('radiologi/verify', [\App\Http\Controllers\RadiologiShareController::class, 'showVerify'])->name('radiologi.verify');
-    Route::post('radiologi/verify', [\App\Http\Controllers\RadiologiShareController::class, 'verify'])->name('radiologi.verify.submit');
-    Route::get('radiologi/hasil/{radiologi}/pdf', [\App\Http\Controllers\RadiologiShareController::class, 'downloadPdf'])->name('radiologi.hasil.pdf');
-    Route::get('radiologi/hasil/{radiologi}/foto', [\App\Http\Controllers\RadiologiShareController::class, 'downloadFoto'])->name('radiologi.hasil.foto');
-
     Route::get('verifikator/verifsop', [\App\Http\Controllers\VerifikatorController::class, 'verifSop'])->name('verifikator.verifsop');
     Route::post('verifikator/verifsop/{sop}/approve', [\App\Http\Controllers\VerifikatorController::class, 'approve'])->name('verifikator.approve');
     Route::post('verifikator/verifsop/{sop}/reject', [\App\Http\Controllers\VerifikatorController::class, 'reject'])->name('verifikator.reject');
@@ -93,5 +87,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('export/sops', [ExportController::class, 'sops'])->name('export.sops');
     Route::get('export/troubleshoots', [ExportController::class, 'troubleshoots'])->name('export.troubleshoots');
 });
+
+Route::get('radiologi/share', [\App\Http\Controllers\RadiologiShareController::class, 'index'])->name('radiologi.share');
+Route::get('radiologi/verify', [\App\Http\Controllers\RadiologiShareController::class, 'showVerify'])->name('radiologi.verify');
+Route::post('radiologi/verify', [\App\Http\Controllers\RadiologiShareController::class, 'verify'])->name('radiologi.verify.submit');
+Route::get('radiologi/hasil/{radiologi}/pdf', [\App\Http\Controllers\RadiologiShareController::class, 'downloadPdf'])->name('radiologi.hasil.pdf');
+Route::get('radiologi/hasil/{radiologi}/foto', [\App\Http\Controllers\RadiologiShareController::class, 'downloadFoto'])->name('radiologi.hasil.foto');
 
 require __DIR__.'/settings.php';
