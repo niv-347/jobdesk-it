@@ -1,5 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
-import { Edit, Loader2, Trash2, UserPlus, X } from 'lucide-react';
+import { Edit, Loader2, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 
 import { konfigurasi } from '@/routes';
@@ -8,7 +8,7 @@ import type { BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Konfigurasi', href: konfigurasi() },
-    { title: 'Pengguna', href: pengguna() },
+    { title: 'Daftar Pegawai', href: pengguna() },
 ];
 
 interface User {
@@ -16,12 +16,6 @@ interface User {
     name: string;
     email: string;
     email_verified_at: string | null;
-}
-
-interface Role {
-    id: number;
-    name: string;
-    slug: string;
 }
 
 interface Props {
@@ -37,40 +31,20 @@ interface Props {
             active: boolean;
         }>;
     };
-    roles: Role[];
     search?: string;
 }
 
-export default function Pengguna({ users, roles = [], search = '' }: Props) {
-    const [isCreateOpen, setIsCreateOpen] = useState(false);
+export default function Pegawai({ users, search = '' }: Props) {
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [searchQuery, setSearchQuery] = useState(search);
-
-    const createForm = useForm({
-        name: '',
-        email: '',
-        password: '',
-        role_id: '',
-    });
 
     const editForm = useForm({
         name: '',
         email: '',
         password: '',
-        role_id: '',
     });
 
     const deleteForm = useForm({});
-
-    const handleCreateSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        createForm.post('/konfigurasi/pengguna', {
-            onSuccess: () => {
-                setIsCreateOpen(false);
-                createForm.reset();
-            },
-        });
-    };
 
     const openEditModal = (user: User) => {
         setEditingUser(user);
@@ -78,7 +52,6 @@ export default function Pengguna({ users, roles = [], search = '' }: Props) {
             name: user.name,
             email: user.email,
             password: '',
-            role_id: '',
         });
         editForm.clearErrors();
     };
@@ -87,8 +60,8 @@ export default function Pengguna({ users, roles = [], search = '' }: Props) {
         e.preventDefault();
 
         if (!editingUser) {
-return;
-}
+            return;
+        }
 
         editForm.put(`/konfigurasi/pengguna/${editingUser.id}`, {
             onSuccess: () => {
@@ -99,7 +72,9 @@ return;
     };
 
     const handleDelete = (user: User) => {
-        if (confirm(`Apakah Anda yakin ingin menghapus pengguna "${user.name}"?`)) {
+        if (
+            confirm(`Apakah Anda yakin ingin menghapus pegawai "${user.name}"?`)
+        ) {
             deleteForm.delete(`/konfigurasi/pengguna/${user.id}`);
         }
     };
@@ -119,48 +94,33 @@ return;
 
     return (
         <>
-            <Head title="Manajemen Pengguna" />
+            <Head title="Daftar Pegawai" />
 
-            <div className="flex h-full flex-1 flex-col gap-6 p-6 bg-white">
-                {/* Header */}
+            <div className="flex h-full flex-1 flex-col gap-6 bg-white p-6">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
-                            <UserPlus className="w-6 h-6 text-indigo-600" />
-                            Manajemen Pengguna
+                        <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                            Daftar Pegawai
                         </h1>
-                        <p className="text-sm text-slate-500 mt-1">
-                            Kelola daftar pengguna dan hak akses sistem di sini.
+                        <p className="mt-1 text-sm text-slate-500">
+                            Kelola data pegawai dan akun sistem di sini.
                         </p>
                     </div>
-
-                    <button
-                        onClick={() => {
-                            createForm.reset();
-                            createForm.clearErrors();
-                            setIsCreateOpen(true);
-                        }}
-                        className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
-                    >
-                        <UserPlus className="w-4 h-4" />
-                        Tambah Pengguna
-                    </button>
                 </div>
 
-                {/* Search Bar */}
-                <div className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm">
-                    <div className="p-4 border-b border-slate-200">
+                <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                    <div className="border-b border-slate-200 p-4">
                         <form onSubmit={handleSearch} className="flex gap-2">
                             <input
                                 type="text"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Cari nama atau email..."
-                                className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-indigo-600"
+                                className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none"
                             />
                             <button
                                 type="submit"
-                                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors"
+                                className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
                             >
                                 Cari
                             </button>
@@ -168,7 +128,7 @@ return;
                     </div>
 
                     <table className="w-full text-left text-sm text-slate-600">
-                        <thead className="bg-slate-50 text-slate-700 font-semibold border-b border-slate-200">
+                        <thead className="border-b border-slate-200 bg-slate-50 font-semibold text-slate-700">
                             <tr>
                                 <th className="p-4">Nama</th>
                                 <th className="p-4">Email</th>
@@ -179,61 +139,86 @@ return;
                         <tbody className="divide-y divide-slate-100">
                             {users.data.length > 0 ? (
                                 users.data.map((user) => (
-                                    <tr key={user.id} className="hover:bg-slate-50/80 transition-colors">
-                                        <td className="p-4 font-medium text-slate-900">{user.name}</td>
-                                        <td className="p-4 text-slate-600">{user.email}</td>
+                                    <tr
+                                        key={user.id}
+                                        className="transition-colors hover:bg-slate-50/80"
+                                    >
+                                        <td className="p-4 font-medium text-slate-900">
+                                            {user.name}
+                                        </td>
+                                        <td className="p-4 text-slate-600">
+                                            {user.email}
+                                        </td>
                                         <td className="p-4 text-slate-600">
                                             {user.email_verified_at ? (
-                                                <span className="text-emerald-600">Terverifikasi</span>
+                                                <span className="text-emerald-600">
+                                                    Terverifikasi
+                                                </span>
                                             ) : (
-                                                <span className="text-slate-400">Belum diverifikasi</span>
+                                                <span className="text-slate-400">
+                                                    Belum diverifikasi
+                                                </span>
                                             )}
                                         </td>
-                                        <td className="p-4 text-center space-x-2">
+                                        <td className="space-x-2 p-4 text-center">
                                             <button
-                                                onClick={() => openEditModal(user)}
-                                                className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors cursor-pointer"
+                                                onClick={() =>
+                                                    openEditModal(user)
+                                                }
+                                                className="inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-indigo-600"
                                             >
-                                                <Edit className="w-4 h-4" />
+                                                <Edit className="h-4 w-4" />
                                             </button>
                                             <button
-                                                onClick={() => handleDelete(user)}
+                                                onClick={() =>
+                                                    handleDelete(user)
+                                                }
                                                 disabled={deleteForm.processing}
-                                                className="inline-flex items-center gap-2 text-sm font-medium text-red-600 hover:text-red-700 transition-colors cursor-pointer disabled:opacity-50"
+                                                className="inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-red-600 transition-colors hover:text-red-700 disabled:opacity-50"
                                             >
-                                                <Trash2 className="w-4 h-4" />
+                                                <Trash2 className="h-4 w-4" />
                                             </button>
                                         </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={4} className="p-8 text-center text-slate-400">
-                                        {search ? 'Tidak ada pengguna yang sesuai dengan pencarian.' : 'Belum ada data pengguna yang tersedia.'}
+                                    <td
+                                        colSpan={4}
+                                        className="p-8 text-center text-slate-400"
+                                    >
+                                        {search
+                                            ? 'Tidak ada pegawai yang sesuai dengan pencarian.'
+                                            : 'Belum ada data pegawai yang tersedia.'}
                                     </td>
                                 </tr>
                             )}
                         </tbody>
                     </table>
 
-                    {/* Pagination */}
                     {users.last_page > 1 && (
-                        <div className="flex items-center justify-between px-4 py-3 border-t border-slate-200">
+                        <div className="flex items-center justify-between border-t border-slate-200 px-4 py-3">
                             <div className="text-sm text-slate-600">
-                                Menampilkan {users.data.length} dari {users.total} pengguna
+                                Menampilkan {users.data.length} dari{' '}
+                                {users.total} pegawai
                             </div>
                             <div className="flex gap-2">
                                 {users.links.map((link, index) => (
                                     <button
                                         key={index}
-                                        onClick={() => link.url && (window.location.href = link.url)}
+                                        onClick={() =>
+                                            link.url &&
+                                            (window.location.href = link.url)
+                                        }
                                         disabled={!link.url}
-                                        dangerouslySetInnerHTML={{ __html: link.label }}
-                                        className={`px-3 py-1 rounded text-sm ${
+                                        dangerouslySetInnerHTML={{
+                                            __html: link.label,
+                                        }}
+                                        className={`rounded px-3 py-1 text-sm ${
                                             link.active
                                                 ? 'bg-indigo-600 text-white'
-                                                : 'bg-white border border-slate-300 text-slate-700 hover:bg-slate-50'
-                                        } ${!link.url ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                                                : 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
+                                        } ${!link.url ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
                                     />
                                 ))}
                             </div>
@@ -242,161 +227,108 @@ return;
                 </div>
             </div>
 
-            {/* Modal: Tambah Pengguna */}
-            {isCreateOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-                    <div className="bg-white rounded-xl shadow-xl w-full max-w-md border border-slate-200 overflow-hidden">
-                        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-                            <h3 className="text-lg font-semibold text-slate-900">Tambah Pengguna Baru</h3>
-                            <button
-                                onClick={() => setIsCreateOpen(false)}
-                                className="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
-                        </div>
-
-                        <form onSubmit={handleCreateSubmit} className="p-6 space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
-                                <input
-                                    type="text"
-                                    value={createForm.data.name}
-                                    onChange={(e) => createForm.setData('name', e.target.value)}
-                                    placeholder="Masukkan nama pengguna"
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-indigo-600"
-                                />
-                                {createForm.errors.name && <p className="text-xs text-red-500 mt-1">{createForm.errors.name}</p>}
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Alamat Email</label>
-                                <input
-                                    type="email"
-                                    value={createForm.data.email}
-                                    onChange={(e) => createForm.setData('email', e.target.value)}
-                                    placeholder="contoh@email.com"
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-indigo-600"
-                                />
-                                {createForm.errors.email && <p className="text-xs text-red-500 mt-1">{createForm.errors.email}</p>}
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Kata Sandi</label>
-                                <input
-                                    type="password"
-                                    value={createForm.data.password}
-                                    onChange={(e) => createForm.setData('password', e.target.value)}
-                                    placeholder="••••••••"
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-indigo-600"
-                                />
-                                {createForm.errors.password && <p className="text-xs text-red-500 mt-1">{createForm.errors.password}</p>}
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Role</label>
-                                <select
-                                    value={createForm.data.role_id}
-                                    onChange={(e) => createForm.setData('role_id', e.target.value)}
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-indigo-600"
-                                >
-                                    <option value="">-- Pilih role --</option>
-                                    {roles.map((role) => (
-                                        <option key={role.id} value={role.id}>
-                                            {role.name}
-                                        </option>
-                                    ))}
-                                </select>
-                                {createForm.errors.role_id && <p className="text-xs text-red-500 mt-1">{createForm.errors.role_id}</p>}
-                            </div>
-
-                            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
-                                <button
-                                    type="button"
-                                    onClick={() => setIsCreateOpen(false)}
-                                    className="px-4 py-2 border border-slate-300 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors cursor-pointer"
-                                >
-                                    Batal
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={createForm.processing}
-                                    className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors cursor-pointer disabled:opacity-60"
-                                >
-                                    {createForm.processing && <Loader2 className="w-4 h-4 animate-spin" />}
-                                    Simpan Pengguna
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
-
-            {/* Modal: Edit Pengguna */}
             {editingUser && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-                    <div className="bg-white rounded-xl shadow-xl w-full max-w-md border border-slate-200 overflow-hidden">
-                        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-                            <h3 className="text-lg font-semibold text-slate-900">Edit Pengguna</h3>
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm">
+                    <div className="w-full max-w-md overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
+                        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                            <h3 className="text-lg font-semibold text-slate-900">
+                                Edit Pegawai
+                            </h3>
                             <button
                                 onClick={() => setEditingUser(null)}
-                                className="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                                className="cursor-pointer text-slate-400 transition-colors hover:text-slate-600"
                             >
-                                <X className="w-5 h-5" />
+                                <X className="h-5 w-5" />
                             </button>
                         </div>
 
-                        <form onSubmit={handleEditSubmit} className="p-6 space-y-4">
+                        <form
+                            onSubmit={handleEditSubmit}
+                            className="space-y-4 p-6"
+                        >
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
+                                <label className="mb-1 block text-sm font-medium text-slate-700">
+                                    Nama Lengkap
+                                </label>
                                 <input
                                     type="text"
                                     value={editForm.data.name}
-                                    onChange={(e) => editForm.setData('name', e.target.value)}
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-indigo-600"
+                                    onChange={(e) =>
+                                        editForm.setData('name', e.target.value)
+                                    }
+                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none"
                                 />
-                                {editForm.errors.name && <p className="text-xs text-red-500 mt-1">{editForm.errors.name}</p>}
+                                {editForm.errors.name && (
+                                    <p className="mt-1 text-xs text-red-500">
+                                        {editForm.errors.name}
+                                    </p>
+                                )}
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Alamat Email</label>
+                                <label className="mb-1 block text-sm font-medium text-slate-700">
+                                    Alamat Email
+                                </label>
                                 <input
                                     type="email"
                                     value={editForm.data.email}
-                                    onChange={(e) => editForm.setData('email', e.target.value)}
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-indigo-600"
+                                    onChange={(e) =>
+                                        editForm.setData(
+                                            'email',
+                                            e.target.value,
+                                        )
+                                    }
+                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none"
                                 />
-                                {editForm.errors.email && <p className="text-xs text-red-500 mt-1">{editForm.errors.email}</p>}
+                                {editForm.errors.email && (
+                                    <p className="mt-1 text-xs text-red-500">
+                                        {editForm.errors.email}
+                                    </p>
+                                )}
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">
-                                    Kata Sandi Baru <span className="text-slate-400 font-normal">(Opsional)</span>
+                                <label className="mb-1 block text-sm font-medium text-slate-700">
+                                    Kata Sandi Baru{' '}
+                                    <span className="font-normal text-slate-400">
+                                        (Opsional)
+                                    </span>
                                 </label>
                                 <input
                                     type="password"
                                     value={editForm.data.password}
-                                    onChange={(e) => editForm.setData('password', e.target.value)}
+                                    onChange={(e) =>
+                                        editForm.setData(
+                                            'password',
+                                            e.target.value,
+                                        )
+                                    }
                                     placeholder="Biarkan kosong jika tidak diubah"
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:border-indigo-600"
+                                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-600 focus:outline-none"
                                 />
-                                {editForm.errors.password && <p className="text-xs text-red-500 mt-1">{editForm.errors.password}</p>}
+                                {editForm.errors.password && (
+                                    <p className="mt-1 text-xs text-red-500">
+                                        {editForm.errors.password}
+                                    </p>
+                                )}
                             </div>
 
-                            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+                            <div className="flex items-center justify-end gap-3 border-t border-slate-100 pt-4">
                                 <button
                                     type="button"
                                     onClick={() => setEditingUser(null)}
-                                    className="px-4 py-2 border border-slate-300 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors cursor-pointer"
+                                    className="cursor-pointer rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
                                 >
                                     Batal
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={editForm.processing}
-                                    className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors cursor-pointer disabled:opacity-60"
+                                    className="flex cursor-pointer items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-60"
                                 >
-                                    {editForm.processing && <Loader2 className="w-4 h-4 animate-spin" />}
+                                    {editForm.processing && (
+                                        <Loader2 className="h-4 animate-spin" />
+                                    )}
                                     Simpan Perubahan
                                 </button>
                             </div>
@@ -408,6 +340,6 @@ return;
     );
 }
 
-Pengguna.layout = {
+Pegawai.layout = {
     breadcrumbs,
 };

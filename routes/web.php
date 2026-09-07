@@ -86,6 +86,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('export/users', [ExportController::class, 'users'])->name('export.users');
     Route::get('export/sops', [ExportController::class, 'sops'])->name('export.sops');
     Route::get('export/troubleshoots', [ExportController::class, 'troubleshoots'])->name('export.troubleshoots');
+
+    //integrasi
+    Route::inertia('integrasi', 'integrasi/index')->name('integrasi.index');
 });
 
 Route::get('radiologi/share', [\App\Http\Controllers\RadiologiShareController::class, 'index'])->name('radiologi.share');

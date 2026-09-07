@@ -6,6 +6,7 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -30,6 +31,7 @@ class RolePermissionSeeder extends Seeder
             ['name' => 'radiologi.share', 'guard_name' => 'web'],
             ['name' => 'verifikator', 'guard_name' => 'web'],
             ['name' => 'verifikator.verifsop', 'guard_name' => 'web'],
+            ['name' => 'integrasi', 'guard_name' => 'web'],
         ];
 
         foreach ($permissions as $perm) {
@@ -45,9 +47,9 @@ class RolePermissionSeeder extends Seeder
 
         $user = User::where('email', 'admin@jobdesk.it')->first();
         if ($user) {
-            $existing = \DB::table('model_has_roles')->where('model_id', $user->id)->where('model_type', User::class)->exists();
+            $existing = DB::table('model_has_roles')->where('model_id', $user->id)->where('model_type', User::class)->exists();
             if (!$existing) {
-                \DB::table('model_has_roles')->insert([
+                DB::table('model_has_roles')->insert([
                     'role_id' => $adminRole->id,
                     'model_id' => $user->id,
                     'model_type' => User::class,

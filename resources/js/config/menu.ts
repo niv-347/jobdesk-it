@@ -8,9 +8,11 @@ import {
     Share2,
     Files,
     FilePlusIcon,
+    Bone,
     Wrench,
     Speech,
     ShieldPlus,
+    Workflow,
 } from 'lucide-react';
 import { dashboard, konfigurasi } from '@/routes';
 import { pengguna } from '@/routes/konfigurasi';
@@ -31,15 +33,15 @@ const baseMenuItems: BaseMenuItem[] = [
         id: 'dashboard',
         title: 'Dashboard',
         icon: LayoutGrid,
-        href: dashboard(),
+        href: dashboard().url,
     },
     {
         id: 'konfigurasi',
         title: 'Konfigurasi',
         icon: Settings,
-        href: konfigurasi(),
+        href: konfigurasi().url,
         children: [
-            { id: 'pengguna', title: 'Pengguna', icon: Briefcase, href: pengguna() },
+            { id: 'pengguna', title: 'Pengguna', icon: Briefcase, href: pengguna().url },
             { id: 'role', title: 'Role Akses', icon: Briefcase, href: '/konfigurasi/role' },
         ],
     },
@@ -56,9 +58,9 @@ const baseMenuItems: BaseMenuItem[] = [
         id: 'troubleshooting',
         title: 'Troubleshooting',
         icon: Wrench,
-        href: troubleshootIndex.index(),
+        href: troubleshootIndex.index().url,
         children: [
-            { id: 'kejadian', title: 'Kejadian', icon: Speech, href: troubleshootIndex.kejadian() },
+            { id: 'kejadian', title: 'Kejadian', icon: Speech, href: troubleshootIndex.kejadian().url },
         ],
     },
     {
@@ -83,7 +85,7 @@ const baseMenuItems: BaseMenuItem[] = [
     {
         id: 'radiologi',
         title: 'Radiologi',
-        icon: LayoutGrid,
+        icon: Bone,
         href: '/radiologi/ekpertise',
         children: [
             { id: 'ekpertise', title: 'Ekspertise', icon: FileText, href: '/radiologi/ekpertise' },
@@ -94,10 +96,16 @@ const baseMenuItems: BaseMenuItem[] = [
         id: 'verifikator',
         title: 'Verifikator',
         icon: ShieldPlus,
-        href: verifikatorRoutes.verifsop(),
+        href: verifikatorRoutes.verifsop().url,
         children: [
-            { id: 'verifsop', title: 'Verifikasi SOP', icon: Files, href: verifikatorRoutes.verifsop() },
+            { id: 'verifsop', title: 'Verifikasi SOP', icon: Files, href: verifikatorRoutes.verifsop().url },
         ],
+    },
+    {
+        id: 'integrasi',
+        title: 'Integrasi',
+        icon: Workflow,
+        href: '/integrasi',
     },
 ];
 

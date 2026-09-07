@@ -1,5 +1,5 @@
 import { Form, Head } from '@inertiajs/react';
-import { Eye, EyeOff, Info, Loader2, Mail } from 'lucide-react';
+import { Eye, EyeOff, Info, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import PasskeyVerify from '@/components/passkey-verify';
 import TextLink from '@/components/text-link';
@@ -57,18 +57,25 @@ export default function Login({ canResetPassword, status }: Props) {
                                         placeholder=" "
                                         className="login-float-input w-full"
                                     />
-                                    <label htmlFor="email" className="login-float-label">
+                                    <label
+                                        htmlFor="email"
+                                        className="login-float-label"
+                                    >
                                         Email address
                                     </label>
                                     {errors.email && (
-                                        <p className="mt-1 text-xs text-red-500">{errors.email}</p>
+                                        <p className="mt-1 text-xs text-red-500">
+                                            {errors.email}
+                                        </p>
                                     )}
                                 </div>
 
                                 <div className="login-float-group login-password-wrapper mb-5">
                                     <input
                                         id="password"
-                                        type={showPassword ? 'text' : 'password'}
+                                        type={
+                                            showPassword ? 'text' : 'password'
+                                        }
                                         name="password"
                                         required
                                         autoComplete="current-password"
@@ -76,15 +83,24 @@ export default function Login({ canResetPassword, status }: Props) {
                                         className="login-float-input w-full"
                                         style={{ paddingRight: '2.5rem' }}
                                     />
-                                    <label htmlFor="password" className="login-float-label">
+                                    <label
+                                        htmlFor="password"
+                                        className="login-float-label"
+                                    >
                                         Password
                                     </label>
                                     <button
                                         type="button"
                                         tabIndex={-1}
                                         className="login-password-toggle"
-                                        onClick={() => setShowPassword((v) => !v)}
-                                        aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                        onClick={() =>
+                                            setShowPassword((v) => !v)
+                                        }
+                                        aria-label={
+                                            showPassword
+                                                ? 'Hide password'
+                                                : 'Show password'
+                                        }
                                     >
                                         {showPassword ? (
                                             <EyeOff className="h-4 w-4" />
@@ -93,7 +109,9 @@ export default function Login({ canResetPassword, status }: Props) {
                                         )}
                                     </button>
                                     {errors.password && (
-                                        <p className="mt-1 text-xs text-red-500">{errors.password}</p>
+                                        <p className="mt-1 text-xs text-red-500">
+                                            {errors.password}
+                                        </p>
                                     )}
                                 </div>
 
@@ -125,7 +143,9 @@ export default function Login({ canResetPassword, status }: Props) {
                                     className="login-shimmer-btn flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
                                     data-test="login-submit-button"
                                 >
-                                    {processing && <Loader2 className="h-4 w-4 animate-spin" />}
+                                    {processing && (
+                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                    )}
                                     <span>Log in</span>
                                 </button>
                             </>
