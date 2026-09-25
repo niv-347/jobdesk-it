@@ -2,6 +2,7 @@ import { createInertiaApp } from '@inertiajs/react';
 
 import 'goey-toast/styles.css';
 import '../css/loading.css';
+import './echo';
 
 import { GooeyToaster } from 'goey-toast';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';

@@ -9,11 +9,14 @@ use App\Http\Controllers\RadiologiController;
 use App\Http\Controllers\Sop\SopController;
 use App\Http\Controllers\Troubleshoot\TroubleshootController;
 use App\Http\Controllers\VisumController;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'login')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Broadcast::routes();
+
     Route::get('dashboard', [DashboardController::class, '__invoke'])->name('dashboard');
 
     // === ROUTE SOP ===

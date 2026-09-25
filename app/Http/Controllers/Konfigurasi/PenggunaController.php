@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Konfigurasi;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pegawai;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -23,12 +24,21 @@ class PenggunaController extends Controller
         $search = $request->query('search');
         $perPage = 10;
 
-        $query = User::query()->select('id', 'name', 'email', 'email_verified_at');
+        $query = User::query()->select('users.id', 'users.name', 'users.email', 'users.email_verified_at')
+            ->with(['pegawai' => function ($q) {
+                $q->select('id', 'user_id', 'nip', 'nik', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'agama', 'alamat', 'no_telepon', 'jabatan', 'unit_kerja', 'golongan', 'pangkat', 'status');
+            }]);
 
         if ($search) {
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%");
+                $q->where('users.name', 'like', "%{$search}%")
+                  ->orWhere('users.email', 'like', "%{$search}%")
+                  ->orWhereHas('pegawai', function ($pq) use ($search) {
+                      $pq->where('nip', 'like', "%{$search}%")
+                        ->orWhere('nik', 'like', "%{$search}%")
+                        ->orWhere('jabatan', 'like', "%{$search}%")
+                        ->orWhere('unit_kerja', 'like', "%{$search}%");
+                  });
             });
         }
 
@@ -43,55 +53,123 @@ class PenggunaController extends Controller
 
     public function store(Request $request)
     {
-        // 1. Validasi Input
         $request->validate([
-            'name'      => ['required', 'string', 'max:255'],
-            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password'  => ['required', Password::defaults()],
-            'role_id'   => ['nullable', 'exists:roles,id'],
+            'name'         => ['required', 'string', 'max:255'],
+            'email'        => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'     => ['required', Password::defaults()],
+            'role_id'      => ['nullable', 'exists:roles,id'],
+            'nip'          => ['nullable', 'string', 'max:50', 'unique:pegawai'],
+            'nik'          => ['nullable', 'string', 'max:50', 'unique:pegawai'],
+            'tempat_lahir' => ['nullable', 'string', 'max:100'],
+            'tanggal_lahir'=> ['nullable', 'date'],
+            'jenis_kelamin'=> ['nullable', 'in:L,P'],
+            'agama'        => ['nullable', 'string', 'max:50'],
+            'alamat'       => ['nullable', 'string'],
+            'no_telepon'   => ['nullable', 'string', 'max:20'],
+            'jabatan'      => ['nullable', 'string', 'max:100'],
+            'unit_kerja'   => ['nullable', 'string', 'max:150'],
+            'golongan'     => ['nullable', 'string', 'max:50'],
+            'pangkat'      => ['nullable', 'string', 'max:50'],
+            'status'       => ['nullable', 'in:aktif,nonaktif'],
         ]);
 
-        // 2. Simpan Data ke Database
-        $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $user = DB::transaction(function () use ($request) {
+            $user = User::create([
+                'name'     => $request->name,
+                'email'    => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
 
-        // Assign role jika dipilih
-        if ($request->filled('role_id')) {
-            $user->roles()->sync([$request->role_id]);
-        }
+            if ($request->filled('role_id')) {
+                $user->roles()->sync([$request->role_id]);
+            }
 
-        // 3. Kembali ke halaman utama dengan pesan sukses
+            if ($request->filled(['nip', 'nik', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'agama', 'alamat', 'no_telepon', 'jabatan', 'unit_kerja', 'golongan', 'pangkat'])) {
+                Pegawai::create([
+                    'user_id'     => $user->id,
+                    'nip'         => $request->nip,
+                    'nik'         => $request->nik,
+                    'tempat_lahir'=> $request->tempat_lahir,
+                    'tanggal_lahir'=> $request->tanggal_lahir,
+                    'jenis_kelamin'=> $request->jenis_kelamin,
+                    'agama'       => $request->agama,
+                    'alamat'      => $request->alamat,
+                    'no_telepon'  => $request->no_telepon,
+                    'jabatan'     => $request->jabatan,
+                    'unit_kerja'  => $request->unit_kerja,
+                    'golongan'    => $request->golongan,
+                    'pangkat'     => $request->pangkat,
+                    'status'      => $request->status ?? 'aktif',
+                ]);
+            }
+
+            return $user;
+        });
+
         return redirect()->back()->with('success', 'Pengguna berhasil ditambahkan!');
     }
 
-    // 1. Method Update Data
     public function update(Request $request, User $pengguna)
     {
         $request->validate([
-            'name'  => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,id,' . $pengguna->id],
-            'password' => ['nullable', Password::defaults()], // Password opsional saat edit
+            'name'         => ['required', 'string', 'max:255'],
+            'email'        => ['required', 'string', 'email', 'max:255', 'unique:users,id,' . $pengguna->id],
+            'password'     => ['nullable', Password::defaults()],
+            'nip'          => ['nullable', 'string', 'max:50', 'unique:pegawai,nip,' . ($pengguna->pegawai?->id ?? 'null') . ',user_id'],
+            'nik'          => ['nullable', 'string', 'max:50', 'unique:pegawai,nik,' . ($pengguna->pegawai?->id ?? 'null') . ',user_id'],
+            'tempat_lahir' => ['nullable', 'string', 'max:100'],
+            'tanggal_lahir'=> ['nullable', 'date'],
+            'jenis_kelamin'=> ['nullable', 'in:L,P'],
+            'agama'        => ['nullable', 'string', 'max:50'],
+            'alamat'       => ['nullable', 'string'],
+            'no_telepon'   => ['nullable', 'string', 'max:20'],
+            'jabatan'      => ['nullable', 'string', 'max:100'],
+            'unit_kerja'   => ['nullable', 'string', 'max:150'],
+            'golongan'     => ['nullable', 'string', 'max:50'],
+            'pangkat'      => ['nullable', 'string', 'max:50'],
+            'status'       => ['nullable', 'in:aktif,nonaktif'],
         ]);
 
-        $userData = [
-            'name'  => $request->name,
-            'email' => $request->email,
-        ];
+        DB::transaction(function () use ($request, $pengguna) {
+            $userData = [
+                'name'  => $request->name,
+                'email' => $request->email,
+            ];
 
-        // Update password hanya jika diisi
-        if ($request->filled('password')) {
-            $userData['password'] = Hash::make($request->password);
-        }
+            if ($request->filled('password')) {
+                $userData['password'] = Hash::make($request->password);
+            }
 
-        $pengguna->update($userData);
+            $pengguna->update($userData);
+
+            $pegawaiData = [
+                'nip'          => $request->nip,
+                'nik'          => $request->nik,
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir'=> $request->tanggal_lahir,
+                'jenis_kelamin'=> $request->jenis_kelamin,
+                'agama'        => $request->agama,
+                'alamat'       => $request->alamat,
+                'no_telepon'   => $request->no_telepon,
+                'jabatan'      => $request->jabatan,
+                'unit_kerja'   => $request->unit_kerja,
+                'golongan'     => $request->golongan,
+                'pangkat'      => $request->pangkat,
+                'status'       => $request->status ?? 'aktif',
+            ];
+
+            if ($pengguna->pegawai) {
+                $pengguna->pegawai->update($pegawaiData);
+            } else {
+                Pegawai::create([
+                    'user_id' => $pengguna->id,
+                ] + $pegawaiData);
+            }
+        });
 
         return redirect()->back()->with('success', 'Data pengguna berhasil diperbarui!');
     }
 
-    // 2. Method Hapus Data
     public function destroy(User $pengguna)
     {
         $pengguna->delete();

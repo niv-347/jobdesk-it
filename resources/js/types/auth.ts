@@ -1,3 +1,24 @@
+export type Pegawai = {
+    id: number;
+    user_id: number;
+    nip: string | null;
+    nik: string | null;
+    tempat_lahir: string | null;
+    tanggal_lahir: string | null;
+    jenis_kelamin: string | null;
+    agama: string | null;
+    alamat: string | null;
+    no_telepon: string | null;
+    jabatan: string | null;
+    unit_kerja: string | null;
+    golongan: string | null;
+    pangkat: string | null;
+    status: string;
+    foto: string | null;
+    created_at: string;
+    updated_at: string;
+};
+
 export type User = {
     id: number;
     name: string;
@@ -7,6 +28,7 @@ export type User = {
     two_factor_enabled?: boolean;
     created_at: string;
     updated_at: string;
+    pegawai?: Pegawai | null;
     [key: string]: unknown;
 };
 
